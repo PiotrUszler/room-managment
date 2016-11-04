@@ -1,7 +1,4 @@
 /**
- * Created by Piotr Uszler on 19.09.2016.
- */
-/**
  * Created by Piotr Uszler on 22.09.2016.
  */
 var gulp = require('gulp'),
@@ -11,15 +8,11 @@ var gulp = require('gulp'),
     sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('js', function () {
-    gulp.src(['angularjs/controllers/module.js', 'angularjs/controllers/config.js', 'angularjs/**/*.js'])
+    gulp.src(['angularjs/controllers/module.js', 'angularjs/**/*.js'])
         .pipe(sourcemaps.init())
         .pipe(concat('app.js'))
-        //.pipe(ngAnnotate())
-        //.pipe(uglify())
-        //.pipe(sourcemaps.write())
+        .pipe(ngAnnotate())
+        .pipe(uglify())
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest('assets'))
-});
-
-gulp.task('watch:js', ['js'], function () {
-    gulp.watch('angularjs/**/*.js', ['js'])
 });
