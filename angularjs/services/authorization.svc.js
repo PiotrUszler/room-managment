@@ -56,10 +56,9 @@ angular.module('app')
                 $http.post('/api/signup', user).then(function (result) {
                     if(result.data.success){
                         console.log('jestem w resolve');
-                        resolve({msg:result.data.msg, success: result.data.success});
+                        resolve(result.data.msg);
                     } else {
-                        console.log('jestem w reject');
-                        reject({msg:result.data.msg, success: result.data.success});
+                        reject(result.data.msg);
                     }
                 })
             })

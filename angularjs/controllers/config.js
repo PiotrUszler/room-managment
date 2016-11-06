@@ -30,6 +30,9 @@ angular.module('app')
             .when('/userinfo', {
                 templateUrl: '/userinfo'
             })
+            .when('/successfulSignup',{
+                templateUrl: '/successfulSignup'
+            })
             .otherwise('/');
     });
 

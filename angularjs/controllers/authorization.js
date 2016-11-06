@@ -7,10 +7,12 @@ angular.module('app')
 
         $scope.regex = '(\\+[0-9]\\d{1})*(\\s)*([0-9]\\d{2})(\\s*)([0-9]\\d{2})(\\s*)([0-9]\\d{2})';
 
-        $rootScope.isLogedIn = function (){
+        $scope.submitError = false;
+        $scope.errorMessage = '';
+
+        $rootScope.isLoggedIn = function (){
             return AuthService.isAuthenticated;
         };
-
 
         $scope.signin = function () {
             console.log('login');
@@ -21,7 +23,6 @@ angular.module('app')
                 console.log(msg);
             })
         };
-
 
         $scope.signout = function () {
             AuthService.signout();
@@ -37,26 +38,33 @@ angular.module('app')
             })
         };
 
-
-
         $scope.submitForm = function (isValid) {
             if(isValid){
-
                 AuthService.signup($scope.user).then(function (data) {
-                    console.log(data);
-
-                    if(data.success){
-                        console.log('Pomyślnie zarejestrowano');
-
-                    } else{
-                        console.log('wystąpił błąd: '+data.msg);
-                    }
+                    console.log('Pomyślnie zarejestrowano');
+                    $scope.submitError = false;
+                    $window.location.href='#/successfulSignup';
                 }, function (data) {
-                    console.log(data.msg.code);
+                    console.log(data);
+                    
+                    switch(data.code){
+                        case 11000:
+                            $scope.submitError = true;
+                            $scope.errorMessage = 'Wybrany email jest już zarejestrowany. Proszę wybrać inny.';
+                            break;
+                        default:
+                            $scope.submitError = true;
+                            $scope.errorMessage = 'Upss coś poszło nie tak. Proszę spróbować później.';
+                    }
                 });
             } else {
-                console.log('Wystąpił błą podczas rejestracji')//TODO obsługa błędu podczas rejestracji
+                $scope.submitError = true;
+                $scope.errorMessage = 'Upss coś poszło nie tak. Proszę spróbować później.';
             }
-        }
+        };
+
+        $scope.$watch('submitError', function (errorMessage) {
+            console.log(errorMessage)
+        })
 
     });

@@ -27,5 +27,7 @@ router.get('/navbar', function (req, res) {
 router.get('/userinfo', function (req, res) {
     res.sendFile(path.resolve('angularjs/views/userinfo.html'))
 });
-
+router.get('/successfulSignup', function (req, res) {
+    res.sendFile(path.resolve('angularjs/views/successfulSignup.html'))
+});
 module.exports = router;

@@ -36,7 +36,7 @@
         </div>
 
         <div class="form-group">
-            <label for="password">Powtórz hasło</label>
+            <label for="password">Potwierdź hasło</label>
             <input type="password" name="rePassword" id="rePassword" class="form-control" placeholder="" ng-model="user.rePassword" required  compare-to="user.password">
             <span ng-show="frm.rePassword.$dirty && frm.rePassword.$error.required" class="help-block">To pole jest wymagane</span>
             <span ng-show="frm.rePassword.$dirty && frm.$error.compareTo && !frm.rePassword.$error.required" class="help-block">Hasła różnią się.</span>
@@ -51,5 +51,7 @@
         <button type="submit" class="btn btn-success" ng-disabled="frm.$invalid">Zarejestruj</button>
         <a href="#/"><button type="button" class="btn btn-danger">Anuluj</button></a>
     </form>
+    <br>
+    <p ng-show="submitError" class="alert alert-danger">{{errorMessage}}</p>
 </div>
-</form>
+
