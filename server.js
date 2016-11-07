@@ -14,6 +14,7 @@ app.use(morgan('dev'));
 app.use(passport.initialize())
 
 app.use('/api', require('./api/auth'));
+app.use('/api', require('./api/room'));
 app.use(require('./routes'));
 
 app.listen(process.env.PORT || 3000, function () {

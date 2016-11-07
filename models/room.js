@@ -21,6 +21,9 @@ var schema = db.Schema({
         type: Number,
         required: true
     },
+    imagePath:{
+        type: String
+    },
     reservations: [
         {
             from: String,

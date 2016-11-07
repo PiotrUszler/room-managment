@@ -13,3 +13,12 @@ input.ng-dirty.ng-invalid{
 input.ng-dirty.ng-valid{
     border: 2px solid green;
 }
+
+.room-info{
+    border: 1px solid gray;
+}
+
+.room-thumbnail{
+    height: 160px;
+    width: 240px;
+}

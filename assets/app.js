@@ -139,6 +139,70 @@ angular.module('app')
  * Created by Piotr Uszler on 11.10.2016.
  */
 /**
+ * Created by Piotr Uszler on 06.11.2016.
+ */
+angular.module('app')
+    .controller('roomCtrl', function ($q, $scope, roomService, $filter) {
+        $scope.dateFrom = '';
+        $scope.dateTo = '';
+        $scope.noRoomsError = false;
+        $scope.errorMsg ='';
+        $scope.rooms = [];
+
+        var setDate = function () {
+            var date = new Date();
+            console.log(date);
+            $scope.dateFrom = date;
+            var dateTemp = new Date;
+            dateTemp.setDate(dateTemp.getDate()+1);
+            $scope.dateTo = dateTemp;
+        };
+
+        $scope.init = function () {
+            setDate();
+            $scope.findRooms();
+        };
+
+        $scope.findRooms = function () {//TODO Obsługa braku znalezionych pokoji i wogole
+            roomService.getRooms({
+                from: $scope.dateFrom.toISOString(),
+                to: $scope.dateTo.toISOString()
+            }).then(function (roomsData) {
+                $scope.rooms = roomsData;
+            }, function (error) {
+                $scope.noRoomsError = true;
+                $scope.errorMsg = 'Coś poszło nie tak.'
+            });
+        };
+
+        $scope.test = function () {
+            console.log($scope.rooms)
+        }
+
+    });
+/**
+ * Created by Piotr Uszler on 07.11.2016.
+ */
+angular.module('app')
+    .filter('uniqueCategories', function () {
+        return function (rooms, propertyName) {
+            if(angular.isArray(rooms)){
+                var result = [];
+                var keys = {};
+                for(var i = 0; i < rooms.length; i++){
+                    var val = rooms[i][propertyName]
+                    if(angular.isUndefined(keys[val])){
+                        keys[val] = true;
+                        result.push(rooms[i]);
+                    }
+                }
+                return result;
+            } else {
+                return rooms;
+            }
+        }
+    });
+/**
  * Created by Piotr Uszler on 14.10.2016.
  */
 angular.module('app')
@@ -226,3 +290,26 @@ angular.module('app')
             isAuthenticated: isAuthenticated
         }
     }]);
+/**
+ * Created by Piotr Uszler on 06.11.2016.
+ */
+angular.module('app')
+    .service('roomService', function ($q, $http) {
+
+        var getRooms = function (data) {
+            return $q(function (resolve, reject) {
+                $http.post('/api/findRooms', data).then(function (result) {
+                    if(result.data.success){
+                        console.log('Pobrano pokoje');
+                        resolve(result.data.rooms);
+                    } else {
+                        reject(result.data.error);
+                    }
+                })
+            })
+        };
+
+        return{
+            getRooms: getRooms
+        }
+    });
