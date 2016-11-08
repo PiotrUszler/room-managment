@@ -33,6 +33,9 @@ angular.module('app')
             .when('/successfulSignup',{
                 templateUrl: '/successfulSignup'
             })
+            .when('/offer',{
+                templateUrl: '/offer'
+            })
             .otherwise('/');
     });
 

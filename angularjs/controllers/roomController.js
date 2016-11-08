@@ -2,7 +2,7 @@
  * Created by Piotr Uszler on 06.11.2016.
  */
 angular.module('app')
-    .controller('roomCtrl', function ($q, $scope, roomService, $filter) {
+    .controller('roomCtrl', function ($q, $cookies, $scope, $window, $location, roomService, offerSvc,$filter) {
         $scope.dateFrom = '';
         $scope.dateTo = '';
         $scope.noRoomsError = false;
@@ -33,6 +33,12 @@ angular.module('app')
                 $scope.noRoomsError = true;
                 $scope.errorMsg = 'Coś poszło nie tak.'
             });
+        };
+
+        $scope.addRoom = function (room) {
+            $cookies.put('room', JSON.stringify(room));
+            offerSvc.chooseRoom(room);
+            $window.location.href='#/offer';
         };
 
         $scope.test = function () {

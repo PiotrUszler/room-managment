@@ -25,7 +25,7 @@
         <div class="col-sm-6">
             <span>{{room.type}}</span>
             <span class="label label-primary pull-right">{{room.price | currency}}</span>
-            <button class="btn btn-successful pull-right">Dodaj do koszyka</button>
+            <button ng-click="addRoom(room)" class="btn btn-successful pull-right">Wybierz</button>
         </div>
         <br>
     </div>

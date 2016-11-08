@@ -2,7 +2,8 @@
  * Created by Piotr Uszler on 06.11.2016.
  */
 var router = require('express').Router(),
-    Room = require('../models/room');
+    Room = require('../models/room'),
+    Extra = require('../models/extras');
 
 router.post('/findRooms', function (req, res) {
     Room.find({
@@ -21,6 +22,16 @@ router.post('/findRooms', function (req, res) {
             res.json({success: true, rooms: rooms})
         }
     })
+});
+
+router.get('/getExtras', function (req, res) {
+    Extra.find({}, function (err, extras) {
+        if(err){
+            res.json({success: false, error: err})
+        } else {
+            res.json({success: true, extras: extras})
+        }
+    });
 });
 
 module.exports = router;

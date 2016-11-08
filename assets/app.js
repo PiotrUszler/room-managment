@@ -1,7 +1,7 @@
 /**
  * Created by Piotr Uszler on 22.09.2016.
  */
-var app = angular.module('app', ['ngRoute', 'ui.router']);
+var app = angular.module('app', ['ngRoute', 'ui.router', 'ngCookies']);
 
 
 /**
@@ -38,6 +38,9 @@ angular.module('app')
             })
             .when('/successfulSignup',{
                 templateUrl: '/successfulSignup'
+            })
+            .when('/offer',{
+                templateUrl: '/offer'
             })
             .otherwise('/');
     });
@@ -139,10 +142,43 @@ angular.module('app')
  * Created by Piotr Uszler on 11.10.2016.
  */
 /**
+ * Created by Piotr Uszler on 08.11.2016.
+ */
+angular.module('app')
+    .controller('offerCtrl', function ($scope, $cookies, offerSvc) {
+        $scope.offer = {};
+        $scope.extras = [];
+        $scope.selectedExtras = [];
+
+
+        $scope.showOffer = function () {
+            $scope.offer = JSON.parse($cookies.get('room'));
+            $scope.extras = getExtras();
+        };
+
+        $scope.addExtra = function (extra) {//TODO Dodawanie i usówanie dodatków
+
+            $scope.selectedExtras.push(extra);
+            if($scope.selectedExtras.indexOf(extra) != -1){
+                console.log('asdasd');
+            }
+            console.log($scope.selectedExtras);
+        };
+
+        var getExtras = function () {
+            offerSvc.getExtras().then(function (extrasData) {
+                $scope.extras = extrasData;
+            });
+            console.log($scope.extras);
+        }
+
+
+    });
+/**
  * Created by Piotr Uszler on 06.11.2016.
  */
 angular.module('app')
-    .controller('roomCtrl', function ($q, $scope, roomService, $filter) {
+    .controller('roomCtrl', function ($q, $cookies, $scope, $window, $location, roomService, offerSvc,$filter) {
         $scope.dateFrom = '';
         $scope.dateTo = '';
         $scope.noRoomsError = false;
@@ -173,6 +209,12 @@ angular.module('app')
                 $scope.noRoomsError = true;
                 $scope.errorMsg = 'Coś poszło nie tak.'
             });
+        };
+
+        $scope.addRoom = function (room) {
+            $cookies.put('room', JSON.stringify(room));
+            offerSvc.chooseRoom(room);
+            $window.location.href='#/offer';
         };
 
         $scope.test = function () {
@@ -290,6 +332,39 @@ angular.module('app')
             isAuthenticated: isAuthenticated
         }
     }]);
+/**
+ * Created by Piotr Uszler on 08.11.2016.
+ */
+angular.module('app')
+    .service('offerSvc', function ($q, $http) {
+        var chosenRoom = {};
+        var extras = [];
+        var chooseRoom = function (room) {
+            choosenRoom = room;
+        };
+
+        var getRoom = function () {
+            return choosenRoom;
+        };
+
+        var getExtras = function () {
+            return $q(function (resolve, reject) {
+                $http.get('/api/getExtras').then(function (result) {
+                    if(result.data.success){
+                        resolve(result.data.extras);
+                    } else {
+                        reject(result.data.error);
+                    }
+                })
+            })
+        };
+
+        return{
+            chooseRoom: chooseRoom,
+            getRoom: getRoom,
+            getExtras: getExtras
+        };
+    });
 /**
  * Created by Piotr Uszler on 06.11.2016.
  */

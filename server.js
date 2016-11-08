@@ -11,7 +11,7 @@ var express = require('express'),
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
-app.use(passport.initialize())
+app.use(passport.initialize());
 
 app.use('/api', require('./api/auth'));
 app.use('/api', require('./api/room'));

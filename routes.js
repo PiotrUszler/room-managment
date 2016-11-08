@@ -24,6 +24,9 @@ router.get('/signup', function (req, res) {
 router.get('/navbar', function (req, res) {
     res.sendFile(path.resolve('angularjs/components/navbar/navigation.html'))
 });
+router.get('/offer', function (req, res) {
+    res.sendFile(path.resolve('angularjs/views/offer.html'))
+});
 router.get('/userinfo', function (req, res) {
     res.sendFile(path.resolve('angularjs/views/userinfo.html'))
 });
