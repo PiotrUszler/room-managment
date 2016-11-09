@@ -5,7 +5,7 @@
         <div class="well" ng-repeat="extra in extras">
             <h5><strong>{{extra.name}}</strong></h5>
             <span class="pull-right label label-primary">{{extra.price | currency}} {{extra.unit}}</span>
-            <button class="btn btn-primary" ng-click="addExtra(extra)">Dodaj +</button>
+            <button class="btn btn-primary" ng-class="{'button-remove': buttonFlag}" ng-click="addOrRemoveExtra(extra)">{{btnTxt}}</button>
         </div>
     </div>
 

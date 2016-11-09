@@ -149,18 +149,28 @@ angular.module('app')
         $scope.offer = {};
         $scope.extras = [];
         $scope.selectedExtras = [];
-
+        $scope.buttonFlag = false;
+        $scope.btnTxt = 'Dodaj +';
 
         $scope.showOffer = function () {
             $scope.offer = JSON.parse($cookies.get('room'));
             $scope.extras = getExtras();
         };
 
-        $scope.addExtra = function (extra) {//TODO Dodawanie i usówanie dodatków
+        $scope.addOrRemoveExtra = function (extra) {//TODO zmiana wyglądu pojedyńczego przycisku po kliknieciu, link: http://stackoverflow.com/questions/27151868/change-class-of-just-one-element-in-an-ngrepeat
 
-            $scope.selectedExtras.push(extra);
-            if($scope.selectedExtras.indexOf(extra) != -1){
-                console.log('asdasd');
+            var index = $scope.selectedExtras.indexOf(extra);
+            console.log(index);
+            if(index == -1){
+                $scope.selectedExtras.push(extra);
+                $scope.buttonFlag = true;
+                $scope.btnTxt = 'Usuń -';
+                console.log('Adding extra');
+            } else {
+                $scope.selectedExtras.splice(index,1);
+                $scope.buttonFlag = false;
+                $scope.btnTxt = 'Dodaj +';
+                console.log('Removing extra');
             }
             console.log($scope.selectedExtras);
         };

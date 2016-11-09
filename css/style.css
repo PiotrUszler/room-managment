@@ -22,3 +22,7 @@ input.ng-dirty.ng-valid{
     height: 160px;
     width: 240px;
 }
+
+.button-remove{
+    background-color: red !important;
+}
