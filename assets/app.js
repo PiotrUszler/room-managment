@@ -149,38 +149,52 @@ angular.module('app')
         $scope.offer = {};
         $scope.extras = [];
         $scope.selectedExtras = [];
-        $scope.buttonFlag = false;
-        $scope.btnTxt = 'Dodaj +';
+        var dates = {};
+        $scope.dateFrom = '';
+        $scope.dateTo = '';
+        $scope.roomName = '';
 
         $scope.showOffer = function () {
             $scope.offer = JSON.parse($cookies.get('room'));
             $scope.extras = getExtras();
+
+            dates = JSON.parse($cookies.get('dates'));
+            $scope.dateFrom = datePreetify(new Date(dates.dateFrom));
+            $scope.dateTo = datePreetify(new Date(dates.dateTo));
+
+            $scope.roomName = $scope.offer.type;
         };
 
-        $scope.addOrRemoveExtra = function (extra) {//TODO zmiana wyglądu pojedyńczego przycisku po kliknieciu, link: http://stackoverflow.com/questions/27151868/change-class-of-just-one-element-in-an-ngrepeat
+        var datePreetify = function (date) {
+            var day = date.getUTCDate();
+            var month = date.getUTCMonth() + 1;
+            var year = date.getUTCFullYear();
+            return ''+day+'-'+month+'-'+year;
+        };
+
+        $scope.addOrRemoveExtra = function (extra) {
 
             var index = $scope.selectedExtras.indexOf(extra);
-            console.log(index);
+            extra.buttonText = extra.buttonToggle ? 'Dodaj +' : 'Usuń -';
+            extra.buttonToggle = !extra.buttonToggle;
+
             if(index == -1){
                 $scope.selectedExtras.push(extra);
-                $scope.buttonFlag = true;
-                $scope.btnTxt = 'Usuń -';
-                console.log('Adding extra');
             } else {
                 $scope.selectedExtras.splice(index,1);
-                $scope.buttonFlag = false;
-                $scope.btnTxt = 'Dodaj +';
-                console.log('Removing extra');
             }
-            console.log($scope.selectedExtras);
         };
 
         var getExtras = function () {
             offerSvc.getExtras().then(function (extrasData) {
                 $scope.extras = extrasData;
+                for(var i = 0 ; i < $scope.extras.length; i++){
+                    $scope.extras[i].buttonText = 'Dodaj +';
+                    $scope.extras[i].buttonToggle = false;;
+                }
             });
-            console.log($scope.extras);
-        }
+        };
+
 
 
     });
@@ -194,6 +208,8 @@ angular.module('app')
         $scope.noRoomsError = false;
         $scope.errorMsg ='';
         $scope.rooms = [];
+        $scope.numberOfBeds = 1;
+
 
         var setDate = function () {
             var date = new Date();
@@ -209,10 +225,11 @@ angular.module('app')
             $scope.findRooms();
         };
 
-        $scope.findRooms = function () {//TODO Obsługa braku znalezionych pokoji i wogole
+        $scope.findRooms = function () {//TODO Wyświetlenie errora o braku pokoji o wybranych parametrach używając noRoomsError i ng-Hide
             roomService.getRooms({
                 from: $scope.dateFrom.toISOString(),
-                to: $scope.dateTo.toISOString()
+                to: $scope.dateTo.toISOString(),
+                beds: $scope.numberOfBeds
             }).then(function (roomsData) {
                 $scope.rooms = roomsData;
             }, function (error) {
@@ -223,12 +240,14 @@ angular.module('app')
 
         $scope.addRoom = function (room) {
             $cookies.put('room', JSON.stringify(room));
+            $cookies.put('dates', JSON.stringify({dateFrom: $scope.dateFrom, dateTo: $scope.dateTo}));
             offerSvc.chooseRoom(room);
             $window.location.href='#/offer';
         };
 
         $scope.test = function () {
-            console.log($scope.rooms)
+            console.log($scope.rooms);
+            $scope.findRooms();
         }
 
     });
@@ -349,6 +368,7 @@ angular.module('app')
     .service('offerSvc', function ($q, $http) {
         var chosenRoom = {};
         var extras = [];
+
         var chooseRoom = function (room) {
             choosenRoom = room;
         };
@@ -369,10 +389,12 @@ angular.module('app')
             })
         };
 
+
+
         return{
             chooseRoom: chooseRoom,
             getRoom: getRoom,
-            getExtras: getExtras
+            getExtras: getExtras,
         };
     });
 /**

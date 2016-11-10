@@ -8,6 +8,8 @@ angular.module('app')
         $scope.noRoomsError = false;
         $scope.errorMsg ='';
         $scope.rooms = [];
+        $scope.numberOfBeds = 1;
+
 
         var setDate = function () {
             var date = new Date();
@@ -23,10 +25,11 @@ angular.module('app')
             $scope.findRooms();
         };
 
-        $scope.findRooms = function () {//TODO Obsługa braku znalezionych pokoji i wogole
+        $scope.findRooms = function () {//TODO Wyświetlenie errora o braku pokoji o wybranych parametrach używając noRoomsError i ng-Hide
             roomService.getRooms({
                 from: $scope.dateFrom.toISOString(),
-                to: $scope.dateTo.toISOString()
+                to: $scope.dateTo.toISOString(),
+                beds: $scope.numberOfBeds
             }).then(function (roomsData) {
                 $scope.rooms = roomsData;
             }, function (error) {
@@ -37,12 +40,14 @@ angular.module('app')
 
         $scope.addRoom = function (room) {
             $cookies.put('room', JSON.stringify(room));
+            $cookies.put('dates', JSON.stringify({dateFrom: $scope.dateFrom, dateTo: $scope.dateTo}));
             offerSvc.chooseRoom(room);
             $window.location.href='#/offer';
         };
 
         $scope.test = function () {
-            console.log($scope.rooms)
+            console.log($scope.rooms);
+            $scope.findRooms();
         }
 
     });

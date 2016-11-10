@@ -7,15 +7,20 @@ var router = require('express').Router(),
 
 router.post('/findRooms', function (req, res) {
     Room.find({
-        reservations: {
-            $not: {
-                $elemMatch: {
-                    from: {$lt: req.body.to},
-                    to: {$gt: req.body.from}
+        $and:[{
+            reservations: {
+                $not: {
+                    $elemMatch: {
+                        from: {$lt: req.body.to},
+                        to: {$gt: req.body.from}
+                    }
                 }
             }
+        },{
+            beds: {$gte: req.body.beds}
         }
-    }, function (err, rooms) {
+
+    ]}, function (err, rooms) {
         if(err) {
             res.json({success: false, error: err})
         } else {
@@ -33,5 +38,6 @@ router.get('/getExtras', function (req, res) {
         }
     });
 });
+
 
 module.exports = router;

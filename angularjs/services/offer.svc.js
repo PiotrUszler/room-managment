@@ -5,6 +5,7 @@ angular.module('app')
     .service('offerSvc', function ($q, $http) {
         var chosenRoom = {};
         var extras = [];
+
         var chooseRoom = function (room) {
             choosenRoom = room;
         };
@@ -25,9 +26,11 @@ angular.module('app')
             })
         };
 
+
+
         return{
             chooseRoom: chooseRoom,
             getRoom: getRoom,
-            getExtras: getExtras
+            getExtras: getExtras,
         };
     });
