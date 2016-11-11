@@ -14,12 +14,12 @@ gulp.task('js', function () {
     gulp.src(['angularjs/controllers/module.js', 'angularjs/controllers/config.js', 'angularjs/**/*.js'])
         .pipe(sourcemaps.init())
         .pipe(concat('app.js'))
-        //.pipe(ngAnnotate())
-        //.pipe(uglify())
-        //.pipe(sourcemaps.write())
+        .pipe(ngAnnotate())
+        .pipe(uglify())
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest('assets'))
 });
 
-gulp.task('watch:js', ['js'], function () {
+gulp.task('dev', ['js'], function () {
     gulp.watch('angularjs/**/*.js', ['js'])
 });

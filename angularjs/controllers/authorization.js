@@ -65,6 +65,7 @@ angular.module('app')
 
         $scope.$watch('submitError', function (errorMessage) {
             console.log(errorMessage)
-        })
+        });
+
 
     });

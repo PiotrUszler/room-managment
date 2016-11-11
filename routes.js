@@ -33,4 +33,7 @@ router.get('/userinfo', function (req, res) {
 router.get('/successfulSignup', function (req, res) {
     res.sendFile(path.resolve('angularjs/views/successfulSignup.html'))
 });
+router.get('/confirmation', function (req, res) {
+    res.sendFile(path.resolve('angularjs/views/confirmation.html'))
+});
 module.exports = router;

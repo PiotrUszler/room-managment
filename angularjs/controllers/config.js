@@ -36,6 +36,9 @@ angular.module('app')
             .when('/offer',{
                 templateUrl: '/offer'
             })
+            .when('/confirmation',{
+                templateUrl: '/confirmation'
+            })
             .otherwise('/');
     });
 
