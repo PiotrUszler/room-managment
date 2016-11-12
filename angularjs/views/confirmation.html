@@ -1,8 +1,14 @@
 <div ng-controller="confirmationCtrl">
-    <p>Confirmation view</p>
-<!--Show login and register screen if not logged in-->
-    <div ng-show="!isSignedIn" class="container">
 
+    <p>Confirmation view</p>
+    <div class="progress">
+        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
+             aria-valuemin="0" aria-valuemax="100" style="width:100%">
+        </div>
+    </div>
+<!--Show login and register screen if not logged in-->
+    <div ng-hide="isSignedIn" class="container" ng-controller="authCtrl">
+        <p>Aby potwierdzić rezerwację należy zalogować się na konto</p>
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <div class="panel panel-login">
@@ -22,10 +28,10 @@
                             <div class="col-lg-12">
                                 <form id="login-form" role="form" style="display: block;">
                                     <div class="form-group">
-                                        <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" ng-model="user.email" value="">
+                                        <input type="email" name="username" id="email" tabindex="1" class="form-control" placeholder="Adres Email" ng-model="user.email" value="">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" ng-model="user.password">
+                                        <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Hasło" ng-model="user.password">
                                     </div>
                                     <div class="form-group">
                                         <div class="row">
@@ -44,27 +50,46 @@
                                         </div>
                                     </div>
                                 </form>
-                                <form id="register-form" action="http://phpoll.com/register/process" method="post" role="form" style="display: none;">
+                                <form name="frm" id="register-form" role="form" ng-submit="submitForm(frm.$valid)" novalidate style="display: none;">
                                     <div class="form-group">
-                                        <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+                                        <input type="text" name="firstName" id="firstName" tabindex="1" class="form-control" placeholder="Imię" ng-model="user.firstName" maxlength="40" required>
+                                        <span ng-show="frm.firstName.$dirty && frm.firstName.$error.required" class="help-block">To pole jest wymagane</span>
+                                        <span ng-show="frm.firstName.$error.maxlength" class="help-block">Imię jest za długie</span>
                                     </div>
                                     <div class="form-group">
-                                        <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="">
+                                        <input type="text" name="lastName" id="lastName" tabindex="2" class="form-control" placeholder="Nazwisko" ng-model="user.lastName"  maxlength="40" required>
+                                        <span ng-show="frm.lastName.$dirty && frm.lastName.$error.required" class="help-block">To pole jest wymagane</span>
+                                        <span ng-show="frm.lastName.$error.maxlength" class="help-block">Nazwisko jest za długie</span>
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+                                        <input type="email" name="email" id="email" tabindex="3" class="form-control" placeholder="Adres email" ng-model="user.email" required>
+                                        <span ng-show="frm.email.$dirty && frm.email.$error.required" class="help-block">To pole jest wymagane</span>
+                                        <span ng-show="frm.email.$dirty && frm.email.$error.email" class="help-block">To nie jest prawidłowy adres email</span>
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
+                                        <input type="password" name="password" id="password" tabindex="4" class="form-control" placeholder="Hasło" ng-model="user.password"  ng-minlength="8" ng-maxlength="25" required>
+                                        <span ng-show="frm.password.$dirty && frm.password.$error.required" class="help-block">To pole jest wymagane</span>
+                                        <span ng-show="frm.password.$dirty && frm.password.$error.minlength" class="help-block">Hasło jest za krótkie</span>
+                                        <span ng-show="frm.password.$dirty && frm.password.$error.maxlength" class="help-block">Hasło jest za długie</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" name="rePassword" id="rePassword" tabindex="5" class="form-control" placeholder="Potwierdź hasło" ng-model="user.rePassword" required  compare-to="user.password">
+                                        <span ng-show="frm.rePassword.$dirty && frm.rePassword.$error.required" class="help-block">To pole jest wymagane</span>
+                                        <span ng-show="frm.rePassword.$dirty && frm.$error.compareTo && !frm.rePassword.$error.required" class="help-block">Hasła różnią się.</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" name="number" id="number" tabindex="7" class="form-control" placeholder="Number telefonu" ng-model="user.phoneNumber" ng-pattern="regex">
+                                        <span ng-show="frm.number.$dirty && frm.number.$invalid" class="help-block">Proszę podać prawidłowy numer telefonu</span>
                                     </div>
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-6 col-sm-offset-3">
-                                                <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Zarejestruj się">
+                                                <button type="submit" name="register-submit" id="register-submit" class="form-control btn btn-register" ng-disabled="frm.$invalid">Zarejestruj</button>
                                             </div>
                                         </div>
                                     </div>
                                 </form>
+                                <p ng-show="submitError" class="alert alert-danger">{{errorMessage}}</p>
                             </div>
                         </div>
                     </div>
@@ -72,7 +97,51 @@
             </div>
         </div>
     </div><!--end of login screen-->
+    <div ng-show="isSignedIn">
+        {{room.type}}
+        {{dateFrom}}
+        {{dateTo}}
+        {{extras}}
+        {{numOfDays}}
 
+        <div class="panel">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <span>Zapoznałem się oraz akceptuję <span style="color:red;">*</span>  </span><input type="checkbox">
+                        <br>
+                        <a href="" data-toggle="modal" data-target="#regulamin">Pokaż Regulamin</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <button class="btn"><a href="#/offer">Wstecz</a></button>
+            <button class="btn"><a href="#/successfulReservation">Rezerwuj</a></button>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="regulamin" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Regulamin</h4>
+            </div>
+            <div class="modal-body">
+                <p>TODO dodac jakiś regulamin</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+            </div>
+        </div>
+
+    </div>
 </div>
 <script>
     $(function() {

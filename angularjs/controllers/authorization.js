@@ -18,7 +18,7 @@ angular.module('app')
             console.log('login');
             AuthService.signin($scope.user).then(function (msg, success) {
                 $rootScope.isLogedIn = true;
-                $window.location.href='#/';
+                //$window.location.href='#/';
                 $window.location.reload();
                 console.log(msg);
             })
@@ -43,7 +43,14 @@ angular.module('app')
                 AuthService.signup($scope.user).then(function (data) {
                     console.log('Pomyślnie zarejestrowano');
                     $scope.submitError = false;
-                    $window.location.href='#/successfulSignup';
+                    AuthService.signin($scope.user).then(function (msg, success) {
+                        $rootScope.isLogedIn = true;
+                        if($window.location.toString() == 'http://localhost:3001/#/confirmation')
+                            $window.location.reload();
+                        else
+                            $window.location.href='#/successfulSignup';
+                    });
+
                 }, function (data) {
                     console.log(data);
                     

@@ -1,5 +1,6 @@
 body{
     padding-top: 60px;
+
 }
 
 .form-container{
@@ -7,11 +8,11 @@ body{
 }
 
 input.ng-dirty.ng-invalid{
-    border: 2px solid red;
+    border: 2px solid red !important;
 }
 
 input.ng-dirty.ng-valid{
-    border: 2px solid green;
+    border: 2px solid green !important;
 }
 
 .room-info{
@@ -27,7 +28,7 @@ input.ng-dirty.ng-valid{
     background-color: red !important;
 }
 
-<!--DO WYWALENIA -->
+<!--DO ZMIANY -->
 body {
     padding-top: 90px;
 }

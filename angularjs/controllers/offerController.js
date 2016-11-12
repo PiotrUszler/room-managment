@@ -50,6 +50,8 @@ angular.module('app')
 
         $scope.toConfirmation = function () {
             console.log('asdasd');
+            var extras = {extras: $scope.selectedExtras, numOfDays: calculateDiffOfDays()};
+            $cookies.put('extras', JSON.stringify(extras));
             $window.location.href = '#/confirmation'
         };
 
