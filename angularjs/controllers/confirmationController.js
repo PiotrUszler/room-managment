@@ -16,6 +16,10 @@ angular.module('app')
             AuthService.isAuthenticated ? $scope.isSignedIn = true : $scope.isSignedIn = false;
 
         };
+            
+        $scope.reserve = function () {
+            
+        };
 
         //TODO zrobienie rejestracji(może przeniesienie na signup view? do rozważenia) i obsługa błędów(może jakoś połączyć obydwa logowania i rejestracje w jedno?)
         //TODO porobienie i przetestowanie referencji w mongodb i zrobienie nowej kolekcji i potwierdzonymi rezerwacjami(zastanowić się nad bazą danych)
@@ -24,7 +28,7 @@ angular.module('app')
         //TODO dodanie czegos do widoku rezerwajci
         //TODO dodanie całej obsługi konta(zmiana hasła, numeru telefonu[dodanie lub zmiana], podglądu rezerwacji, itp) oraz obsługi hotelu(CRUD dodatków, pokoji itp).
         //TODO dodanie może jakiś wykresów na temat obciążenia pokoji lub jakiś przychodów czy coś albo jaieś coś do generowanie pdf z raportem
-        
+        //TODO pozmieniać słowa reservation itp na booking
         init();
 
     });

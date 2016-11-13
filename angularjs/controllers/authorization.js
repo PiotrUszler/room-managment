@@ -38,6 +38,13 @@ angular.module('app')
             })
         };
 
+        $scope.getUserBookings = function () {
+            AuthService.getUserBookings.then(function (msg) {
+                console.log(msg);
+                $scope.userBookings = msg;
+            })
+        };
+
         $scope.submitForm = function (isValid) {
             if(isValid){
                 AuthService.signup($scope.user).then(function (data) {

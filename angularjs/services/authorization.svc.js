@@ -78,11 +78,20 @@ angular.module('app')
             })
         };
 
+        var getUserBookings = function () {//TODO poprawić razem z api żeby dawało success
+            return $q(function (resolve, reject) {
+                $http.get('/api/getUserBookings').then(function (result) {
+                    resolve(result.data)
+                })
+            })
+        };
+
         return{
             signin: signin,
             signout: signout,
             signup: signup,
             getUserInfo: getUserInfo,
+            getUserBookings: getUserBookings(),
             isAuthenticated: isAuthenticated
         }
     }]);

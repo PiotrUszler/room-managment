@@ -27,7 +27,8 @@ var schema = db.Schema({
     reservations: [
         {
             from: String,
-            to: String
+            to: String,
+            user: String
         }
     ]
 });
