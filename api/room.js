@@ -76,10 +76,14 @@ router.get('/getUserBookings',  passport.authenticate('jwt', {session: false}), 
     })
 });
 
-router.post('/reserve', function (req, res) {//TODO do uporzątkowania i obsługa błędów
+router.post('/reserve', passport.authenticate('jwt', {session: false}), function (req, res) {//TODO do uporzątkowania i obsługa błędów i
+    var token = getToken(req.headers);
+    if(token) {
+        var decoded = jwt.decode(token, 'aH3kx09$s');
+    }
     Room.update(
         {_id: mongoose.Types.ObjectId(req.body.id)},
-        {$push: {reservations: {from: req.body.from, to: req.body.to, user: req.body.user}}},function (err, result) {
+        {$push: {reservations: {from: req.body.from, to: req.body.to, user: decoded.email}}},function (err, result) {
             res.json({result: result})
         }
     )
