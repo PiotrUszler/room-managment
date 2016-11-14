@@ -15,6 +15,50 @@ angular.module('app')
         }
     })
 
+    .config(function ($stateProvider, $urlRouterProvider) {
+        $stateProvider
+            .state('home',{
+                url: '/main',
+                controller: 'roomCtrl',
+                templateUrl: 'main'
+            })
+            .state('offer',{
+                url: '/offer',
+                controller: 'offerCtrl',
+                templateUrl: 'offer'
+            })
+            .state('confirmation',{
+                url: '/confirmation',
+                templateUrl: 'confirmation'
+            })
+            .state('successfulBooking',{
+                url: '/successfulBooking',
+                templateUrl: 'successfulBooking'
+            })
+            .state('successfulSignup',{
+                url: '/successfulSignup',
+                templateUrl: 'successfulSignup'
+            })
+            .state('userinfo',{
+                url: '/userinfo',
+                templateUrl: 'userinfo'
+            })
+            .state('signin',{
+                url: '/signin',
+                templateUrl: 'signin'
+            })
+            .state('signup',{
+                url: '/signup',
+                templateUrl: 'signup'
+            });
+        $urlRouterProvider.otherwise('/main')
+    })
+    .run(['$rootScope', '$state', '$stateParams',
+    function ($rootScope, $state, $stateParams) {
+        $rootScope.$state = $state;
+        $rootScope.$stateParams = $stateParams;
+    }]);
+    /*
     .config(function ($routeProvider, $httpProvider) {
         $httpProvider.interceptors.push('authInterceptor');
         $routeProvider
@@ -39,7 +83,10 @@ angular.module('app')
             .when('/confirmation',{
                 templateUrl: '/confirmation'
             })
+            .when('/successfulBooking',{
+                templateUrl: '/successfulBooking'
+            })
             .otherwise('/');
     });
-
+*/
 

@@ -72,7 +72,7 @@ router.get('/getUserBookings',  passport.authenticate('jwt', {session: false}), 
                 result.push({room: rooms[j], reservations: reservations});
             }
         }
-        res.json({result: result})
+        res.json({success: true, result: result})
     })
 });
 
@@ -83,8 +83,11 @@ router.post('/reserve', passport.authenticate('jwt', {session: false}), function
     }
     Room.update(
         {_id: mongoose.Types.ObjectId(req.body.id)},
-        {$push: {reservations: {from: req.body.from, to: req.body.to, user: decoded.email}}},function (err, result) {
-            res.json({result: result})
+        {$push: {reservations: {from: req.body.from, to: req.body.to, user: decoded.email, price: req.body.price, extras: req.body.extras}}},function (err, result) {
+            if(err)
+                res.json({success: false, error: err});
+            else
+                res.json({success: true});
         }
     )
 });

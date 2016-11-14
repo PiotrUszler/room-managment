@@ -21,7 +21,7 @@ angular.module('app')
             $scope.dateTo = datePreetify(new Date(dates.dateTo));
 
             $scope.roomName = $scope.offer.type;
-            $scope.roomPrice = $scope.offer.price;
+            $scope.roomPrice = $scope.offer.price * calculateDiffOfDays();
             $scope.extrasTotalPrice = 0;
 
         };

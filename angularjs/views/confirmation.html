@@ -108,7 +108,7 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <span>Zapoznałem się oraz akceptuję <span style="color:red;">*</span>  </span><input type="checkbox">
+                        <span>Zapoznałem się oraz akceptuję <span style="color:red;">*</span>  </span><input type="checkbox" ng-model="terms">
                         <br>
                         <a href="" data-toggle="modal" data-target="#regulamin">Pokaż Regulamin</a>
                     </div>
@@ -117,8 +117,8 @@
         </div>
 
         <div>
-            <button class="btn"><a href="#/offer">Wstecz</a></button>
-            <button class="btn" ng-click="reserve()">Rezerwuj</button>
+            <button class="btn btn-warning" ng-click="toPrevious()">Wstecz</button>
+            <button class="btn btn-success" ng-click="reserve()">Rezerwuj</button>
         </div>
 
     </div>

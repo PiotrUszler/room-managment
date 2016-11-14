@@ -2,7 +2,7 @@
  * Created by Piotr Uszler on 06.11.2016.
  */
 angular.module('app')
-    .controller('roomCtrl', function ($q, $cookies, $scope, $window, $location, roomService, offerSvc,$filter) {
+    .controller('roomCtrl', function ($q, $cookies, $scope, $window, $location, roomService, offerSvc,$filter, $state) {
         $scope.dateFrom = '';
         $scope.dateTo = '';
         $scope.noRoomsError = false;
@@ -42,7 +42,8 @@ angular.module('app')
             $cookies.put('room', JSON.stringify(room));
             $cookies.put('dates', JSON.stringify({dateFrom: $scope.dateFrom, dateTo: $scope.dateTo}));
             offerSvc.chooseRoom(room);
-            $window.location.href='#/offer';
+            $state.go('offer');
+            //$window.location.href='#/offer';
         };
 
         $scope.test = function () {

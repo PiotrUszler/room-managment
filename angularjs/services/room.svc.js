@@ -17,7 +17,20 @@ angular.module('app')
             })
         };
 
+        var bookRoom = function (data) {//TODO zjaąć się
+            return $q(function (resolve, reject) {
+                $http.post('/api/reserve', data).then(function (result) {
+                    if(result.data.success){
+                        resolve(result.data.success)
+                    } else {
+                        reject(result.data.error)
+                    }
+                })
+            })
+        };
+
         return{
-            getRooms: getRooms
+            getRooms: getRooms,
+            bookRoom: bookRoom
         }
     });

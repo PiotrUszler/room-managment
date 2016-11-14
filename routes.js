@@ -36,4 +36,7 @@ router.get('/successfulSignup', function (req, res) {
 router.get('/confirmation', function (req, res) {
     res.sendFile(path.resolve('angularjs/views/confirmation.html'))
 });
+router.get('/successfulBooking', function (req, res) {
+    res.sendFile(path.resolve('angularjs/views/successfulBooking.html'))
+});
 module.exports = router;

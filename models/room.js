@@ -28,7 +28,18 @@ var schema = db.Schema({
         {
             from: String,
             to: String,
-            user: String
+            user: String,
+            price: Number,
+            extras: [
+                {
+                    name: String
+                }
+            ],
+            paid: {
+                type: Boolean,
+                default: false
+            }
+
         }
     ]
 });
