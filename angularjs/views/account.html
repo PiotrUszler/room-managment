@@ -3,13 +3,13 @@
     <div class="panel panel-default row">
         <div class="col-xs-5">
             <div class="well">
-                <button class="btn">Dane Urzytkownika</button>
-                <button class="btn">Pokaż rezerwacje</button>
+                <button ui-sref="account.details" class="btn">Dane Urzytkownika</button>
+                <button ui-sref="account.bookings" class="btn">Pokaż rezerwacje</button>
             </div>
         </div>
         <div class="col xs-7">
             <div>
-                <user-info></user-info>
+                <div ui-view></div>
             </div>
         </div>
 

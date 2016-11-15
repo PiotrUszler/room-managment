@@ -2,7 +2,7 @@
  * Created by Piotr Uszler on 14.10.2016.
  */
 angular.module('app')
-    .controller('authCtrl', function ($q, $scope, $window, $location, $route, $rootScope, AuthService) {
+    .controller('authCtrl', function ($q, $scope, $state, $window, $location, $route, $rootScope, AuthService) {
 
 
         $scope.regex = '(\\+[0-9]\\d{1})*(\\s)*([0-9]\\d{2})(\\s*)([0-9]\\d{2})(\\s*)([0-9]\\d{2})';
@@ -19,6 +19,7 @@ angular.module('app')
             AuthService.signin($scope.user).then(function (msg, success) {
                 $rootScope.isLogedIn = true;
                 //$window.location.href='#/';
+                //$state.go('home');
                 $window.location.reload();
                 console.log(msg);
             })
@@ -27,7 +28,12 @@ angular.module('app')
         $scope.signout = function () {
             AuthService.signout();
             $rootScope.isLogedIn = false;
-            $window.location.reload();
+            $state.go('home').then(function () {
+                $window.location.reload();
+            });
+            //$window.location.reload();
+            //state.go('home');
+            //$state.reload();
             console.log('logout');
         };
 

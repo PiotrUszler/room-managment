@@ -91,7 +91,7 @@ angular.module('app')
             signout: signout,
             signup: signup,
             getUserInfo: getUserInfo,
-            getUserBookings: getUserBookings(),
+            getUserBookings: getUserBookings,
             isAuthenticated: isAuthenticated
         }
     }]);

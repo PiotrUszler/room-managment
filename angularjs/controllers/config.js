@@ -39,9 +39,9 @@ angular.module('app')
                 url: '/successfulSignup',
                 templateUrl: 'successfulSignup'
             })
-            .state('userinfo',{
-                url: '/userinfo',
-                templateUrl: 'userinfo'
+            .state('account',{
+                url: '/account',
+                templateUrl: 'account'
             })
             .state('signin',{
                 url: '/signin',
@@ -50,6 +50,14 @@ angular.module('app')
             .state('signup',{
                 url: '/signup',
                 templateUrl: 'signup'
+            })
+            .state('account.bookings',{
+                url: '/bookings',
+                templateUrl: 'bookings'
+            })
+            .state('account.details',{
+                url: '/details',
+                templateUrl: 'details'
             });
         $urlRouterProvider.otherwise('/main')
     })

@@ -27,8 +27,8 @@ router.get('/navbar', function (req, res) {
 router.get('/offer', function (req, res) {
     res.sendFile(path.resolve('angularjs/views/offer.html'))
 });
-router.get('/userinfo', function (req, res) {
-    res.sendFile(path.resolve('angularjs/views/userinfo.html'))
+router.get('/account', function (req, res) {
+    res.sendFile(path.resolve('angularjs/views/account.html'))
 });
 router.get('/successfulSignup', function (req, res) {
     res.sendFile(path.resolve('angularjs/views/successfulSignup.html'))
@@ -38,5 +38,11 @@ router.get('/confirmation', function (req, res) {
 });
 router.get('/successfulBooking', function (req, res) {
     res.sendFile(path.resolve('angularjs/views/successfulBooking.html'))
+});
+router.get('/details', function (req, res) {
+    res.sendFile(path.resolve('angularjs/views/details.html'))
+});
+router.get('/bookings', function (req, res) {
+    res.sendFile(path.resolve('angularjs/views/bookings.html'))
 });
 module.exports = router;

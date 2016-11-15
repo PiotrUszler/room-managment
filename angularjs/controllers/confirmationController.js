@@ -2,7 +2,7 @@
  * Created by Piotr Uszler on 11.11.2016.
  */
 angular.module('app')
-    .controller('confirmationCtrl', function ($q, $window, $location, $cookies, $scope, $rootScope, AuthService, roomService) {
+    .controller('confirmationCtrl', function ($q, $window, $location, $state, $cookies, $scope, $rootScope, AuthService, roomService) {
 
         $scope.isSignedIn = false;
 
@@ -22,7 +22,8 @@ angular.module('app')
             else{
                 roomService.bookRoom({id: $scope.room._id, from: $scope.dateFrom, to: $scope.dateTo, price: calculateTotalPrice(), extras: $scope.extras})
                     .then(function () {
-                    $window.location.href = '#/successfulBooking'
+                    //$window.location.href = '#/successfulBooking'
+                        $state.go('successfulBooking')
                 },function (error) {
                     //TODO wyświetlenie errrora
                     })
@@ -30,7 +31,8 @@ angular.module('app')
         };
 
         $scope.toPrevious = function () {
-            $window.location.href = '#/offer'
+            //$window.location.href = '#/offer'
+            $state.go('offer')
         };
 
         var calculateTotalPrice = function () {
@@ -52,8 +54,8 @@ angular.module('app')
         //TODO kody rabatowe
         //TODO powiadomienie o ciasteczkach
         //TODO dodanie podglądu obłożenia hotelu jak w kini(3 stany: wolny, zarezerwowany, zajety)
-        //TODO zmiana na stateProvider
-        //TODO poznanie stateProvidera i dodanie nested views oraz uporzątkowanie routera(nazwy)
+        //TODO zbadanie czy .run stateProvidera poczebne
+        //TODO poznanie stateProvidera i dodanie nested views
         //TODO na głównej stronie zrobićżeby data byłą conajmniej jeden dzien rezerwacji
         //TODO konto
         //zmiana danych

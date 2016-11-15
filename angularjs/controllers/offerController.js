@@ -2,7 +2,7 @@
  * Created by Piotr Uszler on 08.11.2016.
  */
 angular.module('app')
-    .controller('offerCtrl', function ($scope, $cookies, $location, $window, offerSvc) {
+    .controller('offerCtrl', function ($scope, $cookies, $state, $location, $window, offerSvc) {
         $scope.offer = {};
         $scope.extras = [];
         $scope.selectedExtras = [];
@@ -52,11 +52,13 @@ angular.module('app')
             console.log('asdasd');
             var extras = {extras: $scope.selectedExtras, numOfDays: calculateDiffOfDays()};
             $cookies.put('extras', JSON.stringify(extras));
-            $window.location.href = '#/confirmation'
+            //$window.location.href = '#/confirmation'
+            $state.go('confirmation')
         };
 
         $scope.toPrevious = function () {
-            $window.location.href = '#/main'
+            //$window.location.href = '#/main'
+            $state.go('home')
         };
 
         var getExtras = function () {
