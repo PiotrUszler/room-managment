@@ -45,4 +45,7 @@ router.get('/details', function (req, res) {
 router.get('/bookings', function (req, res) {
     res.sendFile(path.resolve('angularjs/views/bookings.html'))
 });
+router.get('/changePassword', function (req, res) {
+    res.sendFile(path.resolve('angularjs/views/changePassword.html'))
+});
 module.exports = router;

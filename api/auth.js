@@ -59,7 +59,7 @@ router.get('/userinfo', passport.authenticate('jwt', {session: false}), function
             if(!user){
                 return res.status(403).send({success: false, msg: 'Logowanie nie powiodło się. Nie znaleziono użytkownika.'});
             } else {
-                res.json({success: true, msg: 'Witaj w strzeżonym miejscu '+ user.email});
+                res.json({success: true, firstName: user.firstName, lastName: user.lastName, email: user.email, phone: user.phoneNumber});
             }
         })
     } else {

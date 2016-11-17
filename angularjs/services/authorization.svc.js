@@ -70,7 +70,7 @@ angular.module('app')
             return $q(function (resolve, reject) {
                 $http.get('/api/userinfo').then(function (result) {
                     if(result.data.success){
-                        resolve(result.data.msg);
+                        resolve({firstName: result.data.firstName, lastName: result.data.lastName, email: result.data.email, phone: result.data.phone});
                     } else {
                         reject(result.data.msg);
                     }

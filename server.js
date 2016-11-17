@@ -6,12 +6,15 @@ var express = require('express'),
     path = require('path'),
     bodyParser = require('body-parser'),
     morgan = require('morgan'),
-    passport = require('passport');
+    passport = require('passport'),
+    favicon = require('serve-favicon');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(passport.initialize());
+//favicon nie dziala
+app.use(favicon(__dirname+'/favicon.ico'));
 
 app.use('/api', require('./api/auth'));
 app.use('/api', require('./api/room'));

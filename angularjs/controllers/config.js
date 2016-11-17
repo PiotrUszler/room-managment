@@ -58,6 +58,10 @@ angular.module('app')
             .state('account.details',{
                 url: '/details',
                 templateUrl: 'details'
+            })
+            .state('account.changePassword',{
+                url: '/changePassword',
+                templateUrl: 'changePassword'
             });
         $urlRouterProvider.otherwise('/main')
     })
