@@ -128,3 +128,7 @@ body {
     background-color: #1CA347;
     border-color: #1CA347;
 }
+
+.row{
+    margin-bottom: 10px!important;
+}

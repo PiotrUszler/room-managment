@@ -53,6 +53,7 @@ schema.pre('save', function (next) {
     }
 });
 
+
 schema.methods.comparePassword = function (pass, cb) {
     bcrypt.compare(pass, this.password, function (err, matching) {
         if(err) {return cb(err)}

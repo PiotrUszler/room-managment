@@ -1,21 +1,29 @@
 <div ng-controller="accCtrl">
     <p>user info</p>
-    <div class="panel panel-default row">
-        <div class="col-md-5">
-            <div class="well">
-                <button ui-sref="account.details" class="btn">Dane Urzytkownika</button>
+    <div class="row">
+        <div class="panel panel-default ">
 
-                <button ui-sref="account.bookings" class="btn">Pokaż rezerwacje</button>
+            <div class="well col-md-2" >
+                <div class="row">
+                    <button ui-sref="account.details" class="btn btn-block">Dane Urzytkownika</button>
+                </div>
 
-                <button ui-sref="account.changePassword" class="btn">Zmień hasło</button>
+                <div class="row">
+                    <button ui-sref="account.bookings" class="btn btn-block">Pokaż rezerwacje</button>
+                </div>
+
+                <div class="row">
+                    <button ui-sref="account.changePassword" class="btn btn-block">Zmień hasło</button>
+
+                </div>
             </div>
-        </div>
-        <div class="col-xs-7">
-            <div>
-                <div ui-view></div>
+            <div class="col-md-10">
+                <div>
+                    <div ui-view></div>
+                </div>
             </div>
-        </div>
 
+        </div>
     </div>
 
 </div>

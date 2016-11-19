@@ -1,22 +1,39 @@
 <p>Details sub view</p>
 <div>
-    <div >
-        <label for="">Imię: </label>
-        <input type="text" value="{{firstName}}">
-    </div>
-    <div >
-        <label for="">Nazwisko: </label>
-        <input type="text" value="{{lastName}}">
-    </div>
-    <div >
-        <label for="">Adres Email</label>
-        <input type="text" value="{{email}}">
-    </div>
-    <div >
-        <label for="">Numer telefonu</label>
-        <input type="text" value="{{phone}}">
-    </div>
-    <div>
-        <button>Zapisz</button>
-    </div>
+    <form name="frm"  ng-submit="changeUserDetails(frm.$valid, firstName, lastName, email, phone)" novalidate>
+
+
+        <div class="form-group">
+            <label for="firstName">Imię</label>
+            <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Imię" ng-model="firstName"
+                   minlength="3" maxlength="40" required value="{{firstName}}">
+            <span ng-show="frm.firstName.$dirty && frm.firstName.$error.required" class="help-block">To pole jest wymagane</span>
+            <span ng-show="frm.firstName.$error.minlength" class="help-block">Imię jest za krótkie</span>
+            <span ng-show="frm.firstName.$error.maxlength" class="help-block">Imię jest za długie</span>
+        </div>
+
+        <div class="form-group">
+            <label for="lastName">Nazwisko</label>
+            <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Nazwisko" ng-model="lastName"
+                   minlength="3" maxlength="40" value="{{lastName}}" required>
+            <span ng-show="frm.lastName.$dirty && frm.lastName.$error.required" class="help-block">To pole jest wymagane</span>
+            <span ng-show="frm.lasttName.$error.minlength" class="help-block">Nazwisko jest za krótkie</span>
+            <span ng-show="frm.lastName.$error.maxlength" class="help-block">Nazwisko jest za długie</span>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Adres Email</label>
+            <input type="email" name="email" id="email" class="form-control" placeholder="email" ng-model="email" value="{{email}}"required>
+            <span ng-show="frm.email.$dirty && frm.email.$error.required" class="help-block">To pole jest wymagane</span>
+            <span ng-show="frm.email.$dirty && frm.email.$error.email" class="help-block">To nie jest prawidłowy adres email</span>
+        </div>
+
+        <div class="form-group">
+            <label for="number">Numer Telefonu</label>
+            <input type="text" name="number" id="number" class="form-control" placeholder="numer" ng-model="phone" value="{{phone}}" ng-pattern="regex">
+            <span ng-show="frm.number.$dirty && frm.number.$invalid" class="help-block">Proszę podać prawidłowy numer telefonu</span>
+        </div>
+
+        <button type="submit" class="btn btn-success" ng-disabled="frm.$invalid">Zapisz</button>
+    </form>
 </div>

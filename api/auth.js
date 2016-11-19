@@ -48,6 +48,22 @@ router.post('/authenticate', function (req, res) {
     })
 });
 
+router.post('/getNewToken', function (req, res) {
+    User.findOne({
+        email: req.body.email
+    }, function (err, user) {
+        if(err) throw error;
+        if(!user){
+            console.log('new token brak uzy');
+             res.status(403).send({success: false, msg: 'Logowanie nie powiodło się. Nie znaleziono użytkownika.'});
+        } else {
+            console.log('new token new token');
+            var token = jwt.encode(user, 'aH3kx09$s');
+            res.json({success: true, token: 'JWT ' + token});
+        }
+    })
+});
+
 router.get('/userinfo', passport.authenticate('jwt', {session: false}), function (req, res) {
     var token = getToken(req.headers);
     if(token){
@@ -57,13 +73,40 @@ router.get('/userinfo', passport.authenticate('jwt', {session: false}), function
         }, function (error, user) {
             if(error) throw error;
             if(!user){
-                return res.status(403).send({success: false, msg: 'Logowanie nie powiodło się. Nie znaleziono użytkownika.'});
+                res.status(403).send({success: false, msg: 'Logowanie nie powiodło się. Nie znaleziono użytkownika.'});
             } else {
                 res.json({success: true, firstName: user.firstName, lastName: user.lastName, email: user.email, phone: user.phoneNumber});
             }
         })
     } else {
-        return res.status(403).send({success: false, msg: 'Brak tokena'});
+         res.status(403).send({success: false, msg: 'Brak tokena'});
+    }
+});
+
+router.post('/change-user-details', function (req, res) {
+    User.update(
+        {email: req.body.email},
+        {$set: {firstName: req.body.firstName}},function (err, result) {
+            if(err)
+                res.json({success: false, error: err});
+            else
+                res.json({success: true});
+        }
+    )
+});
+
+router.post('/change-password', passport.authenticate('jwt', {session: false}), function (req, res) {
+    var token = getToken(req.headers);
+    if(token){
+        var user = jwt.decode(token, 'aH3kx09$s');
+        User.findOne({email: user.email}, function (error, user) {
+            if(error) throw error;
+            if(!user){
+                res.status(403).send({success: false, msg: 'Nie znaleziono użytkownika'})
+            } else {
+
+            }
+        })
     }
 });
 

@@ -29,8 +29,24 @@ angular.module('app')
             })
         };
 
+        var cancelBooking = function (room_id, booking_id) {
+            return $q(function (resolve, reject) {
+                console.log('jetem przed post cancel');
+                $http.post('/api/cancelBooking',{room_id: room_id, booking_id: booking_id}).then(function (result) {
+                    if(result.data.success){
+                        console.log('resolve cancel');
+                        resolve(result.data.success)
+                    } else {
+                        console.log('reject cancel');
+                        reject(result.data.error)
+                    }
+                })
+            })
+        };
+
         return{
             getRooms: getRooms,
-            bookRoom: bookRoom
+            bookRoom: bookRoom,
+            cancelBooking: cancelBooking
         }
     });

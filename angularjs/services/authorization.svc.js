@@ -85,6 +85,28 @@ angular.module('app')
                 })
             })
         };
+        
+        var changeUserDetails = function (newDetails) {
+            return $q(function (resolve, reject) {
+                $http.post('/api/test', newDetails).then(function (result) {
+                    if(result.data.success){
+                        console.log('hello');
+                        $http.post('/api/getNewToken', {email: newDetails.email}).then(function (result2) {
+                            if(result2.data.success){
+                                console.log('result2 success');
+                                storeUserInfo(result2.data.token);
+                                loadUserInfo();
+                            } else {
+                                console.log('error nowego tokena')
+                            }
+                        });
+                        resolve({success: true, msg: "Pomyślnie zmieniono dane"})
+                    } else {
+                        reject({success: false, msg: "coś poszło nie tak"});
+                    }
+                })
+            })
+        };
 
         return{
             signin: signin,
@@ -92,6 +114,7 @@ angular.module('app')
             signup: signup,
             getUserInfo: getUserInfo,
             getUserBookings: getUserBookings,
+            changeUserDetails: changeUserDetails,
             isAuthenticated: isAuthenticated
         }
     }]);

@@ -58,6 +58,8 @@ angular.module('app')
         //TODO zbadanie czy .run stateProvidera poczebne
         //TODO poznanie stateProvidera i dodanie nested views
         //TODO na głównej stronie zrobićżeby data byłą conajmniej jeden dzien rezerwacji
+        //TODO zmiana regex na rootScope jesli mozliwe
+        //TODo data rezerwacji tylko od daty dzisiejszej (bez rezerwacji w przeszłości)
         //TODO konto
         //zmiana danych
         //zmiana hasła

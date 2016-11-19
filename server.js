@@ -13,7 +13,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(passport.initialize());
-//favicon nie dziala
 app.use(favicon(__dirname+'/favicon.ico'));
 
 app.use('/api', require('./api/auth'));
