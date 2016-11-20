@@ -6,17 +6,19 @@
         <div class="form-group">
             <label for="firstName">Imię</label>
             <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Imię" ng-model="user.firstName"
-                   maxlength="40" required>
+                   minlength="3" maxlength="40" required>
             <span ng-show="frm.firstName.$dirty && frm.firstName.$error.required" class="help-block">To pole jest wymagane</span>
             <span ng-show="frm.firstName.$error.maxlength" class="help-block">Imię jest za długie</span>
+            <span ng-show="frm.firstName.$error.minlength" class="help-block">Imię jest za krótkie</span>
         </div>
 
         <div class="form-group">
             <label for="lastName">Nazwisko</label>
             <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Nazwisko" ng-model="user.lastName"
-                   maxlength="40" required>
+                   minlength="3" maxlength="40" required>
             <span ng-show="frm.lastName.$dirty && frm.lastName.$error.required" class="help-block">To pole jest wymagane</span>
             <span ng-show="frm.lastName.$error.maxlength" class="help-block">Nazwisko jest za długie</span>
+            <span ng-show="frm.lastName.$error.minlength" class="help-block">Nazwisko jest za krótkie</span>
         </div>
 
         <div class="form-group">

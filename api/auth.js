@@ -5,7 +5,8 @@
 var router = require('express').Router(),
     User = require('../models/user'),
     passport = require('passport'),
-    jwt = require('jwt-simple');
+    jwt = require('jwt-simple'),
+    db = require('../db');
 require('../passport')(passport);
 
 
@@ -95,19 +96,28 @@ router.post('/change-user-details', function (req, res) {
     )
 });
 
+
+
 router.post('/change-password', passport.authenticate('jwt', {session: false}), function (req, res) {
     var token = getToken(req.headers);
-    if(token){
-        var user = jwt.decode(token, 'aH3kx09$s');
-        User.findOne({email: user.email}, function (error, user) {
-            if(error) throw error;
-            if(!user){
-                res.status(403).send({success: false, msg: 'Nie znaleziono użytkownika'})
-            } else {
-
-            }
-        })
+    if(token) {
+        var decoded = jwt.decode(token, 'aH3kx09$s');
     }
+    User.findOne({email: decoded.email}, function (error, user) {
+        if(error) throw error;
+        if(!user){
+            res.status(403).send({success: false, msg: 'Nie znaleziono użytkownika'})
+        } else{
+            //console.log(user);
+            user.changePass(req.body.oldPass, req.body.newPass, function(err, result){
+                if(result){
+                    res.json({success: true, msg: 'udało się?'})
+                } else {
+                    res.json({success: false, error: err});
+                }
+            })
+        }
+    })
 });
 
 getToken = function (headers) {

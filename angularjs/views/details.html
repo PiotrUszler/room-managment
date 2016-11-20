@@ -17,7 +17,7 @@
             <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Nazwisko" ng-model="lastName"
                    minlength="3" maxlength="40" value="{{lastName}}" required>
             <span ng-show="frm.lastName.$dirty && frm.lastName.$error.required" class="help-block">To pole jest wymagane</span>
-            <span ng-show="frm.lasttName.$error.minlength" class="help-block">Nazwisko jest za krótkie</span>
+            <span ng-show="frm.lastName.$error.minlength" class="help-block">Nazwisko jest za krótkie</span>
             <span ng-show="frm.lastName.$error.maxlength" class="help-block">Nazwisko jest za długie</span>
         </div>
 

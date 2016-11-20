@@ -49,6 +49,19 @@ angular.module('app')
             })
         };
 
+        //TODO ustawic passy na zero po żądaniu hhtp
+        $scope.changePassword = function (valid,oldP, newP) {
+            if(valid){
+                AuthService.changePassword(oldP, newP).then(function (res) {
+                    console.log(res.msg);
+
+                    $scope.successfulPasswordChange = true;
+                },function (rej) {
+                    $scope.wrongPassword = true;
+                })
+            }
+        };
+
         $scope.checkDate = function (date) {
             var currentDate = new Date();
             var dateFrom = new Date(date);

@@ -108,6 +108,18 @@ angular.module('app')
             })
         };
 
+        var changePassword = function (oldPass, newPass) {
+            return $q(function (resolve, reject) {
+                $http.post('/api/change-password', {oldPass: oldPass, newPass: newPass}).then(function (result) {
+                    if(result.data.success)
+                        resolve({msg: 'pomyślnie zmieniono haslo'});
+                    else{
+                        reject({msg: result.data.error})
+                    }
+                })
+            })
+        };
+
         return{
             signin: signin,
             signout: signout,
@@ -115,6 +127,7 @@ angular.module('app')
             getUserInfo: getUserInfo,
             getUserBookings: getUserBookings,
             changeUserDetails: changeUserDetails,
+            changePassword: changePassword,
             isAuthenticated: isAuthenticated
         }
     }]);
