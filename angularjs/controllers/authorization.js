@@ -14,10 +14,21 @@ angular.module('app')
             return AuthService.isAuthenticated;
         };
 
+
+        if($rootScope.isLoggedIn()) {
+            AuthService.getUserRole().then(function (result) {
+                $rootScope.role = result.role;
+            });
+        }
+
+    
         $scope.signin = function () {
             console.log('login');
             AuthService.signin($scope.user).then(function (msg, success) {
                 $rootScope.isLogedIn = true;
+                AuthService.getUserRole().then(function (result) {
+                    $rootScope.role = result.role;
+                });
                 //$window.location.href='#/';
                 //$state.go('home');
                 $window.location.reload();
@@ -45,7 +56,7 @@ angular.module('app')
         };
 
 
-
+        //TODO state.reload
         $scope.submitForm = function (isValid) {
             if(isValid){
                 AuthService.signup($scope.user).then(function (data) {
@@ -56,7 +67,10 @@ angular.module('app')
                         if($window.location.toString() == 'http://localhost:3001/#/confirmation')
                             $window.location.reload();
                         else
-                            $window.location.href='#/successfulSignup';
+                            $state.go('successfulSignup').then(function () {
+                                $window.location.reload();
+                            });
+                            //$window.location.href='#/successfulSignup';
                     });
 
                 }, function (data) {

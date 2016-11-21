@@ -68,6 +68,7 @@ angular.module('app')
             return dateFrom > currentDate;
         };
 
+
         getInfo();
         getUserBookings();
     });

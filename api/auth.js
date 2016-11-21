@@ -76,7 +76,7 @@ router.get('/userinfo', passport.authenticate('jwt', {session: false}), function
             if(!user){
                 res.status(403).send({success: false, msg: 'Logowanie nie powiodło się. Nie znaleziono użytkownika.'});
             } else {
-                res.json({success: true, firstName: user.firstName, lastName: user.lastName, email: user.email, phone: user.phoneNumber});
+                res.json({success: true, firstName: user.firstName, lastName: user.lastName, email: user.email, phone: user.phoneNumber, role: user.role});
             }
         })
     } else {

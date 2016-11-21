@@ -62,6 +62,10 @@ angular.module('app')
             .state('account.changePassword',{
                 url: '/changePassword',
                 templateUrl: 'changePassword'
+            })
+            .state('managment',{
+                url: '/managment',
+                templateUrl: 'managment'
             });
         $urlRouterProvider.otherwise('/main')
     })
@@ -69,6 +73,7 @@ angular.module('app')
     function ($rootScope, $state, $stateParams) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
+
     }]);
     /*
     .config(function ($routeProvider, $httpProvider) {

@@ -128,6 +128,15 @@ router.post('/cancelBooking', function (req, res) {
     )
 });
 
+router.get('/getRooms', function (req, res) {
+    Room.find({}, function (err ,result) {
+        if(err)
+            res.json({success: false, error: err});
+        else
+            res.json({success: true, result: result})
+    })
+});
+
 getToken = function (headers) {
     if(headers && headers.authorization){
         var parts = headers.authorization.split(' ');

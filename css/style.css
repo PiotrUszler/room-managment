@@ -3,6 +3,35 @@ body{
 
 }
 
+
+
+.room{
+    height: 60px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.room p{
+    color:white;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 60px;
+}
+
+.room:hover{
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+.available{
+    background-color: #1CA347;
+}
+
+.notAvailable{
+    background-color: firebrick;
+}
+
 .form-container{
     margin: 0 auto;
 }

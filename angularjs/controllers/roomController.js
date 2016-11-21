@@ -11,6 +11,10 @@ angular.module('app')
         $scope.numberOfBeds = 1;
 
 
+        $scope.select = function (room) {
+            $scope.selectedRoom = room;
+        };
+
         var setDate = function () {
             var date = new Date();
             console.log(date);
@@ -49,6 +53,26 @@ angular.module('app')
         $scope.test = function () {
             console.log($scope.rooms);
             $scope.findRooms();
-        }
+        };
 
+        $scope.getAllRooms = function () {
+            roomService.getAllRooms().then(function (rooms) {
+                $scope.allRooms = rooms;
+                console.log(rooms);
+            }, function (error) {
+                //TODO obsługa errora
+            })
+        };
+
+
+        $scope.getAvailability = function (reservations) {
+            var currentDate = new Date();
+            for(var i = 0; i < reservations.length; i++){
+                var dateFrom = new Date(reservations[i].from);
+                var dateTo = new Date(reservations[i].to);
+                if(currentDate < dateTo && currentDate > dateFrom)
+                    return 'notAvailable'
+            }
+            return 'available'
+        };
     });

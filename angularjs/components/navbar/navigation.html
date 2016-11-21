@@ -35,6 +35,7 @@
                         <li ng-hide="isLoggedIn()"><a ui-sref="signin">Zaloguj</a></li>
                         <li ng-show="isLoggedIn()"><a ui-sref="account.details">Konto</a></li>
                         <li ng-show="isLoggedIn()"><a ng-click="signout()" href="">Wyloguj</a></li>
+                        <li ng-if="role == 'admin'"><a ui-sref="managment">Tylko admin to widzi</a></li>
                     </ul>
                 </li>
             </ul>

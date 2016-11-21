@@ -2,7 +2,7 @@
  * Created by Piotr Uszler on 14.10.2016.
  */
 angular.module('app')
-    .service('AuthService', ['$http', '$q', function ($http, $q) {
+    .service('AuthService', ['$http', '$q', function ($http, $q, $rootScope) {
         var LOCAL_TOKEN = 'token';
         var isAuthenticated = false;
         var authToken;
@@ -10,8 +10,10 @@ angular.module('app')
         function loadUserInfo() {
             var token = window.localStorage.getItem(LOCAL_TOKEN);
             console.log('loading User info...');//Do usunięcia
-            if(token)
+            if(token){
                 userInfo(token);
+
+            }
         }
 
         function destroyUserInfo() {
@@ -70,7 +72,7 @@ angular.module('app')
             return $q(function (resolve, reject) {
                 $http.get('/api/userinfo').then(function (result) {
                     if(result.data.success){
-                        resolve({firstName: result.data.firstName, lastName: result.data.lastName, email: result.data.email, phone: result.data.phone});
+                        resolve({firstName: result.data.firstName, lastName: result.data.lastName, email: result.data.email, phone: result.data.phone, role: result.data.role});
                     } else {
                         reject(result.data.msg);
                     }
@@ -120,6 +122,18 @@ angular.module('app')
             })
         };
 
+        var getUserRole = function () {
+            return $q(function (resolve, reject) {
+                $http.get('/api/userinfo').then(function (result) {
+                    if(result.data.success){
+                        resolve({role: result.data.role});
+                    } else {
+                        reject(result.data.msg);
+                    }
+                })
+            })
+        };
+
         return{
             signin: signin,
             signout: signout,
@@ -128,6 +142,7 @@ angular.module('app')
             getUserBookings: getUserBookings,
             changeUserDetails: changeUserDetails,
             changePassword: changePassword,
+            getUserRole: getUserRole,
             isAuthenticated: isAuthenticated
         }
     }]);
