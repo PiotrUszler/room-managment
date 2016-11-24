@@ -137,6 +137,16 @@ router.get('/getRooms', function (req, res) {
     })
 });
 
+router.post('/getRoomBookings', function (req, res) {
+    Room.find({_id: mongoose.Types.ObjectId(req.body.room_id)},{"reservations":1,"_id":0},function (err, result) {
+        if(err){
+            res.json({success: false, error: err})
+        } else {
+            res.json(result)
+        }
+    })
+});
+
 getToken = function (headers) {
     if(headers && headers.authorization){
         var parts = headers.authorization.split(' ');

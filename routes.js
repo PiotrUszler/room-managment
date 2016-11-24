@@ -51,4 +51,7 @@ router.get('/changePassword', function (req, res) {
 router.get('/managment', function (req, res) {
     res.sendFile(path.resolve('angularjs/views/managment.html'))
 });
+router.get('/managment-bookings', function (req, res) {
+    res.sendFile(path.resolve('angularjs/views/managment-bookings.html'))
+});
 module.exports = router;

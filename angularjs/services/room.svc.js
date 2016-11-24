@@ -4,6 +4,8 @@
 angular.module('app')
     .service('roomService', function ($q, $http) {
 
+        var selectedRoom = null;
+
         var getRooms = function (data) {
             return $q(function (resolve, reject) {
                 $http.post('/api/findRooms', data).then(function (result) {
@@ -56,10 +58,23 @@ angular.module('app')
             })
         };
 
+        var getRoomBookings = function (room_id) {
+            return $q(function (resolve, reject) {
+                $http.post('/api/getRoomBookings', {room_id: room_id}).then(function (result) {
+                        console.log(result.data[0].reservations);
+                        resolve(result.data[0])
+                },function (result) {
+                    reject(result.data)
+                })
+            })
+        };
+
+
         return{
             getRooms: getRooms,
             getAllRooms: getAllRooms,
             bookRoom: bookRoom,
-            cancelBooking: cancelBooking
+            cancelBooking: cancelBooking,
+            getRoomBookings: getRoomBookings
         }
     });

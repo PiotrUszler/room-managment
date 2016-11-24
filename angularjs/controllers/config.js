@@ -66,7 +66,12 @@ angular.module('app')
             .state('managment',{
                 url: '/managment',
                 templateUrl: 'managment'
+            })
+            .state('managment-bookings', {
+                url: '/managment-bookings',
+                templateUrl: '/managment-bookings'
             });
+
         $urlRouterProvider.otherwise('/main')
     })
     .run(['$rootScope', '$state', '$stateParams',

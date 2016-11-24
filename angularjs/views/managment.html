@@ -1,12 +1,22 @@
-<div ng-controller="roomCtrl" ng-init="getAllRooms()">
+<div ng-controller="roomCtrl" ng-init="managmentInit()">
     <p>main managment view</p>
+    <div class="row">
+        <div class="col-xs-6">
+            <label for="roomDateFrom">Od:</label>
+            <input type="date" id="roomDateFrom" ng-model="roomDateFrom" ng-change="getAllRooms()">
+        </div>
+        <div class="col-xs-6">
+            <label for="roomDateTo">Do:</label>
+            <input type="date" id="roomDateTo" ng-model="roomDateTo" ng-change="getAllRooms()">
+        </div>
+    </div>
     <div class="row">
 
 
 
         <div class="room col-xs-1" data-toggle="modal" data-target="#regulamin"
              ng-repeat="room in allRooms" ng-class="getAvailability(room.reservations)" ng-click="select(room)">
-          <p>{{room.number}}</p>
+            <p>{{room.number}}</p>
         </div>
 
 
@@ -20,12 +30,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Regulamin</h4>
+                <h4 class="modal-title">Pokój</h4>
             </div>
             <div class="modal-body">
                 <p>Pokój: {{selectedRoom.type}}</p>
                 <p>numer: {{selectedRoom.number}}</p>
                 <p>L.osób: {{selectedRoom.beds}}</p>
+            </div>
+            <div>
+                <button ng-click="toBooking(selectedRoom,roomDateFrom,roomDateTo)">Rezerwuj</button>
+                <button ng-click="toBookings(selectedRoom)">Pokaż rezerwacje</button>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
@@ -35,24 +49,3 @@
     </div>
 </div>
 </div>
-<script>
-    $(function() {
-
-        $('#login-form-link').click(function(e) {
-            $("#login-form").delay(100).fadeIn(100);
-            $("#register-form").fadeOut(100);
-            $('#register-form-link').removeClass('active');
-            $(this).addClass('active');
-            e.preventDefault();
-        });
-        $('#register-form-link').click(function(e) {
-            $("#register-form").delay(100).fadeIn(100);
-            $("#login-form").fadeOut(100);
-            $('#login-form-link').removeClass('active');
-            $(this).addClass('active');
-            e.preventDefault();
-        });
-
-    });
-
-</script>

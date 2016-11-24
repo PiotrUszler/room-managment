@@ -10,9 +10,11 @@ angular.module('app')
         $scope.rooms = [];
         $scope.numberOfBeds = 1;
 
+        $scope.successfulCancel = false;
 
         $scope.select = function (room) {
             $scope.selectedRoom = room;
+            roomService.selectRoom(room);
         };
 
         var setDate = function () {
@@ -67,12 +69,62 @@ angular.module('app')
 
         $scope.getAvailability = function (reservations) {
             var currentDate = new Date();
+            var roomDateFrom = new Date($scope.roomDateFrom);
+            var roomDateTo = new Date($scope.roomDateTo);
             for(var i = 0; i < reservations.length; i++){
                 var dateFrom = new Date(reservations[i].from);
                 var dateTo = new Date(reservations[i].to);
-                if(currentDate < dateTo && currentDate > dateFrom)
+                if(roomDateFrom < dateTo && roomDateTo > dateFrom){
                     return 'notAvailable'
+                }
             }
             return 'available'
         };
+
+        $scope.managmentInit = function () {
+            var date = new Date();
+            $scope.roomDateFrom = date;
+            var dateTemp = new Date;
+            dateTemp.setDate(dateTemp.getDate()+1);
+            $scope.roomDateTo = dateTemp;
+            $scope.getAllRooms();
+        };
+        
+        $scope.toBookings = function (room) {
+            $cookies.put('selectedRoom', JSON.stringify(room));
+            $('#regulamin').modal('hide');
+            setTimeout(function(){
+                $state.go('managment-bookings');
+            }, 500);
+        };
+
+        $scope.getSelectedRoom = function () {
+            $scope.selectedRoom = JSON.parse($cookies.get('selectedRoom'));
+        };
+
+
+        $scope.checkDate = function (date) {
+            var currentDate = new Date();
+            var dateFrom = new Date(date);
+            return dateFrom > currentDate;
+        };
+
+        $scope.cancelBooking = function (room_id, booking_id) {
+            console.log("room id to:"+room_id+", booking_id to:"+booking_id);
+
+            roomService.cancelBooking(room_id, booking_id).then(function (a) {
+                console.log('udało się anulować');
+                $state.reload();
+            })
+        };
+
+        $scope.getRoomBookings = function () {
+            $scope.getSelectedRoom();
+            roomService.getRoomBookings($scope.selectedRoom._id).then(function (b) {
+                $scope.bookings = b.reservations;
+                console.log($scope.bookings);
+            })
+        };
+
+
     });
