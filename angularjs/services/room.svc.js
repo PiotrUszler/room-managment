@@ -69,12 +69,48 @@ angular.module('app')
             })
         };
 
+        var getUserInfo = function (user) {
+            return $q(function (resolve, reject) {
+                $http.post('/api/getUserInfo', {email: user}).then(function (userInfo) {
+                    if(!userInfo.data.error)
+                        resolve(userInfo.data);
+                    else
+                        reject(userInfo.data)
+                },function (userInfo) {
+                    reject(userInfo.data);
+                })
+            })
+        };
+
+        var signupAndBook = function (user, id, dates, price, extras) {
+            console.log(extras);
+            return $q(function (resolve, reject) {
+                $http.post('/api/signupAndBook', {
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email,
+                    number: user.phone,
+                    id: id,
+                    from: dates.dateFrom,
+                    to: dates.dateTo,
+                    price: price,
+                    extras: extras
+                }).then(function (result) {
+                        console.log('udało się')
+                    }, function (result) {
+                        console.log('nie udało się')
+                })
+            })
+        };
+
 
         return{
             getRooms: getRooms,
             getAllRooms: getAllRooms,
             bookRoom: bookRoom,
             cancelBooking: cancelBooking,
-            getRoomBookings: getRoomBookings
+            getRoomBookings: getRoomBookings,
+            getUserInfo: getUserInfo,
+            signupAndBook: signupAndBook
         }
     });

@@ -84,6 +84,24 @@ router.get('/userinfo', passport.authenticate('jwt', {session: false}), function
     }
 });
 
+router.post('/getUserInfo', passport.authenticate('jwt', {session: false}), function (req, res) {
+    var token = getToken(req.headers);
+    if(token){
+        var decoded = jwt.decode(token, 'aH3kx09$s');
+        if(decoded.role == 'admin'){
+            User.findOne({
+                email: req.body.email
+            }, function (error, user) {
+                if(error) throw error;
+                if(user)
+                    res.json( {firstName: user.firstName, lastName: user.lastName, email: user.email, phone: user.phoneNumber});
+                else
+                    res.json({error: 'User not found'})
+            })
+        }
+    }
+});
+
 router.post('/change-user-details', function (req, res) {
     User.update(
         {email: req.body.email},

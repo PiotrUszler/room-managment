@@ -70,6 +70,10 @@ angular.module('app')
             .state('managment-bookings', {
                 url: '/managment-bookings',
                 templateUrl: '/managment-bookings'
+            })
+            .state('test',{
+                url: '/test',
+                templateUrl: 'test'
             });
 
         $urlRouterProvider.otherwise('/main')

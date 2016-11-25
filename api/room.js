@@ -147,6 +147,37 @@ router.post('/getRoomBookings', function (req, res) {
     })
 });
 
+//TODO w przypadku rejestracji przez admina i braku emaila tworzony user z emailem firstName.lastName.phone, a pozostale dane to firstName, lastName phone i powinno dzialczyci
+//i moze dac role jako hmmm unregistered or something i pozniej w miejscach gdzie pobiera sie dane sprawdzac role i zaleznie od niej przypisywac dane  ale naj[ier sprawdzic czy nie istnieje
+//juz taki uzytkownik
+
+//TODO jesli req.body.email == undefined to jako user dajemy firstName.lastName.phone (to bedzie unikalny klucz) i no problemo albo moze dac object user: {firstName,lastName, phone}
+router.post('/signupAndBook', function (req, res) {
+    console.log(req.body.extras);
+    var newUser = new User({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        password: 'haslo123',
+        phoneNumber: req.body.number
+    });
+    newUser.save(function (error) {
+        if(error){
+            res.json({success: false, msg: error});
+        } else{
+            Room.update(
+                {_id: mongoose.Types.ObjectId(req.body.id)},
+                {$push: {reservations: {from: req.body.from, to: req.body.to, user: newUser.email, price: req.body.price, extras: req.body.extras}}},function (err, result) {
+                    if(err)
+                        res.json({success: false, error: err});
+                    else
+                        res.json({success: true});
+                }
+            )
+        }
+    })
+});
+
 getToken = function (headers) {
     if(headers && headers.authorization){
         var parts = headers.authorization.split(' ');

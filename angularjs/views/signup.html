@@ -23,7 +23,7 @@
 
         <div class="form-group">
             <label for="email">Adres Email</label>
-            <input type="email" name="email" id="email" class="form-control" placeholder="email" ng-model="user.email" required>
+            <input type="email" name="email" id="email" class="form-control" placeholder="email" ng-model="user.email">
             <span ng-show="frm.email.$dirty && frm.email.$error.required" class="help-block">To pole jest wymagane</span>
             <span ng-show="frm.email.$dirty && frm.email.$error.email" class="help-block">To nie jest prawidłowy adres email</span>
         </div>

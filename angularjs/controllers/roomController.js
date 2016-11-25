@@ -11,10 +11,15 @@ angular.module('app')
         $scope.numberOfBeds = 1;
 
         $scope.successfulCancel = false;
+        $scope.totalPrice = 0;
+
+
+        $scope.extras = [];
+        $scope.selectedExtras = [];
+        $scope.extrasTotalPrice = 0;
 
         $scope.select = function (room) {
             $scope.selectedRoom = room;
-            roomService.selectRoom(room);
         };
 
         var setDate = function () {
@@ -122,8 +127,95 @@ angular.module('app')
             $scope.getSelectedRoom();
             roomService.getRoomBookings($scope.selectedRoom._id).then(function (b) {
                 $scope.bookings = b.reservations;
-                console.log($scope.bookings);
             })
+        };
+
+        $scope.selectUser = function (user) {
+            roomService.getUserInfo(user).then(function (u) {
+                $scope.selectedUser = u;
+            });
+
+        };
+
+        $scope.toBooking = function (room, dateFrom, dateTo) {
+            $cookies.put('booking', JSON.stringify({room: room, dateFrom: dateFrom, dateTo: dateTo}));
+            $('#regulamin').modal('hide');
+            setTimeout(function(){
+                $state.go('test');
+            }, 500);
+        };
+
+        $scope.initBooking = function () {
+            $scope.booking = JSON.parse($cookies.get('booking'));
+            $scope.test.dateFrom = new Date($scope.booking.dateFrom);
+            $scope.test.dateTo = new Date($scope.booking.dateTo);
+            $scope.calculateTotalPrice();
+            getExtras();
+        };
+
+
+        //TODO dodanie dodatków i obliczenie ceny
+        $scope.submitBookForm = function () {
+            var user = null;
+            if($scope.test.email == undefined){
+                var user = {
+                    email: ""+$scope.test.firstName+$scope.test.lastName+$scope.test.phone,
+                    firstName: $scope.test.firstName,
+                    lastName: $scope.test.lastName,
+                    phone: $scope.test.phone
+                };
+            } else {
+                var user = {
+                    email: $scope.test.email,
+                    firstName: $scope.test.firstName,
+                    lastName: $scope.test.lastName,
+                    phone: $scope.test.phone
+                };
+            }
+            roomService.signupAndBook(user, $scope.booking.room._id, {dateFrom: $scope.test.dateFrom, dateTo: $scope.test.dateTo}, $scope.totalPrice, $scope.selectedExtras)
+                .then(function (a) {
+                console.log(a);
+            })
+        };
+
+        var calculateDiffOfDays = function () {
+            var MS_PER_DAY = 1000 * 60 * 60 * 24;
+            var dateFrom = new Date($scope.test.dateFrom);
+            var dateTo = new Date($scope.test.dateTo);
+            var dateFromUTC = Date.UTC(dateFrom.getFullYear(), dateFrom.getMonth(), dateFrom.getDate());
+            var dateToUTC = Date.UTC(dateTo.getFullYear(), dateTo.getMonth(), dateTo.getDate());
+            return Math.floor((dateToUTC - dateFromUTC) / MS_PER_DAY);
+        };
+
+        $scope.calculateTotalPrice = function () {
+
+            $scope.totalPrice = (calculateDiffOfDays() * $scope.booking.room.price) + $scope.extrasTotalPrice;
+        };
+
+        var getExtras = function () {
+            offerSvc.getExtras().then(function (extrasData) {
+                $scope.extras = extrasData;
+                for(var i = 0 ; i < $scope.extras.length; i++){
+                    $scope.extras[i].buttonText = 'Dodaj +';
+                    $scope.extras[i].buttonToggle = false;
+                }
+            });
+        };
+        
+        $scope.addOrRemoveExtra = function (extra) {
+
+            var index = $scope.selectedExtras.indexOf(extra);
+            extra.buttonText = extra.buttonToggle ? 'Dodaj +' : 'Usuń -';
+            extra.buttonToggle = !extra.buttonToggle;
+            $scope.totalPrice = 0;
+            if(index == -1){
+                $scope.selectedExtras.push(extra);
+                $scope.extrasTotalPrice += extra.price * calculateDiffOfDays();
+            } else {
+                $scope.selectedExtras.splice(index,1);
+                $scope.extrasTotalPrice -= extra.price * calculateDiffOfDays();
+            }
+            $scope.calculateTotalPrice();
         };
 
 

@@ -54,4 +54,7 @@ router.get('/managment', function (req, res) {
 router.get('/managment-bookings', function (req, res) {
     res.sendFile(path.resolve('angularjs/views/managment-bookings.html'))
 });
+router.get('/test', function (req, res) {
+    res.sendFile(path.resolve('angularjs/views/test.html'))
+});
 module.exports = router;

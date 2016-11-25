@@ -1,47 +1,53 @@
 <div ng-controller="roomCtrl" ng-init="getRoomBookings()">
-    <p>managment bookings</p>
-    <div class="row">
-        <p>{{selectedRoom.type}}</p>
-        <p>{{selectedRoom.number}}</p>
-        <p>{{selectedRoom.beds}}</p>
-        <p>{{selectedRoom.price}}</p>
-    </div>
-    <div ng-repeat="booking in bookings" class=row">
-        <div class="col-sm-10">
-            <p>Rezerwujący: {{booking.user}}</p>
-            <p>od: {{booking.from}}</p>
-            <p>do: {{booking.to}}</p>
-            <p>cena: {{booking.price}}</p>
-            <p>Dodatki: </p>
-            <div ng-repeat="extra in booking.extras">
-                <li>{{extra.name}}</li>
+    <div>
+        <p>managment bookings</p>
+        <div class="row">
+            <p>{{selectedRoom.type}}</p>
+            <p>{{selectedRoom.number}}</p>
+            <p>{{selectedRoom.beds}}</p>
+            <p>{{selectedRoom.price}}</p>
+        </div>
+        <div ng-repeat="booking in bookings" class="row panel panel-default">
+            <div class="col-sm-10">
+                <p>Rezerwujący: {{booking.user}}</p>
+                <p>od: {{booking.from}}</p>
+                <p>do: {{booking.to}}</p>
+                <p>cena: {{booking.price}}</p>
+                <p>Dodatki: </p>
+                <div ng-repeat="extra in booking.extras">
+                    <li>{{extra.name}}</li>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <button class="btn btn-info" data-toggle="modal" data-target="#user" ng-click="selectUser(booking.user)">Pokaż użytkownika</button>
+                <button class="btn btn-warning" ng-show="checkDate(booking.from)" ng-click="cancelBooking(selectedRoom._id, booking._id)">Anuluj</button>
             </div>
         </div>
-        <div class="col-sm-2">
-            <button class="btn btn-info" data-toggle="modal" data-target="#user" ng-click="selectUser(booking.user)">Pokaż użytkownika</button>
-            <button class="btn btn-warning" ng-show="checkDate(booking.from)" ng-click="cancelBooking(selectedRoom._id, booking._id)">Anuluj</button>
+    </div>
+    //TODO po wybraniu uzytkownika pokazanie jego danych w modalu i moze jakis przycisk przenoszący do uzytkownika
+
+    <!-- Modal -->
+    <div id="user" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Użytkownik</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Imię: {{selectedUser.firstName}}</p>
+                    <p>Nazwisko: {{selectedUser.lastName}}</p>
+                    <p>Email: {{selectedUser.email}}</p>
+                    <p>Telefon: {{selectedUser.phone}}</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+                </div>
+            </div>
+
         </div>
     </div>
-</div>
-//TODO po wybraniu uzytkownika pokazanie jego danych w modalu i moze jakis przycisk przenoszący do uzytkownika
 
-<!-- Modal -->
-<div id="user" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Użytkownik</h4>
-            </div>
-            <div class="modal-body">
-                <p>{{selectedUser.email}}</p>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
-            </div>
-        </div>
-
-    </div>
 </div>
