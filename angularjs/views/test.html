@@ -5,15 +5,27 @@
             <p>{{booking.dateFrom}}</p>
             <p>{{booking.dateTo}}</p>
             <p>{{booking.room.price}}</p>
-            <input type="text" ng-model="test.firstName" placeholder="Imie">
-            <input type="text" ng-model="test.lastName" placeholder="Nazwisko">
-            <input type="text" ng-model="test.email" placeholder="email">
-            <input type="text" ng-model="test.phone" placeholder="telefon">
+            <div>
+                <p>Wybierz użytkownika lub dodaj nowego:</p>
+                <button type="button" class="btn btn-default" ng-click="selectOrAddUser = false">Wybierz</button>
+                <button type="button" class="btn btn-default" ng-click="selectOrAddUser = true">Nowy</button>
+            </div>
+            <div ng-show="selectOrAddUser">
+                <input type="text" ng-model="test.firstName" placeholder="Imie">
+                <input type="text" ng-model="test.lastName" placeholder="Nazwisko">
+                <input type="text" ng-model="test.email" placeholder="email">
+                <input type="text" ng-model="test.phone" placeholder="telefon">
+            </div>
+            <div ng-show="selectOrAddUser == false">
+                <select name="userSelect" ng-model="selectedUserBooking">
+                    <option ng-repeat="user in users" value="{{user}}">{{user.email}}</option>
+                </select>
+            </div>
             <div >
                 <div class="well" ng-repeat="extra in extras">
                     <h5><strong>{{extra.name}}</strong></h5>
                     <span class="pull-right label label-primary">{{extra.price | currency}} {{extra.unit}}</span>
-                    <button class="btn btn-primary" ng-class="{'button-remove': extra.buttonToggle}" ng-click="addOrRemoveExtra(extra)">{{extra.buttonText}}</button>
+                    <button type="button" class="btn btn-primary" ng-class="{'button-remove': extra.buttonToggle}" ng-click="addOrRemoveExtra(extra)">{{extra.buttonText}}</button>
                 </div>
                 <p>{{totalPrice}}</p>
                 <p>{{extrasTotalPrice}}</p>

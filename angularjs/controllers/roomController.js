@@ -18,6 +18,8 @@ angular.module('app')
         $scope.selectedExtras = [];
         $scope.extrasTotalPrice = 0;
 
+        $scope.selectOrAddUser = undefined;
+
         $scope.select = function (room) {
             $scope.selectedRoom = room;
         };
@@ -36,13 +38,23 @@ angular.module('app')
             $scope.findRooms();
         };
 
-        $scope.findRooms = function () {//TODO Wyświetlenie errora o braku pokoji o wybranych parametrach używając noRoomsError i ng-Hide
+        $scope.findRooms = function () {//TODO ogarnac sie z tym beds, wyszukiwac pokoje o podanej ilosci osob i nazwac to jakos w bazie ostatecznie
+            if($scope.dateTo.getMonth() <= $scope.dateFrom.getMonth() && $scope.dateTo.getDate() <= $scope.dateFrom.getDate()){
+                var date = $scope.dateFrom;
+                date.setDate(date.getDate()+1);
+                $scope.dateTo = date;
+            }
             roomService.getRooms({
                 from: $scope.dateFrom.toISOString(),
                 to: $scope.dateTo.toISOString(),
                 beds: $scope.numberOfBeds
             }).then(function (roomsData) {
-                $scope.rooms = roomsData;
+                if(roomsData.length >0){
+                    $scope.rooms = roomsData;
+                    $scope.noRoomsError = false;
+                }
+                else
+                    $scope.noRoomsError = true;
             }, function (error) {
                 $scope.noRoomsError = true;
                 $scope.errorMsg = 'Coś poszło nie tak.'
@@ -133,6 +145,8 @@ angular.module('app')
         $scope.selectUser = function (user) {
             roomService.getUserInfo(user).then(function (u) {
                 $scope.selectedUser = u;
+                console.log($scope.selectedUser);
+
             });
 
         };
@@ -151,31 +165,43 @@ angular.module('app')
             $scope.test.dateTo = new Date($scope.booking.dateTo);
             $scope.calculateTotalPrice();
             getExtras();
+            roomService.getUsers().then(function (users) {
+                $scope.users = JSON.parse(JSON.stringify(users));
+            })
         };
 
 
         //TODO dodanie dodatków i obliczenie ceny
         $scope.submitBookForm = function () {
             var user = null;
-            if($scope.test.email == undefined){
-                var user = {
-                    email: ""+$scope.test.firstName+$scope.test.lastName+$scope.test.phone,
-                    firstName: $scope.test.firstName,
-                    lastName: $scope.test.lastName,
-                    phone: $scope.test.phone
-                };
+            if($scope.selectOrAddUser){
+                if($scope.test.email == undefined){
+                    var user = {
+                        email: ""+$scope.test.firstName+$scope.test.lastName+$scope.test.phone,
+                        firstName: $scope.test.firstName,
+                        lastName: $scope.test.lastName,
+                        phone: $scope.test.phone
+                    };
+                } else {
+                    var user = {
+                        email: $scope.test.email,
+                        firstName: $scope.test.firstName,
+                        lastName: $scope.test.lastName,
+                        phone: $scope.test.phone
+                    };
+                }
+                roomService.signupAndBook(user, $scope.booking.room._id, {dateFrom: $scope.test.dateFrom, dateTo: $scope.test.dateTo}, $scope.totalPrice, $scope.selectedExtras)
+                    .then(function (a) {
+                        console.log(a);
+                    })
             } else {
-                var user = {
-                    email: $scope.test.email,
-                    firstName: $scope.test.firstName,
-                    lastName: $scope.test.lastName,
-                    phone: $scope.test.phone
-                };
+                user = JSON.parse($scope.selectedUserBooking);
+                console.log("RoomCtrl, funkcja submitBookForm, dataOd: "+$scope.test.dateFrom);
+                roomService.adminBook($scope.booking.room._id, user.email ,{dateFrom: $scope.test.dateFrom, dateTo: $scope.test.dateTo}, $scope.totalPrice, $scope.selectedExtras)
+                    .then(function (a) {
+                        console.log(a);
+                    })
             }
-            roomService.signupAndBook(user, $scope.booking.room._id, {dateFrom: $scope.test.dateFrom, dateTo: $scope.test.dateTo}, $scope.totalPrice, $scope.selectedExtras)
-                .then(function (a) {
-                console.log(a);
-            })
         };
 
         var calculateDiffOfDays = function () {
@@ -217,6 +243,17 @@ angular.module('app')
             }
             $scope.calculateTotalPrice();
         };
-
+        
+        $scope.paidClass = function (paid) {
+            if(paid)
+                return 'btn-success';
+            return 'btn-warning'
+        };
+        $scope.pay = function (booking) {
+            roomService.pay(booking._id, !booking.paid).then(function (result) {
+                console.log(result);
+                booking.paid = !booking.paid;
+            })
+        }
 
     });

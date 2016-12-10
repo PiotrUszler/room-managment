@@ -20,7 +20,8 @@
             </div>
             <div class="col-sm-2">
                 <button class="btn btn-info" data-toggle="modal" data-target="#user" ng-click="selectUser(booking.user)">Pokaż użytkownika</button>
-                <button class="btn btn-warning" ng-show="checkDate(booking.from)" ng-click="cancelBooking(selectedRoom._id, booking._id)">Anuluj</button>
+                <button class="btn" ng-class="paidClass(booking.paid)" ng-click="pay(booking)">Zapłacone</button>
+                <button class="btn btn-danger" ng-show="checkDate(booking.from)" ng-click="cancelBooking(selectedRoom._id, booking._id)">Anuluj</button>
             </div>
         </div>
     </div>

@@ -96,12 +96,60 @@ angular.module('app')
                     price: price,
                     extras: extras
                 }).then(function (result) {
-                        console.log('udało się')
+                        console.log(result)
                     }, function (result) {
                         console.log('nie udało się')
                 })
             })
         };
+
+        var adminBook = function (id, email, dates, price, extras) {
+            console.log("Serwis: roomSvc, funkcja: adminBook | id:"+id+", email: "+email);
+            return $q(function (resolve, reject) {
+                $http.post('/api/adminBook', {
+                    id: id,
+                    email: email,
+                    from: dates.dateFrom,
+                    to: dates.dateTo,
+                    price: price,
+                    extras: extras
+                }).then(function (result) {
+                    if(result.data.success)
+                        resolve('OK');
+                    else{
+                        reject('Wystąpił błąd podczas rezerwacji');
+                    }
+                }, function (result) {
+                    reject('Wystąpił błąd podczas rezerwacji');
+                })
+            })
+        };
+
+        var getUsers = function () {
+            return $q(function (resolve, reject) {
+                $http.get('/api/getUsers').then(function (result) {
+                    if(result.data.success = false){
+                        reject('Nie znaleziono użytkowników')
+                    }else{
+                        resolve(result.data)
+                    }
+                }, function (result) {
+                    reject('Nie znaleziono użytkowników')
+                })
+            })
+        };
+
+        var pay = function (reservation_id, pay) {
+            return $q(function (resolve, reject) {
+                $http.post('/api/paid', {id: reservation_id, pay: pay}).then(function (result) {
+                    if(result.data.success)
+                        resolve(true);
+                    else
+                        reject(false);
+                })
+            })
+        };
+
 
 
         return{
@@ -111,6 +159,9 @@ angular.module('app')
             cancelBooking: cancelBooking,
             getRoomBookings: getRoomBookings,
             getUserInfo: getUserInfo,
-            signupAndBook: signupAndBook
+            signupAndBook: signupAndBook,
+            adminBook: adminBook,
+            getUsers: getUsers,
+            pay: pay
         }
     });

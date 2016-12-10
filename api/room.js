@@ -178,6 +178,40 @@ router.post('/signupAndBook', function (req, res) {
     })
 });
 
+router.post('/adminBook', function (req, res) {
+    Room.update(
+        {_id: mongoose.Types.ObjectId(req.body.id)},
+        {$push: {reservations: {from: req.body.from, to: req.body.to, user: req.body.email, price: req.body.price, extras: req.body.extras}}},function (err, result) {
+            if(err)
+                res.json({success: false, error: err});
+            else
+                res.json({success: true})
+
+        }
+    )
+});
+
+router.get('/getUsers', function (req, res) {
+    User.find({}, {email:1},function (err, result) {
+        if(err)
+            res.json({success: false, msg: err});
+        else
+            res.json(result);
+    })
+});
+
+router.post('/paid', function (req, res) {
+    Room.update(
+        {"reservations._id": mongoose.Types.ObjectId(req.body.id)},
+        {$set: {"reservations.$.paid": req.body.pay}},function (err, result) {
+            if(err)
+                res.json({success: false, error: err});
+            else
+                res.json({success: true})
+        }
+    )
+});
+
 getToken = function (headers) {
     if(headers && headers.authorization){
         var parts = headers.authorization.split(' ');
