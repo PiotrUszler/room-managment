@@ -21,7 +21,20 @@
 
 
     </div>
-<!--//TODO najpierw pobrac pokoje do tablicy i zaleznie od tego porozdzielac na rozne kategorie
+<!--//TODO najpierw pobrac pokoje do tablicy i zaleznie od tego porozdzielac na rozne kategorie-->
+
+<div ng-controller="voucherCtrl">
+    Ile: <input type="number" max="100" ng-model="numberOfVouchers">
+    Typ: <select ng-model="voucherType">
+            <option value="0">Jednokrotnego użytku</option>
+            <option value="1">Wielokrotnego użytku</option>
+        </select>
+    Upust: <input type="text" ng-model="discount">
+    <button ng-click="generateVouchers()">Generuj vouchery</button>
+    <div ng-repeat="voucher in generatedVouchers">
+        <li>{{voucher}}</li>
+    </div>
+</div>
 
 <!-- Modal -->
 <div id="regulamin" class="modal fade" role="dialog">
