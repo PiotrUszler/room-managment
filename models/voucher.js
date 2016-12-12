@@ -33,4 +33,5 @@ var schema = db.Schema({
         default: Date.now()
     }
 });
+
 module.exports = db.model('Voucher', schema);
