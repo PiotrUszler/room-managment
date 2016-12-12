@@ -24,15 +24,26 @@
 <!--//TODO najpierw pobrac pokoje do tablicy i zaleznie od tego porozdzielac na rozne kategorie-->
 
 <div ng-controller="voucherCtrl">
-    Ile: <input type="number" max="100" ng-model="numberOfVouchers">
+    Ile: <input type="number" max="100" data-toggle="tooltip" title="Proszę podać ilość kuponów do wygenerowania (max. 100)" ng-model="numberOfVouchers">
     Typ: <select ng-model="voucherType">
             <option value="0">Jednokrotnego użytku</option>
             <option value="1">Wielokrotnego użytku</option>
         </select>
-    Upust: <input type="text" ng-model="discount">
-    <button ng-click="generateVouchers()">Generuj vouchery</button>
+    <div>
+        Upust: <input type="text" data-toggle="tooltip" title="Proszę podać w złotówkach lub procentach (zł lub % na końcu)" ng-model="discount">
+    </div>
+    <div>
+        Data wygaśnięcia: <input type="date" ng-model="voucherExpiryDate">
+    </div>
+    <button class="btn" ng-click="generateVouchers()">Generuj vouchery</button>
+    <div ng-show="voucherError">
+        {{voucherError}}
+    </div>
     <div ng-repeat="voucher in generatedVouchers">
         <li>{{voucher}}</li>
+    </div>
+    <div>
+        <button class="btn btn-success" ng-show="vouchersGenerated" ng-click="saveVouchers()">Zapisz</button>
     </div>
 </div>
 
@@ -62,3 +73,9 @@
     </div>
 </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+</script>

@@ -6,6 +6,7 @@ var router = require('express').Router(),
     Room = require('../models/room'),
     Extra = require('../models/extras'),
     User = require('../models/user'),
+    Voucher = require('../models/voucher'),
     passport = require('passport'),
     jwt = require('jwt-simple');
 require('../passport')(passport);
@@ -211,7 +212,26 @@ router.post('/paid', function (req, res) {
         }
     )
 });
+/*
+router.post('/saveVouchers', function (req, res) {
 
+    for(var i = 0; i < req.body.codes.length; i++){
+        var voucher = {
+            codes: req.body.codes[i],
+            discount: req.body.discount,
+            discountType: req.body.discountType,
+            type: req.body.type,
+            expiryDate: req.body.expiryDate
+        };
+        Voucher.insert(function (err, result) {
+            if(err)
+                res.json({success: false, msg: err})
+        });
+
+    }
+    res.json({success: true, msg: 'Pomyślnie zapisano.'})
+});
+*/
 getToken = function (headers) {
     if(headers && headers.authorization){
         var parts = headers.authorization.split(' ');
