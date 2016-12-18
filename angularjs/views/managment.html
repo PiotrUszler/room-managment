@@ -11,18 +11,14 @@
         </div>
     </div>
     <div class="row">
-
-
-
         <div class="room col-xs-1" data-toggle="modal" data-target="#regulamin"
              ng-repeat="room in allRooms" ng-class="getAvailability(room.reservations)" ng-click="select(room)">
             <p>{{room.number}}</p>
         </div>
-
-
     </div>
 <!--//TODO najpierw pobrac pokoje do tablicy i zaleznie od tego porozdzielac na rozne kategorie-->
 
+<!--Generator Voucherów-->
 <div ng-controller="voucherCtrl">
     Ile: <input type="number" max="100" data-toggle="tooltip" title="Proszę podać ilość kuponów do wygenerowania (max. 100)" ng-model="numberOfVouchers">
     Typ: <select ng-model="voucherType">
@@ -39,8 +35,12 @@
     <div ng-show="voucherError">
         {{voucherError}}
     </div>
-    <div ng-repeat="voucher in generatedVouchers">
+    <div ng-hide="vouchersSaved" ng-repeat="voucher in generatedVouchers">
         <li>{{voucher}}</li>
+    </div>
+
+    <div ng-show="vouchersSaved">
+        <p class="alert alert-success">Pomyślnie zapisano.</p>
     </div>
     <div>
         <button class="btn btn-success" ng-show="vouchersGenerated" ng-click="saveVouchers()">Zapisz</button>

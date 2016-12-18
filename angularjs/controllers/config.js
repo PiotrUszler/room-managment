@@ -22,6 +22,18 @@ angular.module('app')
                 controller: 'roomCtrl',
                 templateUrl: 'main'
             })
+            .state('rooms',{
+                url: '/rooms',
+                templateUrl: 'rooms'
+            })
+            .state('restaurant',{
+                url: '/restaurant',
+                templateUrl: 'restaurant'
+            })
+            .state('contact',{
+                url: '/contact',
+                templateUrl: 'contact'
+            })
             .state('offer',{
                 url: '/offer',
                 controller: 'offerCtrl',

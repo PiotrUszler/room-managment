@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="authCtrl">
+<nav id='nav_bar' class="navbar navbar-inverse navbar-fixed-top" ng-controller="authCtrl">
     <div class="container-fluid">
         <div class="navbar-header" >
             <!-- For mobile version -->
@@ -9,15 +9,18 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#/">
-                <img src="" alt="Hotel-logo">
+            <a class="navbar-brand" ui-sref="home">
+                <img src="/images/Logo.svg" alt="Hotel-logo">
             </a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="#/account">user info<span class="sr-only">(current)</span></a></li>
-                <li ng-hide="isLoggedIn()"><a href="#/signin">Zaloguj się</a></li>
+                <li ui-sref-active="active"><a ui-sref="home">Strona główna</a></li>
+                <li ui-sref-active="active"><a ui-sref="restaurant">Restauracja<span class="sr-only">(current)</span></a></li>
+                <li ui-sref-active="active"><a ui-sref="rooms">Pokoje</a></li>
+                <li ui-sref-active="active"><a ui-sref="contact">Kontakt</a></li>
+                <!--
                 <li class="dropdown">
                     <a href="#/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -25,11 +28,12 @@
                         <li><a href="#/">Another action</a></li>
                     </ul>
                 </li>
+                -->
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Konto <span class="caret"></span></a>
+                    <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> Konto <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li ng-hide="isLoggedIn()"><a ui-sref="signup">Rejestracja</a></li>
                         <li ng-hide="isLoggedIn()"><a ui-sref="signin">Zaloguj</a></li>
@@ -42,3 +46,15 @@
         </div>
     </div>
 </nav>
+<script>
+    $(document).ready(function() {
+        $(window).scroll(function () {
+            if ($(window).scrollTop() > 50) {
+                $('#nav_bar').addClass('navbar-fixed');
+            }
+            if ($(window).scrollTop() < 51) {
+                $('#nav_bar').removeClass('navbar-fixed');
+            }
+        });
+    });
+</script>

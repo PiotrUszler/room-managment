@@ -3,7 +3,28 @@ body{
 
 }
 
+.navbar-brand img{
+    margin-top: -8px;
+    width: 150px;
+}
 
+
+.navbar{
+    margin-top: 100px;
+    opacity: 0.9;
+    transition-duration: 1s;
+    -webkit-transition-timing-function: ease;
+    transition-timing-function: ease;
+}
+
+.active a {
+    background-color: #caa846 !important;
+}
+
+.navbar-fixed {
+    margin-top: 0px !important;
+
+}
 
 .room{
     height: 60px;

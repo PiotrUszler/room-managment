@@ -6,7 +6,8 @@ var db = require('../db');
 var schema = db.Schema({
     code: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     discount: {
         type: Number,

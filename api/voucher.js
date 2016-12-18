@@ -8,7 +8,6 @@ var router = require('express').Router(),
     db = require('../db');
 
 router.post('/saveVouchers', function (req, res) {
-
     for(var i = 0; i < req.body.codes.length; i++){
         var voucher = new Voucher({
             code: req.body.codes[i],
@@ -19,12 +18,15 @@ router.post('/saveVouchers', function (req, res) {
         });
         //TODO wyslac co cza resem
         voucher.save(function (err, result) {
-            if(err)
-                console.log(err);
-            else
-                console.log(result);
-        })
+            if(err){
+                console.log("err.code w voucher.save: "+err.code);
+            }
+        });
     }
+});
+
+router.post('/checkVoucher', function (req, res) {
+
 });
 
 

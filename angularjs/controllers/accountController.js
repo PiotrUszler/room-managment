@@ -7,7 +7,10 @@ angular.module('app')
         $scope.regex = '(\\+[0-9]\\d{1})*(\\s)*([0-9]\\d{2})(\\s*)([0-9]\\d{2})(\\s*)([0-9]\\d{2})';
 
 
-
+        $scope.isActive = function (viewLocation) {
+            return viewLocation === $location.path();
+        };
+        
         $scope.changeUserDetails = function(isValid, fName, lName, nEmail, nPhone){
             if(isValid){
                 var newDetails = {

@@ -4,7 +4,6 @@
 angular.module('app')
 .controller('voucherCtrl', function ($scope, voucherService) {
 
-
     //Ile, czy wielokrotnego uzytku, data wygaśnięcia
     $scope.generateVouchers = function () {
         $scope.vouchers = {
@@ -42,14 +41,16 @@ angular.module('app')
             $scope.vouchers.expiryDate = expiryDate;
             $scope.generatedVouchers = $scope.vouchers.codes;
             $scope.vouchersGenerated = true;
+            $scope.vouchersSaved = false;
         }
     };
     
     $scope.saveVouchers = function () {
         console.log($scope.vouchers);
         voucherService.saveVouchers($scope.vouchers).then(function (result) {
-            console.log(result)
+
         });
+        $scope.vouchersSaved = true;
     };
 
     function isNumeric(n) {
