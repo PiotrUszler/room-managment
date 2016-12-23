@@ -1,7 +1,19 @@
 
-/*
+
 body{
-    padding-top: 60px;
+
+}
+
+.main-image-container{
+  width: 100%;
+  margin: 0!important;
+}
+
+.main-image{
+  width: 100%;
+}
+
+.container{
 
 }
 
@@ -16,6 +28,7 @@ body{
     opacity: 0.9;
     transition-duration: 1s;
     -webkit-transition-timing-function: ease;
+    -webkit-backface-visibility: hidden;//zapobiega migotaniu logo
     transition-timing-function: ease;
 }
 
@@ -90,10 +103,6 @@ input.ng-dirty.ng-valid{
     background-color: red !important;
 }
 
-<!--DO ZMIANY -->
-body {
-    padding-top: 90px;
-}
 .panel-login {
     border-color: #ccc;
     -webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
@@ -212,4 +221,3 @@ body {
 .tooltip:hover .tooltip-text {
     visibility: visible;
 }
-*/
