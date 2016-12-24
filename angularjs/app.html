@@ -13,10 +13,14 @@
     <title>Hotel</title>
 </head>
 <body>
+<div class="image-slider">
+</div>
 <div class="container">
     <!--<ng-view></ng-view>-->
+
     <ng-include src="'/navbar'"></ng-include>
-    <div ui-view></div>
+    <div ui-view autoscroll="false"></div>
+    <ng-include src="'footer'"></ng-include>
 </div>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -26,6 +30,30 @@
             $(this).collapse('hide')
         }
     })
+</script>
+
+<script>
+    $(document).ready(function(){
+        var header = $('image-slider');
+        header.css('background-repeat', 'no-repeat');
+
+        var backgrounds = new Array(
+                'url(images/photo1.jpeg)',
+                'url(images/photo2.jpeg)'
+        );
+
+        var current = 0;
+
+        function nextBackground() {
+            current++;
+            current = current % backgrounds.length;
+            header.css('background-image', backgrounds[current]);
+        }
+        setInterval(nextBackground, 1000);
+
+        header.css('background-image', backgrounds[0]);
+
+    });
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-cookies.js"></script>

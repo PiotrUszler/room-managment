@@ -1,43 +1,49 @@
 <div ng-controller="roomCtrl">
+    <!--
     <div class="main-image-container">
         <img class="main-image" src="images/background-image.jpg" alt="main">
     </div>
+    -->
+
 
     <p ng-init="init()"></p>
-    <div class="progress">
-        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="33"
-             aria-valuemin="0" aria-valuemax="100" style="width:33%">
+    <div class="container">
+        <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="33"
+                 aria-valuemin="0" aria-valuemax="100" style="width:33%">
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-4">
-            <p>Data przyjazdu</p>
-            <input type="date" ng-change="findRooms()" ng-model="dateFrom">
+        <div class="row">
+            <div class="col-sm-4">
+                <p>Data przyjazdu</p>
+                <input type="date" ng-change="findRooms()" ng-model="dateFrom">
+            </div>
+            <div class="col-sm-4">
+                <p>Data wyjazdu</p>
+                <input type="date" ng-change="findRooms()" ng-model="dateTo">
+            </div>
+            <div class="col-sm-4">
+                <p>Ilość osób</p>
+                <input ng-model="numberOfBeds" ng-change="findRooms()" type="number" max="6" value="1">
+            </div>
         </div>
-        <div class="col-sm-4">
-            <p>Data wyjazdu</p>
-            <input type="date" ng-change="findRooms()" ng-model="dateTo">
-        </div>
-        <div class="col-sm-4">
-            <p>Ilość osób</p>
-            <input ng-model="numberOfBeds" ng-change="findRooms()" type="number" max="6" value="1">
-        </div>
-    </div>
-    <br>
+        <br>
 
-    <div ng-repeat="room in rooms | uniqueCategories: 'type'" class="row room-info" ng-hide="noRoomsError">
-        <br>
-        <div class="col-sm-6"><img ng-src="{{room.imagePath}}" alt="" class="room-thumbnail"></div>
-        <div class="col-sm-6">
-            <span>{{room.type}}</span>
-            <span class="label label-primary pull-right">{{room.price | currency}}</span>
-            <button ng-click="addRoom(room)" class="btn btn-successful pull-right">Wybierz</button>
+        <div ng-repeat="room in rooms | uniqueCategories: 'type'" class="row room-info" ng-hide="noRoomsError">
+            <br>
+            <div class="col-sm-6"><img ng-src="{{room.imagePath}}" alt="" class="room-thumbnail"></div>
+            <div class="col-sm-6">
+                <span>{{room.type}}</span>
+                <span class="label label-primary pull-right">{{room.price | currency}}</span>
+                <button ng-click="addRoom(room)" class="btn btn-successful pull-right">Wybierz</button>
+            </div>
+            <br>
+        </div>
+        <div ng-show="noRoomsError">
+            <p>Brak wolnych pokoji w podanym terminie. Proszę spróbować inny termin.</p>
         </div>
         <br>
     </div>
-    <div ng-show="noRoomsError">
-        <p>Brak wolnych pokoji w podanym terminie. Proszę spróbować inny termin.</p>
-    </div>
-    <br>
+
 
 </div>
