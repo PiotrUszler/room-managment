@@ -1,17 +1,78 @@
 
+$break-small: 768px;
+$darkFont: #1d2129;
+$lightFont: #fff;
 
 body{
-
+    background-image: url(images/background-pattern.png);
+    color: $lightFont!important;
+    font-family: 'PT Sans', sans-serif!important;
 }
 
-$break-small: 769px;
+input{
+    color: $darkFont!important;
+}
+@media only screen and (max-width: 768px) {
+    .container
+    {
+        text-align: center;
+    }
+}
+
+button{
+    color: $darkFont!important;
+}
+
+select{
+    color: $darkFont!important;
+}
+
+#map {
+    width: 100%;
+    height: 400px
+}
+
+.rooms-managment{
+    margin-top: 40px;
+}
+
+.vouchers{
+    margin-top: 40px;
+}
+
+.abcd{
+    vertical-align: middle!important;
+}
+
+.well{
+    color: $darkFont;
+}
+
+.booking-dates{
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.arrival, .departure, .num-of-ppl{
+    height: 40px;
+    width: 140px;
+
+}
+.fa.fa-male{
+    width: 26px;
+}
+
+.imageHelper{
+    background-image: url('images/photo2.jpeg');
+    visibility: hidden;
+}
 
 .image-slider{
     width: 100%;
     height: 500px;
     margin-left: 0!important;
     margin-right: 0!important;
-    background-image: url("images/photo1.jpeg");
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -19,6 +80,10 @@ $break-small: 769px;
         height: 300px ;
 
     }
+    transition-duration: 2s;
+    -webkit-transition-timing-function: ease;
+    -webkit-backface-visibility: hidden;//zapobiega migotaniu logo
+    transition-timing-function: ease;
 
 }
 
@@ -29,7 +94,7 @@ $break-small: 769px;
 }
 
 .container{
-
+    background-image: url(images/background-pattern.png);
 }
 
 .navbar-brand img{
@@ -110,15 +175,25 @@ input.ng-dirty.ng-valid{
 
 .room-info{
     border: 1px solid gray;
+    margin-top: 30px;
 }
 
 .room-thumbnail{
     height: 160px;
     width: 240px;
+    padding-bottom: 20px;
+}
+
+.modal{
+    color: black;
 }
 
 .button-remove{
     background-color: red !important;
+}
+
+.panel{
+    color: black;
 }
 
 .panel-login {
@@ -238,4 +313,8 @@ input.ng-dirty.ng-valid{
 
 .tooltip:hover .tooltip-text {
     visibility: visible;
+}
+
+.footer-basic-centered{
+    margin-top: 40px;
 }

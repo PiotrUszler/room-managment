@@ -41,7 +41,10 @@ var schema = db.Schema({
             }
 
         }
-    ]
+    ],
+    description:{
+        type: String
+    }
 });
 
 module.exports = db.model('Room', schema);

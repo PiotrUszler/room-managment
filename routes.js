@@ -7,7 +7,8 @@ var express = require('express'),
 
 //Static files
 router.use(express.static(__dirname+'/assets'));
-router.use(express.static(__dirname+'/css'));
+
+//router.use(express.static(__dirname+'/css'));
 
 router.get('/', function (req, res) {
     res.sendFile(path.resolve('angularjs/app.html'))

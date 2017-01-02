@@ -1,10 +1,10 @@
 <div ng-controller="roomCtrl" ng-init="initBooking()">
     <div class="row">
         <form ng-submit="submitBookForm()">
-            <p>{{booking.room._id}}</p>
-            <p>{{booking.dateFrom}}</p>
-            <p>{{booking.dateTo}}</p>
-            <p>{{booking.room.price}}</p>
+            <p>Pokój: {{booking.room.type}}</p>
+            <p>Od: {{booking.dateFrom | date: "dd-MM-yyyy"}}</p>
+            <p>Do: {{booking.dateTo | date: "dd-MM-yyyy"}}</p>
+            <p>Cena za noc: {{booking.room.price | currency: ''}} zł</p>
             <div>
                 <p>Wybierz użytkownika lub dodaj nowego:</p>
                 <button type="button" class="btn btn-default" ng-click="selectOrAddUser = false">Wybierz</button>
@@ -21,15 +21,21 @@
                     <option ng-repeat="user in users" value="{{user}}">{{user.email}}</option>
                 </select>
             </div>
+
+
             <div >
                 <div class="well" ng-repeat="extra in extras">
                     <h5><strong>{{extra.name}}</strong></h5>
                     <span class="pull-right label label-primary">{{extra.price | currency}} {{extra.unit}}</span>
                     <button type="button" class="btn btn-primary" ng-class="{'button-remove': extra.buttonToggle}" ng-click="addOrRemoveExtra(extra)">{{extra.buttonText}}</button>
                 </div>
-                <p>{{totalPrice}}</p>
-                <p>{{extrasTotalPrice}}</p>
+                <div>
+                    Voucher: <input type="text">
+                </div>
+                <p>Cena dodatków: {{extrasTotalPrice | currency: ''}} zł</p>
+                <p>Cena całkowita: {{totalPrice | currency: ''}} zł</p>
             </div>
+
 
         <button type="submit" class="btn btn-success">Zarejestruj</button>
         </form>

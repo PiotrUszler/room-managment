@@ -10,7 +10,7 @@
             <input type="date" id="roomDateTo" ng-model="roomDateTo" ng-change="getAllRooms()">
         </div>
     </div>
-    <div class="row">
+    <div class="row rooms-managment">
         <div class="room col-xs-1" data-toggle="modal" data-target="#regulamin"
              ng-repeat="room in allRooms" ng-class="getAvailability(room.reservations)" ng-click="select(room)">
             <p>{{room.number}}</p>
@@ -19,33 +19,43 @@
 <!--//TODO najpierw pobrac pokoje do tablicy i zaleznie od tego porozdzielac na rozne kategorie-->
 
 <!--Generator Voucherów-->
-<div ng-controller="voucherCtrl">
-    Ile: <input type="number" max="100" data-toggle="tooltip" title="Proszę podać ilość kuponów do wygenerowania (max. 100)" ng-model="numberOfVouchers">
-    Typ: <select ng-model="voucherType">
-            <option value="0">Jednokrotnego użytku</option>
-            <option value="1">Wielokrotnego użytku</option>
-        </select>
-    <div>
-        Upust: <input type="text" data-toggle="tooltip" title="Proszę podać w złotówkach lub procentach (zł lub % na końcu)" ng-model="discount">
-    </div>
-    <div>
-        Data wygaśnięcia: <input type="date" ng-model="voucherExpiryDate">
-    </div>
-    <button class="btn" ng-click="generateVouchers()">Generuj vouchery</button>
-    <div ng-show="voucherError">
-        {{voucherError}}
-    </div>
-    <div ng-hide="vouchersSaved" ng-repeat="voucher in generatedVouchers">
-        <li>{{voucher}}</li>
-    </div>
+    <div ng-controller="voucherCtrl" class="vouchers">
+        <div class="row">
+            <div class="col col-sm-2">
+                Ile: <input type="number" max="100" data-toggle="tooltip" title="Proszę podać ilość kuponów do wygenerowania (max. 100)" ng-model="numberOfVouchers">
+            </div>
+            <div class="col col-sm-2">
+                Typ: <select ng-model="voucherType">
+                <option value="0">Jednokrotnego użytku</option>
+                <option value="1">Wielokrotnego użytku</option>
+            </select>
+            </div>
+            <div class="col col-sm-2">
+                Upust: <input type="text" data-toggle="tooltip" title="Proszę podać w złotówkach lub procentach (zł lub % na końcu)" ng-model="discount">
+            </div>
+            <div class="col col-sm-2">
+                Data wygaśnięcia: <input type="date" ng-model="voucherExpiryDate">
+            </div>
+            <div class="col col-sm-2">
+                <button class="btn" ng-click="generateVouchers()">Generuj vouchery</button>
+            </div>
+        </div>
+        <div class="row">
+            <div ng-show="voucherError">
+                {{voucherError}}
+            </div>
+            <div ng-hide="vouchersSaved" ng-repeat="voucher in generatedVouchers">
+                <li>{{voucher}}</li>
+            </div>
 
-    <div ng-show="vouchersSaved">
-        <p class="alert alert-success">Pomyślnie zapisano.</p>
+            <div ng-show="vouchersSaved">
+                <p class="alert alert-success">Pomyślnie zapisano.</p>
+            </div>
+            <div>
+                <button class="btn btn-success" ng-show="vouchersGenerated" ng-click="saveVouchers()">Zapisz</button>
+            </div>
+        </div>
     </div>
-    <div>
-        <button class="btn btn-success" ng-show="vouchersGenerated" ng-click="saveVouchers()">Zapisz</button>
-    </div>
-</div>
 
 <!-- Modal -->
 <div id="regulamin" class="modal fade" role="dialog">

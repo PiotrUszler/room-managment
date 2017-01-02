@@ -1,1 +1,26 @@
 <p>Kontakt</p>
+<div class="row">
+    <h3>Lokalizacja</h3>
+    <div id="map" class="col-md-6"></div>
+    <div class="col-md-6">
+        <div>olsztyn</div>
+        <div>asdasdasd</div>
+        <div>dasdasd 12303/23 21</div>
+    </div>
+    <script>
+        function initMap() {
+            var location = {lat: 53.743858, lng: 20.456166};
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 9,
+                center: location
+            });
+            var marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXMsiICQ555DkLUh2JjetkpkbFynS3wYY&callback=initMap">
+    </script>
+</div>
