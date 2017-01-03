@@ -2,7 +2,7 @@
  * Created by Piotr Uszler on 06.11.2016.
  */
 angular.module('app')
-    .controller('roomCtrl', function ($q, $cookies, $scope, $window, $location, roomService, offerSvc,$filter, $state) {
+    .controller('roomCtrl', function ($q, $cookies, $scope, $rootScope, $window, $location, roomService, offerSvc,$filter, $state) {
         $scope.dateFrom = '';
         $scope.dateTo = '';
         $scope.noRoomsError = false;
@@ -214,8 +214,13 @@ angular.module('app')
         };
 
         $scope.calculateTotalPrice = function () {
-
-            $scope.totalPrice = (calculateDiffOfDays() * $scope.booking.room.price) + $scope.extrasTotalPrice;
+            if($rootScope.discount != undefined && $rootScope.discount.type == 'zl'){
+                $scope.totalPrice = ((calculateDiffOfDays() * $scope.booking.room.price) + $scope.extrasTotalPrice) - $rootScope.discount.amount;
+            } else if($rootScope.discount != undefined && $rootScope.discount.type == '%'){
+                $scope.totalPrice = (calculateDiffOfDays() * $scope.booking.room.price) + $scope.extrasTotalPrice;
+                $scope.totalPrice = $scope.totalPrice - ($scope.totalPrice * ($rootScope.discount.amount / 100));
+            } else
+                $scope.totalPrice = (calculateDiffOfDays() * $scope.booking.room.price) + $scope.extrasTotalPrice;
         };
 
         var getExtras = function () {
@@ -254,6 +259,18 @@ angular.module('app')
                 console.log(result);
                 booking.paid = !booking.paid;
             })
-        }
+        };
+
+        //TODo
+        $rootScope.$watch('discount',function () {
+            /*
+            if($rootScope.discount != undefined && $rootScope.discount.type == 'zl'){
+                $scope.totalPrice -= $rootScope.discount.amount;
+            } else if($rootScope.discount != undefined && $rootScope.discount.type == '%'){
+                $scope.totalPrice = $scope.totalPrice - ($scope.totalPrice * ($rootScope.discount.amount / 100));
+            }
+            */
+            $scope.calculateTotalPrice();
+        })
 
     });

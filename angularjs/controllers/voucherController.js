@@ -2,7 +2,7 @@
  * Created by Piotr Uszler on 11.12.2016.
  */
 angular.module('app')
-.controller('voucherCtrl', function ($scope, voucherService) {
+.controller('voucherCtrl', function ($scope, $rootScope, voucherService) {
 
     //Ile, czy wielokrotnego uzytku, data wygaśnięcia
     $scope.generateVouchers = function () {
@@ -60,9 +60,11 @@ angular.module('app')
                 console.log(result);
                 $scope.voucherNotFound = undefined;
                 $scope.voucherFound = 'Kod poprawny zniżka '+result.discount+result.discountType;
+                $rootScope.discount = {amount: result.discount, type: result.discountType};
                 console.log(result.discount);
             }, function (error) {
                 console.log(error);
+                $rootScope.discount = undefined;
                 $scope.voucherNotFound = error;
                 $scope.voucherFound = undefined;
             })
@@ -73,6 +75,7 @@ angular.module('app')
         if(!$scope.bookingFrm.$valid){
             $scope.voucherFound = undefined;
             $scope.voucherNotFound = undefined;
+            $rootScope.discount = undefined;
         }
     };
 
