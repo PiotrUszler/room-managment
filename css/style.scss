@@ -32,9 +32,16 @@ select{
     height: 400px
 }
 
-.rooms-managment{
-    margin-top: 40px;
+.white-label{
+    color: $lightFont;
 }
+@media screen and (max-width: 991px){
+    .white-label{
+        color: $darkFont!important;
+    }
+}
+
+
 
 .vouchers{
     margin-top: 40px;
@@ -127,16 +134,31 @@ select{
     margin-left: 2px;
 }
 
-
+.managment{
+    margin-top: 10px!important;
+}
+.managment-dates{
+    margin-top: 10px!important;
+}
 
 .navbar-fixed {
     margin-top: 0 !important;
 
 }
 
+.panel{
+    border: none!important;
+}
+
+.rooms-managment{
+    margin-top: 40px;
+    margin-right: 20px!important;
+}
+
 .room{
     height: 60px;
-    margin-right: 5px;
+    min-width: 50px;
+    margin-left: 10px;
     margin-bottom: 5px;
 }
 
@@ -150,7 +172,7 @@ select{
 .room:hover{
     -webkit-transform: scale(1.1);
     -ms-transform: scale(1.1);
-    transform: scale(1.05);
+    transform: scale(1.1);
 }
 
 .available{
@@ -188,8 +210,12 @@ input.ng-dirty.ng-valid{
     color: black;
 }
 
+.button-extra{
+    background-color: #6bea7a!important;
+}
+
 .button-remove{
-    background-color: red !important;
+    background-color: #f44242 !important;
 }
 
 .panel{

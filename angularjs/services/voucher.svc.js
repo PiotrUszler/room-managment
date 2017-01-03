@@ -18,7 +18,19 @@ angular.module('app')
             })
         };
 
+        var checkVoucher = function (voucher) {
+            return $q(function (resolve, reject) {
+                $http.post('/api/checkVoucher', {voucherCode: voucher}).then(function (result) {
+                    if(result.data.success)
+                        resolve(result.data.voucher);
+                    else
+                        reject(result.data.error)
+                })
+            })
+        };
+
         return {
-            saveVouchers: saveVouchers
+            saveVouchers: saveVouchers,
+            checkVoucher: checkVoucher
         }
     });

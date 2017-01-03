@@ -1,0 +1,41 @@
+<div class="row managment-dates">
+    <div class="col-xs-6">
+        <label for="roomDateFrom" class="white-label">Od:</label>
+        <input type="date" id="roomDateFrom" ng-model="roomDateFrom" ng-change="getAllRooms()">
+    </div>
+    <div class="col-xs-6">
+        <label for="roomDateTo" class="white-label">Do:</label>
+        <input type="date" id="roomDateTo" ng-model="roomDateTo" ng-change="getAllRooms()">
+    </div>
+</div>
+<div class="row rooms-managment">
+    <div class="room col-xs-1" data-toggle="modal" data-target="#room-dialog"
+         ng-repeat="room in allRooms" ng-class="getAvailability(room.reservations)" ng-click="select(room)">
+        <p>{{room.number}}</p>
+    </div>
+</div>
+<!-- Modal -->
+<div id="room-dialog" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Pokój</h4>
+            </div>
+            <div class="modal-body">
+                <p>Pokój: {{selectedRoom.type}}</p>
+                <p>Numer: {{selectedRoom.number}}</p>
+                <p>L.osób: {{selectedRoom.beds}}</p>
+            </div>
+            <div>
+                <button data-dismiss="modal" ng-click="toBooking(selectedRoom,roomDateFrom,roomDateTo)">Rezerwuj</button>
+                <button data-dismiss="modal" ng-click="toBookings(selectedRoom)">Pokaż rezerwacje</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+            </div>
+        </div>
+
+    </div>
+</div>

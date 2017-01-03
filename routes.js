@@ -70,4 +70,13 @@ router.get('/contact', function (req, res) {
 router.get('/test', function (req, res) {
     res.sendFile(path.resolve('angularjs/views/test.html'))
 });
+router.get('/managment-rooms', function (req, res) {
+    res.sendFile(path.resolve('angularjs/views/managment.rooms.html'))
+});
+router.get('/managment-vouchers', function (req, res) {
+    res.sendFile(path.resolve('angularjs/views/managment.vouchers.html'))
+});
+router.get('/managment-users', function (req, res) {
+    res.sendFile(path.resolve('angularjs/views/managment.users.html'))
+});
 module.exports = router;

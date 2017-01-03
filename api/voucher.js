@@ -26,7 +26,17 @@ router.post('/saveVouchers', function (req, res) {
 });
 
 router.post('/checkVoucher', function (req, res) {
+    Voucher.findOne({
+        code: req.body.voucherCode
+    }, function (err, result) {
+        if(result)
+            res.json({success: true, voucher: result});
+        else if (err)
+            res.json({success: false, error: err});
+        else
+            res.json({success: false, error: 'Nie znaleziono klucza.'})
 
+    })
 });
 
 

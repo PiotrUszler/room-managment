@@ -1,7 +1,7 @@
 <div ng-controller="roomCtrl" ng-init="initBooking()">
     <div class="row">
-        <form ng-submit="submitBookForm()">
-            <p>Pokój: {{booking.room.type}}</p>
+        <form name="bookingFrm" ng-submit="submitBookForm()" novalidate>
+            <h3>Pokój: {{booking.room.type}}</h3>
             <p>Od: {{booking.dateFrom | date: "dd-MM-yyyy"}}</p>
             <p>Do: {{booking.dateTo | date: "dd-MM-yyyy"}}</p>
             <p>Cena za noc: {{booking.room.price | currency: ''}} zł</p>
@@ -26,18 +26,31 @@
             <div >
                 <div class="well" ng-repeat="extra in extras">
                     <h5><strong>{{extra.name}}</strong></h5>
-                    <span class="pull-right label label-primary">{{extra.price | currency}} {{extra.unit}}</span>
-                    <button type="button" class="btn btn-primary" ng-class="{'button-remove': extra.buttonToggle}" ng-click="addOrRemoveExtra(extra)">{{extra.buttonText}}</button>
+                    <span class="pull-right label label-primary">{{extra.price | currency: ''}} zł {{extra.unit}}</span>
+                    <button type="button" class="btn button-extra" ng-class="{'button-remove': extra.buttonToggle}" ng-click="addOrRemoveExtra(extra)">{{extra.buttonText}}</button>
                 </div>
-                <div>
-                    Voucher: <input type="text">
+                <div ng-controller="voucherCtrl">
+                    <div >
+                        Voucher: <input name="voucher" type="text" ng-model="voucher" minlength="23" maxlength="23" ng-change="codeChanged()" vouchercheck>
+                        <button type="button" class="btn btn-success" ng-click="checkVoucher()" ng-disabled="bookingFrm.$invalid">Zatwierdź</button>
+                    </div>
+                    <div>
+                        <span ng-show="bookingFrm.voucher.$dirty && bookingFrm.voucher.$error.minlength">Kod jest za krótki</span>
+                        <span ng-show="bookingFrm.voucher.$dirty && bookingFrm.voucher.$error.validVoucher && !bookingFrm.voucher.$error.minlength">Niepoprawny format kodu</span>
+                        <span ng-show="voucherNotFound">{{voucherNotFound}}</span>
+                        <span ng-show="voucherFound">{{voucherFound}}</span>
+                    </div>
                 </div>
+
                 <p>Cena dodatków: {{extrasTotalPrice | currency: ''}} zł</p>
                 <p>Cena całkowita: {{totalPrice | currency: ''}} zł</p>
+                <p>Zniżka: {{}}</p>
             </div>
 
 
-        <button type="submit" class="btn btn-success">Zarejestruj</button>
+
+        <button type="submit" class="btn btn-success">Zarezerwuj</button>
         </form>
+
     </div>
 </div>

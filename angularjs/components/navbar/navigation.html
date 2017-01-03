@@ -38,8 +38,8 @@
                         <li ng-hide="isLoggedIn()"><a ui-sref="signup">Rejestracja</a></li>
                         <li ng-hide="isLoggedIn()"><a ui-sref="signin">Zaloguj</a></li>
                         <li ng-show="isLoggedIn()"><a ui-sref="account.details">Konto</a></li>
+                        <li ng-if="role == 'admin'"><a ui-sref="managment.rooms">Panel adnimistratora</a></li>
                         <li ng-show="isLoggedIn()"><a ng-click="signout()" href="">Wyloguj</a></li>
-                        <li ng-if="role == 'admin'"><a ui-sref="managment">Panel adnimistratora</a></li>
                     </ul>
                 </li>
             </ul>
@@ -49,10 +49,10 @@
 <script>
     $(document).ready(function() {
         $(window).scroll(function () {
-            if ($(window).scrollTop() > 50) {
+            if ($(window).scrollTop() > 90) {
                 $('#nav_bar').addClass('navbar-fixed');
             }
-            if ($(window).scrollTop() < 51) {
+            if ($(window).scrollTop() < 91) {
                 $('#nav_bar').removeClass('navbar-fixed');
             }
         });

@@ -79,6 +79,18 @@ angular.module('app')
                 url: '/managment',
                 templateUrl: 'managment'
             })
+            .state('managment.rooms',{
+                url: '/managment-rooms',
+                templateUrl: 'managment-rooms'
+            })
+            .state('managment.users',{
+                url: '/managment-users',
+                templateUrl: 'managment-users'
+            })
+            .state('managment.vouchers',{
+                url: '/managment-vouchers',
+                templateUrl: 'managment-vouchers'
+            })
             .state('managment-bookings', {
                 url: '/managment-bookings',
                 templateUrl: '/managment-bookings'

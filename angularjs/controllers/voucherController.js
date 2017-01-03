@@ -53,6 +53,29 @@ angular.module('app')
         $scope.vouchersSaved = true;
     };
 
+    //TODO odjecie kwoty i sprawdzenie vaznosci(wyswietlenie odpowiedniego errora), na koniec przy rezerwacji uwzglednic voucher
+    $scope.checkVoucher = function () {
+        console.log($scope.voucher);
+            voucherService.checkVoucher($scope.voucher.toString()).then(function (result) {
+                console.log(result);
+                $scope.voucherNotFound = undefined;
+                $scope.voucherFound = 'Kod poprawny zniżka '+result.discount+result.discountType;
+                console.log(result.discount);
+            }, function (error) {
+                console.log(error);
+                $scope.voucherNotFound = error;
+                $scope.voucherFound = undefined;
+            })
+
+    };
+    
+    $scope.codeChanged = function () {
+        if(!$scope.bookingFrm.$valid){
+            $scope.voucherFound = undefined;
+            $scope.voucherNotFound = undefined;
+        }
+    };
+
     function isNumeric(n) {
         return !isNaN(parseFloat(n)) && isFinite(n);
     }

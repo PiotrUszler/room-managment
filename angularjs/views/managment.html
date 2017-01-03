@@ -1,91 +1,31 @@
 <div ng-controller="roomCtrl" ng-init="managmentInit()">
-    <p>main managment view</p>
-    <div class="row">
-        <div class="col-xs-6">
-            <label for="roomDateFrom">Od:</label>
-            <input type="date" id="roomDateFrom" ng-model="roomDateFrom" ng-change="getAllRooms()">
-        </div>
-        <div class="col-xs-6">
-            <label for="roomDateTo">Do:</label>
-            <input type="date" id="roomDateTo" ng-model="roomDateTo" ng-change="getAllRooms()">
-        </div>
-    </div>
-    <div class="row rooms-managment">
-        <div class="room col-xs-1" data-toggle="modal" data-target="#regulamin"
-             ng-repeat="room in allRooms" ng-class="getAvailability(room.reservations)" ng-click="select(room)">
-            <p>{{room.number}}</p>
-        </div>
-    </div>
-<!--//TODO najpierw pobrac pokoje do tablicy i zaleznie od tego porozdzielac na rozne kategorie-->
 
-<!--Generator Voucherów-->
-    <div ng-controller="voucherCtrl" class="vouchers">
-        <div class="row">
-            <div class="col col-sm-2">
-                Ile: <input type="number" max="100" data-toggle="tooltip" title="Proszę podać ilość kuponów do wygenerowania (max. 100)" ng-model="numberOfVouchers">
+    <div class="row managment">
+        <div class="panel panel-default ">
+
+            <div class="panel-heading col-md-2" >
+                <div class="row">
+                    <button ui-sref="managment.rooms" class="btn btn-block">Zarządzanie pokojami</button>
+                </div>
+
+                <div class="row">
+                    <button ui-sref="managment.vouchers" class="btn btn-block">Vouchery</button>
+                </div>
+
+                <div class="row">
+                    <button ui-sref="managment.users" class="btn btn-block">Użytkownicy</button>
+
+                </div>
             </div>
-            <div class="col col-sm-2">
-                Typ: <select ng-model="voucherType">
-                <option value="0">Jednokrotnego użytku</option>
-                <option value="1">Wielokrotnego użytku</option>
-            </select>
-            </div>
-            <div class="col col-sm-2">
-                Upust: <input type="text" data-toggle="tooltip" title="Proszę podać w złotówkach lub procentach (zł lub % na końcu)" ng-model="discount">
-            </div>
-            <div class="col col-sm-2">
-                Data wygaśnięcia: <input type="date" ng-model="voucherExpiryDate">
-            </div>
-            <div class="col col-sm-2">
-                <button class="btn" ng-click="generateVouchers()">Generuj vouchery</button>
-            </div>
-        </div>
-        <div class="row">
-            <div ng-show="voucherError">
-                {{voucherError}}
-            </div>
-            <div ng-hide="vouchersSaved" ng-repeat="voucher in generatedVouchers">
-                <li>{{voucher}}</li>
+            <div class="panel-body col-md-10">
+                <div>
+                    <div ui-view></div>
+                </div>
             </div>
 
-            <div ng-show="vouchersSaved">
-                <p class="alert alert-success">Pomyślnie zapisano.</p>
-            </div>
-            <div>
-                <button class="btn btn-success" ng-show="vouchersGenerated" ng-click="saveVouchers()">Zapisz</button>
-            </div>
         </div>
     </div>
 
-<!-- Modal -->
-<div id="regulamin" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Pokój</h4>
-            </div>
-            <div class="modal-body">
-                <p>Pokój: {{selectedRoom.type}}</p>
-                <p>numer: {{selectedRoom.number}}</p>
-                <p>L.osób: {{selectedRoom.beds}}</p>
-            </div>
-            <div>
-                <button ng-click="toBooking(selectedRoom,roomDateFrom,roomDateTo)">Rezerwuj</button>
-                <button ng-click="toBookings(selectedRoom)">Pokaż rezerwacje</button>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
-            </div>
-        </div>
-
-    </div>
-</div>
 </div>
 
-<script>
-    $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    })
-</script>
+
