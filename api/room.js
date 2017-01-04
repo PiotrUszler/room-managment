@@ -22,7 +22,8 @@ router.post('/findRooms', function (req, res) {
                     }
                 }
             }
-        },{
+        },
+        {
             beds: {$gte: req.body.beds}
         }
 

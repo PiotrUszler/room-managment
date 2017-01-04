@@ -21,10 +21,18 @@ angular.module('app')
         var checkVoucher = function (voucher) {
             return $q(function (resolve, reject) {
                 $http.post('/api/checkVoucher', {voucherCode: voucher}).then(function (result) {
-                    if(result.data.success)
+                    if(result.data.success && (new Date(result.data.voucher.expiryDate) < new Date())){
+                        reject('Termin miną');
+                    }
+                    else if(result.data.success && result.data.voucher.used){
+                        reject('Kod został już wykożystany');
+                    }
+                    else if(result.data.success && !result.data.voucher.used){
                         resolve(result.data.voucher);
-                    else
-                        reject(result.data.error)
+                    }
+                    else{
+                        reject(result.data.error);
+                    }
                 })
             })
         };

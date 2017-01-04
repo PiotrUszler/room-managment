@@ -261,15 +261,7 @@ angular.module('app')
             })
         };
 
-        //TODo
         $rootScope.$watch('discount',function () {
-            /*
-            if($rootScope.discount != undefined && $rootScope.discount.type == 'zl'){
-                $scope.totalPrice -= $rootScope.discount.amount;
-            } else if($rootScope.discount != undefined && $rootScope.discount.type == '%'){
-                $scope.totalPrice = $scope.totalPrice - ($scope.totalPrice * ($rootScope.discount.amount / 100));
-            }
-            */
             $scope.calculateTotalPrice();
         })
 
