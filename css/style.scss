@@ -41,14 +41,20 @@ select{
     }
 }
 
-
+.form-group{
+    color: $lightFont;
+}
 
 .vouchers{
     margin-top: 40px;
 }
 
-.abcd{
-    vertical-align: middle!important;
+.main-price{
+    border-left: dashed #fff 1px;
+}
+
+.btn{
+    border-radius: 0!important;
 }
 
 .well{

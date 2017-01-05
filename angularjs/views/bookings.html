@@ -1,14 +1,13 @@
-<p>user booking sub view</p>
+
 <div class="row" ng-repeat="booking in userBookings.bookings | orderBy:'-reservations.from'">
-    {{booking._id}}
     <div class="col-sm-4">
         <div><img ng-src="{{booking.imagePath}}" alt="" class="room-thumbnail"></div>
     </div>
-    <div class="col-sm-8">
+    <div class="col-sm-8 white-label">
         <div>
-            {{booking.reservations.from}} - {{booking.reservations.to}}
-            {{booking.type}}
-            {{booking.reservations.price}}
+            <p>Pokój:             {{booking.type}}</p>
+            <p>Rezerwacja: od {{booking.reservations.from}} do {{booking.reservations.to}}</p>
+            <p>Cena: {{booking.reservations.price}}</p>
         </div>
         <button class="btn btn-warning" ng-show="checkDate(booking.reservations.from)" ng-click="cancelBooking(booking._id, booking.reservations._id)">Anuluj</button>
     </div>

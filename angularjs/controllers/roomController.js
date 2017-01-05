@@ -261,6 +261,7 @@ angular.module('app')
             })
         };
 
+        //TODo sprawdzic czemu wywala blad wszedzie
         $rootScope.$watch('discount',function () {
             $scope.calculateTotalPrice();
         })

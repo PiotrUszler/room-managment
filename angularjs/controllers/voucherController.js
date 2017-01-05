@@ -37,7 +37,6 @@ angular.module('app')
                 $scope.vouchers.discountType = 'zl';
 
             $scope.vouchers.discount = convertToNumber($scope.discount);
-            $scope.vouchers.type = $scope.voucherType;//0 jednoktronego, 1 wielo
             $scope.vouchers.expiryDate = expiryDate;
             $scope.generatedVouchers = $scope.vouchers.codes;
             $scope.vouchersGenerated = true;

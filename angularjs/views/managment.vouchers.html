@@ -1,37 +1,34 @@
 <div ng-controller="voucherCtrl" class="vouchers">
     <div class="row">
-        <div class="col col-sm-2">
+        <div class="col col-sm-4">
             <div class="white-label">Ile: </div>
             <input type="number" max="100" data-toggle="tooltip" title="Proszę podać ilość kuponów do wygenerowania (max. 100)" ng-model="numberOfVouchers">
         </div>
-        <div class="col col-sm-2">
-            <div class="white-label">Typ: </div>
-                <select ng-model="voucherType">
-                    <option value="0">Jednokrotnego użytku</option>
-                    <option value="1">Wielokrotnego użytku</option>
-                </select>
-        </div>
-        <div class="col col-sm-2">
+        <div class="col col-sm-4">
             <div class="white-label">Upust: </div>
             <input type="text" data-toggle="tooltip" title="Proszę podać w złotówkach lub procentach (zł lub % na końcu)" ng-model="discount">
         </div>
-        <div class="col col-sm-2">
+        <div class="col col-sm-4">
             <div class="white-label">Data wygaśnięcia: </div>
             <input type="date" ng-model="voucherExpiryDate">
         </div>
-        <div class="col col-sm-2">
-            <button class="btn" ng-click="generateVouchers()">Generuj vouchery</button>
+    </div>
+    <div class="row">
+        <div class="col col-md-12">
+            <button class="btn btn-success" ng-click="generateVouchers()">Generuj vouchery</button>
         </div>
     </div>
     <div class="row">
-        <div ng-show="voucherError">
+        <div class="col col-md-12" ng-show="voucherError">
             {{voucherError}}
         </div>
-        <div ng-hide="vouchersSaved" ng-repeat="voucher in generatedVouchers">
-            <li>{{voucher}}</li>
+        <div class="col col-md-12 white-label" ng-hide="vouchersSaved" ng-repeat="voucher in generatedVouchers">
+            <ul>
+                <li>{{voucher}}</li>
+            </ul>
         </div>
 
-        <div ng-show="vouchersSaved">
+        <div class="col col-md-12" ng-show="vouchersSaved">
             <p class="alert alert-success">Pomyślnie zapisano.</p>
         </div>
         <div>

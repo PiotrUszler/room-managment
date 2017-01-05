@@ -46,22 +46,22 @@
         <div ng-repeat="room in rooms | uniqueCategories: 'type'" class="row room-info" ng-hide="noRoomsError">
             <br>
             <div class="col-sm-4"><img ng-src="{{room.imagePath}}" alt="" class="room-thumbnail"></div>
-            <div class="col-sm-6 abcd">
+            <div class="col-sm-6">
                 <div>{{room.type}}</div>
                 <div>{{room.description}}</div>
             </div>
-            <div class="col col-sm-2">
 
+            <div class="col col-sm-2 main-price">
                 <button ng-click="addRoom(room)" class="btn btn-successful">Wybierz</button>
                 <span class="label label-primary">{{room.price | currency: ''}} zł / noc</span>
             </div>
 
-            <br>
+
         </div>
         <div ng-show="noRoomsError">
             <p>Brak wolnych pokoji w podanym terminie. Proszę spróbować inny termin.</p>
         </div>
-        <br>
+
     </div>
 
 

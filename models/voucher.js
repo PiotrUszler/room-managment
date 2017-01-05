@@ -17,10 +17,6 @@ var schema = db.Schema({
         type: String,
         required: true
     },
-    type: { //0 Jednokrotnego użytku, 1 wielokrotnego
-        type: String,
-        required: true
-    },
     expiryDate: {
         type: Date,
         required: true

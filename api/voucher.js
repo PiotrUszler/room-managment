@@ -13,7 +13,6 @@ router.post('/saveVouchers', function (req, res) {
             code: req.body.codes[i],
             discount: req.body.discount,
             discountType: req.body.discountType,
-            type: req.body.type,
             expiryDate: req.body.expiryDate
         });
         //TODO wyslac co cza resem

@@ -8,12 +8,14 @@
         <input type="date" id="roomDateTo" ng-model="roomDateTo" ng-change="getAllRooms()">
     </div>
 </div>
+
 <div class="row rooms-managment">
     <div class="room col-xs-1" data-toggle="modal" data-target="#room-dialog"
          ng-repeat="room in allRooms" ng-class="getAvailability(room.reservations)" ng-click="select(room)">
         <p>{{room.number}}</p>
     </div>
 </div>
+
 <!-- Modal -->
 <div id="room-dialog" class="modal fade" role="dialog">
     <div class="modal-dialog">
