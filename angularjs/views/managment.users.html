@@ -1,1 +1,5 @@
-<p class="white-label">Work in progress...</p>
+<div ng-controller="userCtrl">
+    <select name="userSelect" ng-model="selectedUser" >
+        <option ng-repeat="user in users" value="{{user.email}}">{{user.email}}</option>
+    </select>
+</div>

@@ -125,9 +125,9 @@ angular.module('app')
             })
         };
 
-        var getUsers = function () {
+        var getUsersEmails = function () {
             return $q(function (resolve, reject) {
-                $http.get('/api/getUsers').then(function (result) {
+                $http.get('/api/getUsersEmails').then(function (result) {
                     if(result.data.success = false){
                         reject('Nie znaleziono użytkowników')
                     }else{
@@ -161,7 +161,7 @@ angular.module('app')
             getUserInfo: getUserInfo,
             signupAndBook: signupAndBook,
             adminBook: adminBook,
-            getUsers: getUsers,
+            getUsersEmails: getUsersEmails,
             pay: pay
         }
     });

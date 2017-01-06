@@ -193,11 +193,12 @@ angular.module('app')
             $scope.test.dateTo = new Date($scope.booking.dateTo);
             $scope.calculateTotalPrice();
             getExtras();
-            roomService.getUsers().then(function (users) {
+            roomService.getUsersEmails().then(function (users) {
                 $scope.users = JSON.parse(JSON.stringify(users));
             })
         };
 
+        //TODO przeniesienie pewnych funkcjonalnosci do userCtrl
 
         //TODO dodanie dodatków i obliczenie ceny
         $scope.submitBookForm = function () {

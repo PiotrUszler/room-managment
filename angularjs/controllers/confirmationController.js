@@ -60,7 +60,6 @@ angular.module('app')
         //TODO dodanie całej obsługi konta(zmiana hasła, numeru telefonu[dodanie lub zmiana], podglądu rezerwacji, itp) oraz obsługi hotelu(CRUD dodatków, pokoji itp).
         //TODO dodanie może jakiś wykresów na temat obciążenia pokoji lub jakiś przychodów czy coś albo jaieś coś do generowanie pdf z raportem
         //TODO pozmieniać słowa reservation itp na booking
-        //TODO kody rabatowe
         //TODO powiadomienie o ciasteczkach
         //TODO dodanie podglądu obłożenia hotelu jak w kini(3 stany: wolny, zarezerwowany, zajety)
         //TODO zbadanie czy .run stateProvidera poczebne

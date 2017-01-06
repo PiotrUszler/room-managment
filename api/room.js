@@ -193,14 +193,7 @@ router.post('/adminBook', function (req, res) {
     )
 });
 
-router.get('/getUsers', function (req, res) {
-    User.find({}, {email:1},function (err, result) {
-        if(err)
-            res.json({success: false, msg: err});
-        else
-            res.json(result);
-    })
-});
+
 
 router.post('/paid', function (req, res) {
     Room.update(

@@ -18,6 +18,7 @@ app.use(favicon(__dirname+'/favicon.ico'));
 app.use('/api', require('./api/auth'));
 app.use('/api', require('./api/room'));
 app.use('/api', require('./api/voucher'));
+app.use('/api', require('./api/user'));
 app.use(require('./routes'));
 
 app.listen(process.env.PORT || 3000, function () {
