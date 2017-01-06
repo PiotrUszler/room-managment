@@ -2,10 +2,10 @@
     <div>
         <p>managment bookings</p>
         <div class="row">
-            <p>{{selectedRoom.type}}</p>
-            <p>{{selectedRoom.number}}</p>
-            <p>{{selectedRoom.beds}}</p>
-            <p>{{selectedRoom.price}}</p>
+            <p>Pokók: {{selectedRoom.type}}</p>
+            <p>Numer: {{selectedRoom.number}}</p>
+            <p>Ilość osób: {{selectedRoom.beds}}</p>
+            <p>Cena za noc: {{selectedRoom.price}}</p>
         </div>
         <div ng-repeat="booking in bookings" class="row panel panel-default">
             <div class="col-sm-10">

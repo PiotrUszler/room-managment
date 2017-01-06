@@ -59,7 +59,7 @@ angular.module('app')
                 console.log(result);
                 $scope.voucherNotFound = undefined;
                 $scope.voucherFound = 'Kod poprawny zniżka '+result.discount+result.discountType;
-                $rootScope.discount = {amount: result.discount, type: result.discountType};
+                $rootScope.discount = {amount: result.discount, type: result.discountType, code: $scope.voucher};
                 console.log(result.discount);
             }, function (error) {
                 console.log(error);

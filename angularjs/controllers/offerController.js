@@ -2,7 +2,7 @@
  * Created by Piotr Uszler on 08.11.2016.
  */
 angular.module('app')
-    .controller('offerCtrl', function ($scope, $cookies, $state, $location, $window, offerSvc) {
+    .controller('offerCtrl', function ($scope, $rootScope, $cookies, $state, $location, $window, offerSvc) {
         $scope.offer = {};
         $scope.extras = [];
         $scope.selectedExtras = [];
@@ -20,10 +20,10 @@ angular.module('app')
             $scope.dateFrom = datePreetify(new Date(dates.dateFrom));
             $scope.dateTo = datePreetify(new Date(dates.dateTo));
 
-            $scope.roomName = $scope.offer.type;
-            $scope.roomPrice = $scope.offer.price * calculateDiffOfDays();
+            $scope.roomName = $scope.offer.room.type;
+            $scope.roomPrice = $scope.offer.room.price * calculateDiffOfDays();
             $scope.extrasTotalPrice = 0;
-
+            $scope.calculateTotalPrice();
         };
 
         var datePreetify = function (date) {
@@ -46,12 +46,14 @@ angular.module('app')
                 $scope.selectedExtras.splice(index,1);
                 $scope.extrasTotalPrice -= (extra.price * calculateDiffOfDays());
             }
+            $scope.calculateTotalPrice();
         };
 
         $scope.toConfirmation = function () {
             console.log('asdasd');
             var extras = {extras: $scope.selectedExtras, numOfDays: calculateDiffOfDays()};
             $cookies.put('extras', JSON.stringify(extras));
+            $cookies.put('price', JSON.stringify($scope.totalPrice));
             //$window.location.href = '#/confirmation'
             $state.go('confirmation')
         };
@@ -59,6 +61,18 @@ angular.module('app')
         $scope.toPrevious = function () {
             //$window.location.href = '#/main'
             $state.go('home')
+        };
+
+        $scope.calculateTotalPrice = function () {
+                if($rootScope.discount != undefined && $rootScope.discount.type == 'zl'){
+                    $scope.totalPrice = ((calculateDiffOfDays() * $scope.offer.room.price) + $scope.extrasTotalPrice) - $rootScope.discount.amount;
+                } else if($rootScope.discount != undefined && $rootScope.discount.type == '%'){
+                    $scope.totalPrice = (calculateDiffOfDays() * $scope.offer.room.price) + $scope.extrasTotalPrice;
+                    $scope.totalPrice = $scope.totalPrice - ($scope.totalPrice * ($rootScope.discount.amount / 100));
+                } else{
+                    $scope.totalPrice = (calculateDiffOfDays() * $scope.offer.room.price) + $scope.extrasTotalPrice;
+                    console.log($scope.extrasTotalPrice)
+                }
         };
 
         var getExtras = function () {
@@ -71,6 +85,22 @@ angular.module('app')
             });
         };
 
+        $scope.addOrRemoveExtra = function (extra) {
+
+            var index = $scope.selectedExtras.indexOf(extra);
+            extra.buttonText = extra.buttonToggle ? 'Dodaj +' : 'Usuń -';
+            extra.buttonToggle = !extra.buttonToggle;
+            $scope.totalPrice = 0;
+            if(index == -1){
+                $scope.selectedExtras.push(extra);
+                $scope.extrasTotalPrice += extra.price * calculateDiffOfDays();
+            } else {
+                $scope.selectedExtras.splice(index,1);
+                $scope.extrasTotalPrice -= extra.price * calculateDiffOfDays();
+            }
+            $scope.calculateTotalPrice();
+        };
+
         var calculateDiffOfDays = function () {
             var MS_PER_DAY = 1000 * 60 * 60 * 24;
             var dateFrom = new Date(dates.dateFrom);
@@ -79,6 +109,10 @@ angular.module('app')
             var dateToUTC = Date.UTC(dateTo.getFullYear(), dateTo.getMonth(), dateTo.getDate());
             return Math.floor((dateToUTC - dateFromUTC) / MS_PER_DAY);
         };
+
+        $rootScope.$watch('discount',function () {
+            $scope.calculateTotalPrice();
+        })
 
         showOffer();
     });

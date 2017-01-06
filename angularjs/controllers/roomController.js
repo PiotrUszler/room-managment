@@ -2,7 +2,7 @@
  * Created by Piotr Uszler on 06.11.2016.
  */
 angular.module('app')
-    .controller('roomCtrl', function ($q, $cookies, $scope, $rootScope, $window, $location, roomService, offerSvc,$filter, $state) {
+    .controller('roomCtrl', function ($q, $cookies, $scope, $rootScope, $window, $location, roomService, voucherService, offerSvc,$filter, $state) {
         $scope.dateFrom = '';
         $scope.dateTo = '';
         $scope.noRoomsError = false;
@@ -26,9 +26,8 @@ angular.module('app')
 
         var setDate = function () {
             var date = new Date();
-            console.log(date);
             $scope.dateFrom = date;
-            var dateTemp = new Date;
+            var dateTemp = new Date();
             dateTemp.setDate(dateTemp.getDate()+1);
             $scope.dateTo = dateTemp;
         };
@@ -39,10 +38,11 @@ angular.module('app')
         };
 
         $scope.findRooms = function () {//TODO ogarnac sie z tym beds, wyszukiwac pokoje o podanej ilosci osob i nazwac to jakos w bazie ostatecznie
-            if($scope.dateTo.getMonth() <= $scope.dateFrom.getMonth() && $scope.dateTo.getDate() <= $scope.dateFrom.getDate()){
-                var date = $scope.dateFrom;
-                date.setDate(date.getDate()+1);
-                $scope.dateTo = date;
+            if($scope.dateFrom.getMonth() >= $scope.dateTo.getMonth() && $scope.dateFrom.getDate() >= $scope.dateTo.getDate()){
+                var dateTemp = new Date();
+                dateTemp.setDate($scope.dateFrom.getDate()+1);
+                dateTemp.setMonth($scope.dateFrom.getMonth());
+                $scope.dateTo = dateTemp;
             }
             roomService.getRooms({
                 from: $scope.dateFrom.toISOString(),
@@ -62,7 +62,7 @@ angular.module('app')
         };
 
         $scope.addRoom = function (room) {
-            $cookies.put('room', JSON.stringify(room));
+            $cookies.put('room', JSON.stringify({room: {id: room._id, type: room.type, price: room.price}}));
             $cookies.put('dates', JSON.stringify({dateFrom: $scope.dateFrom, dateTo: $scope.dateTo}));
             offerSvc.chooseRoom(room);
             $state.go('offer');
@@ -83,11 +83,42 @@ angular.module('app')
             })
         };
 
+        /*
+        $scope.checkAvailability = function () {
+            console.log($scope.roomDateFrom);
+            for(var i = 0; i < $scope.allRooms.length; i++){
+                var currentDate = new Date();
+                var roomDateFrom = new Date($scope.roomDateFrom);
+                var roomDateTo = new Date($scope.roomDateTo);
+                for(var j = 0; j < $scope.allRooms[i].reservations.length; j++){
+                    var dateFrom = new Date($scope.allRooms[i].reservations[j].from);
+                    var dateTo = new Date($scope.allRooms[i].reservations[j].to);
+                    if(roomDateFrom < dateTo && roomDateTo > dateFrom) {
+                        $scope.allRooms[i].available = false;
+                        break;
+                    }
+                }
+                if($scope.allRooms[i].available == undefined)
+                    $scope.allRooms[i].available = true;
+            };
+            console.log($scope.allRooms);
+        };
 
+        */
+
+        $scope.dateChanged = function () {
+            if($scope.dateFrom.getMonth() >= $scope.dateTo.getMonth() && $scope.dateFrom.getDate() >= $scope.dateTo.getDate()){
+                var dateTemp = new Date();
+                dateTemp.setDate($scope.dateFrom.getDate()+1);
+                dateTemp.setMonth($scope.dateFrom.getMonth());
+                $scope.dateTo = dateTemp;
+            }
+        };
+        //TODo po zmianie daty zmienic classe(kompletny rework? :()
         $scope.getAvailability = function (reservations) {
             var currentDate = new Date();
-            var roomDateFrom = new Date($scope.roomDateFrom);
-            var roomDateTo = new Date($scope.roomDateTo);
+            var roomDateFrom = new Date($scope.dateFrom);
+            var roomDateTo = new Date($scope.dateTo);
             for(var i = 0; i < reservations.length; i++){
                 var dateFrom = new Date(reservations[i].from);
                 var dateTo = new Date(reservations[i].to);
@@ -99,16 +130,13 @@ angular.module('app')
         };
 
         $scope.managmentInit = function () {
-            var date = new Date();
-            $scope.roomDateFrom = date;
-            var dateTemp = new Date;
-            dateTemp.setDate(dateTemp.getDate()+1);
-            $scope.roomDateTo = dateTemp;
+            setDate();
             $scope.getAllRooms();
         };
         
         $scope.toBookings = function (room) {
-            $cookies.put('selectedRoom', JSON.stringify(room));
+
+            $cookies.put('selectedRoom', JSON.stringify({_id: room._id, type: room.type, number: room.number, beds: room.beds, price: room.price}));
             $('#regulamin').modal('hide');
             setTimeout(function(){
                 $state.go('managment-bookings');
@@ -152,7 +180,7 @@ angular.module('app')
         };
 
         $scope.toBooking = function (room, dateFrom, dateTo) {
-            $cookies.put('booking', JSON.stringify({room: room, dateFrom: dateFrom, dateTo: dateTo}));
+            $cookies.put('booking', JSON.stringify({room: {_id: room._id, type: room.type, number: room.number, beds: room.beds, price: room.price}, dateFrom: dateFrom, dateTo: dateTo}));
             $('#regulamin').modal('hide');
             setTimeout(function(){
                 $state.go('test');
@@ -191,15 +219,25 @@ angular.module('app')
                     };
                 }
                 roomService.signupAndBook(user, $scope.booking.room._id, {dateFrom: $scope.test.dateFrom, dateTo: $scope.test.dateTo}, $scope.totalPrice, $scope.selectedExtras)
-                    .then(function (a) {
-                        console.log(a);
+                    .then(function (result) {
+                        if($rootScope.discount){
+                            voucherService.useVoucher($rootScope.discount.code).then(function (vResult) {
+                            },function (error) {
+                                console.log(error);
+                            });
+                        }
                     })
             } else {
                 user = JSON.parse($scope.selectedUserBooking);
-                console.log("RoomCtrl, funkcja submitBookForm, dataOd: "+$scope.test.dateFrom);
                 roomService.adminBook($scope.booking.room._id, user.email ,{dateFrom: $scope.test.dateFrom, dateTo: $scope.test.dateTo}, $scope.totalPrice, $scope.selectedExtras)
                     .then(function (a) {
-                        console.log(a);
+                        if($rootScope.discount){
+                            voucherService.useVoucher($rootScope.discount.code).then(function (vResult) {
+                            },function (error) {
+                                console.log(error);
+                            });
+                        }
+
                     })
             }
         };
@@ -214,13 +252,18 @@ angular.module('app')
         };
 
         $scope.calculateTotalPrice = function () {
-            if($rootScope.discount != undefined && $rootScope.discount.type == 'zl'){
-                $scope.totalPrice = ((calculateDiffOfDays() * $scope.booking.room.price) + $scope.extrasTotalPrice) - $rootScope.discount.amount;
-            } else if($rootScope.discount != undefined && $rootScope.discount.type == '%'){
-                $scope.totalPrice = (calculateDiffOfDays() * $scope.booking.room.price) + $scope.extrasTotalPrice;
-                $scope.totalPrice = $scope.totalPrice - ($scope.totalPrice * ($rootScope.discount.amount / 100));
-            } else
-                $scope.totalPrice = (calculateDiffOfDays() * $scope.booking.room.price) + $scope.extrasTotalPrice;
+            if($scope.booking){
+                if($rootScope.discount != undefined && $rootScope.discount.type == 'zl'){
+                    $scope.totalPrice = ((calculateDiffOfDays() * $scope.booking.room.price) + $scope.extrasTotalPrice) - $rootScope.discount.amount;
+                } else if($rootScope.discount != undefined && $rootScope.discount.type == '%'){
+                    $scope.totalPrice = (calculateDiffOfDays() * $scope.booking.room.price) + $scope.extrasTotalPrice;
+                    $scope.totalPrice = $scope.totalPrice - ($scope.totalPrice * ($rootScope.discount.amount / 100));
+                } else{
+                    $scope.totalPrice = (calculateDiffOfDays() * $scope.booking.room.price) + $scope.extrasTotalPrice;
+                    console.log($scope.extrasTotalPrice)
+                }
+
+            }
         };
 
         var getExtras = function () {
@@ -260,8 +303,6 @@ angular.module('app')
                 booking.paid = !booking.paid;
             })
         };
-
-        //TODo sprawdzic czemu wywala blad wszedzie
         $rootScope.$watch('discount',function () {
             $scope.calculateTotalPrice();
         })

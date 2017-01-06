@@ -14,6 +14,19 @@
                 <span class="pull-right label label-primary">{{extra.price | currency: ''}} zł {{extra.unit}}</span>
                 <button class="btn button-extra" ng-class="{'button-remove': extra.buttonToggle}" ng-click="addOrRemoveExtra(extra)">{{extra.buttonText}}</button>
             </div>
+            <div ng-controller="voucherCtrl">
+                <div >
+                    Voucher: <input name="voucher" type="text" ng-model="voucher" minlength="23" maxlength="23" ng-change="codeChanged()" vouchercheck>
+                    <button type="button" class="btn btn-success" ng-click="checkVoucher()" ng-disabled="bookingFrm.$invalid">Zatwierdź</button>
+                </div>
+                <div>
+                    <span ng-show="bookingFrm.voucher.$dirty && bookingFrm.voucher.$error.minlength">Kod jest za krótki</span>
+                    <span ng-show="bookingFrm.voucher.$dirty && bookingFrm.voucher.$error.validVoucher && !bookingFrm.voucher.$error.minlength">Niepoprawny format kodu</span>
+                    <span ng-show="voucherNotFound">{{voucherNotFound}}</span>
+                    <span ng-show="voucherFound">{{voucherFound}}</span>
+                </div>
+            </div>
+
         </div>
         <div class="col xs-7">
             <div>
@@ -30,12 +43,11 @@
                 </p>
                 <br><br>
                 <p>
-                    Suma: {{roomPrice + extrasTotalPrice | currency: ''}} zł
+                    Suma: {{totalPrice | currency: ''}} zł
                 </p>
                 <br>
             </div>
         </div>
-
     </div>
     <div>
         <div>

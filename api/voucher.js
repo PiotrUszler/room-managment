@@ -38,5 +38,16 @@ router.post('/checkVoucher', function (req, res) {
     })
 });
 
+router.post('/useVoucher', function (req, res) {
+    Voucher.update({code: req.body.code}, {$set: {used: true}}, function (err, result) {
+        if(result.nModified == 1)
+            res.json({success: true});
+        else if(err)
+            res.json({success: false, error: err});
+        else
+            res.json({success: false, error: 'Nie znaleziono klucza.'})
+    })
+});
+
 
 module.exports = router;

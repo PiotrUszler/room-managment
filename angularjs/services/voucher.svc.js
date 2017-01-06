@@ -37,8 +37,20 @@ angular.module('app')
             })
         };
 
+        var useVoucher = function (voucher) {
+            return $q(function (resolve, reject) {
+                $http.post('/api/useVoucher', {code: voucher}).then(function (result) {
+                    if(result.data.success)
+                        resolve('Klucz wykorzystany.');
+                    else
+                        reject(result.data.error)
+                })
+            })
+        };
+
         return {
             saveVouchers: saveVouchers,
-            checkVoucher: checkVoucher
+            checkVoucher: checkVoucher,
+            useVoucher: useVoucher
         }
     });

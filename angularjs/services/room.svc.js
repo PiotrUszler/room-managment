@@ -96,9 +96,9 @@ angular.module('app')
                     price: price,
                     extras: extras
                 }).then(function (result) {
-                        console.log(result)
+                        resolve('OK');
                     }, function (result) {
-                        console.log('nie udało się')
+                        reject('Wystąpił błąd podczas rezerwacji')
                 })
             })
         };

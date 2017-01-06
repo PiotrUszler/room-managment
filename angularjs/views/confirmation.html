@@ -100,11 +100,13 @@
         </div>
     </div><!--end of login screen-->
     <div ng-show="isSignedIn">
-        {{room.type}}
+        {{room.room.type}}
         {{dateFrom}}
         {{dateTo}}
         {{extras}}
         {{numOfDays}}
+        {{price}}
+        {{discount}}
 
         <div class="panel">
             <div class="panel-body">
