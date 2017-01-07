@@ -45,7 +45,6 @@ angular.module('app')
     };
     
     $scope.saveVouchers = function () {
-        console.log($scope.vouchers);
         voucherService.saveVouchers($scope.vouchers).then(function (result) {
 
         });
@@ -54,15 +53,11 @@ angular.module('app')
 
     //TODO odjecie kwoty i sprawdzenie vaznosci(wyswietlenie odpowiedniego errora), na koniec przy rezerwacji uwzglednic voucher
     $scope.checkVoucher = function () {
-        console.log($scope.voucher);
             voucherService.checkVoucher($scope.voucher.toString()).then(function (result) {
-                console.log(result);
                 $scope.voucherNotFound = undefined;
                 $scope.voucherFound = 'Kod poprawny zniżka '+result.discount+result.discountType;
                 $rootScope.discount = {amount: result.discount, type: result.discountType, code: $scope.voucher};
-                console.log(result.discount);
             }, function (error) {
-                console.log(error);
                 $rootScope.discount = undefined;
                 $scope.voucherNotFound = error;
                 $scope.voucherFound = undefined;

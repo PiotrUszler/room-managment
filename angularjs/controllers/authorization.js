@@ -54,9 +54,7 @@ angular.module('app')
                 $scope.userinfo = msg;
             })
         };
-
-
-        //TODO state.reload
+        
         $scope.submitForm = function (isValid) {
             if(isValid){
                 AuthService.signup($scope.user).then(function (data) {
@@ -70,7 +68,6 @@ angular.module('app')
                             $state.go('successfulSignup').then(function () {
                                 $window.location.reload();
                             });
-                            //$window.location.href='#/successfulSignup';
                     });
 
                 }, function (data) {

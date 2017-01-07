@@ -14,8 +14,21 @@ angular.module('app')
             })
         };
 
+        var changeUserDetails = function (newDetails) {
+            return $q(function (resolve, reject) {
+                $http.post('/api/adminChangeUserDetails', newDetails).then(function (result) {
+                    if(result.data.success){
+                        resolve({success: true, msg: "Pomyślnie zmieniono dane"})
+                    } else {
+                        reject({success: false, msg: "coś poszło nie tak"});
+                    }
+                })
+            })
+        };
+
 
         return{
-            getAllUsers: getAllUsers
+            getAllUsers: getAllUsers,
+            changeUserDetails: changeUserDetails
         }
     });

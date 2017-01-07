@@ -6,6 +6,21 @@ angular.module('app')
 
         userService.getAllUsers().then(function (users) {
             $scope.users = users;
-            console.log($scope.users)
-        })
+        });
+        
+        $scope.changeUserDetails = function(isValid){
+            if(isValid){
+                var newDetails = {
+                    firstName: $scope.selectedUser.firstName,
+                    lastName: $scope.selectedUser.lastName,
+                    email: $scope.selectedUser.email,
+                    phoneNumber: $scope.selectedUser.phoneNumber,
+                    role: $scope.selectedUser.role
+                };
+                userService.changeUserDetails(newDetails).then(function (a) {
+                    $state.reload();
+                })
+            }
+        };
+
     });

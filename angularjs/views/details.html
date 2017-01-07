@@ -1,10 +1,8 @@
-<p>Details sub view</p>
+
 <div>
     <form name="frm"  ng-submit="changeUserDetails(frm.$valid, firstName, lastName, email, phone)" novalidate>
-
-
         <div class="form-group">
-            <label for="firstName">Imię</label>
+            <label class="white-label" for="firstName">Imię</label>
             <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Imię" ng-model="firstName"
                    minlength="3" maxlength="40" required value="{{firstName}}">
             <span ng-show="frm.firstName.$dirty && frm.firstName.$error.required" class="help-block">To pole jest wymagane</span>
@@ -13,7 +11,7 @@
         </div>
 
         <div class="form-group">
-            <label for="lastName">Nazwisko</label>
+            <label class="white-label" for="lastName">Nazwisko</label>
             <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Nazwisko" ng-model="lastName"
                    minlength="3" maxlength="40" value="{{lastName}}" required>
             <span ng-show="frm.lastName.$dirty && frm.lastName.$error.required" class="help-block">To pole jest wymagane</span>
@@ -21,14 +19,14 @@
             <span ng-show="frm.lastName.$error.maxlength" class="help-block">Nazwisko jest za długie</span>
         </div>
 
-        <div class="form-group">
+        <div class="white-label" class="form-group">
             <label for="email">Adres Email</label>
             <input type="email" name="email" id="email" class="form-control" placeholder="email" ng-model="email" value="{{email}}"required>
             <span ng-show="frm.email.$dirty && frm.email.$error.required" class="help-block">To pole jest wymagane</span>
             <span ng-show="frm.email.$dirty && frm.email.$error.email" class="help-block">To nie jest prawidłowy adres email</span>
         </div>
 
-        <div class="form-group">
+        <div class="white-label" class="form-group">
             <label for="number">Numer Telefonu</label>
             <input type="text" name="number" id="number" class="form-control" placeholder="numer" ng-model="phone" value="{{phone}}" ng-pattern="regex">
             <span ng-show="frm.number.$dirty && frm.number.$invalid" class="help-block">Proszę podać prawidłowy numer telefonu</span>

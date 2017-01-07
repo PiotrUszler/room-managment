@@ -101,10 +101,7 @@ router.post('/reserve', passport.authenticate('jwt', {session: false}), function
     )
 });
 
-router.post('/test', passport.authenticate('jwt', {session: false}), function (req, res) {
-    var query = {email: req.body.email};
-
-    var newName = 'kasztan';
+router.post('/changeUserDetails', passport.authenticate('jwt', {session: false}), function (req, res) {
     var token = getToken(req.headers);
     if(token) {
         var decoded = jwt.decode(token, 'aH3kx09$s');

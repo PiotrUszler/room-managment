@@ -1,5 +1,52 @@
 <div ng-controller="userCtrl">
-    <select name="userSelect" ng-model="selectedUser" >
-        <option ng-repeat="user in users" value="{{user.email}}">{{user.email}}</option>
-    </select>
+    <div>
+        <select ng-options="user as user.email for user in users" ng-model="selectedUser" ng-change="update()"></select>
+    </div>
+    <div>
+        <form name="frm"  ng-submit="changeUserDetails(frm.$valid)" novalidate>
+            <div class="form-group">
+                <label class="white-label" for="firstName">Imię</label>
+                <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Imię" ng-model="selectedUser.firstName"
+                       minlength="3" maxlength="40" required value="{{selectedUser.firstName}}">
+                <span ng-show="frm.firstName.$dirty && frm.firstName.$error.required" class="help-block">To pole jest wymagane</span>
+                <span ng-show="frm.firstName.$error.minlength" class="help-block">Imię jest za krótkie</span>
+                <span ng-show="frm.firstName.$error.maxlength" class="help-block">Imię jest za długie</span>
+            </div>
+
+            <div class="form-group">
+                <label class="white-label" for="lastName">Nazwisko</label>
+                <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Nazwisko" ng-model="selectedUser.lastName"
+                       minlength="3" maxlength="40" value="{{selectedUser.lastName}}" required>
+                <span ng-show="frm.lastName.$dirty && frm.lastName.$error.required" class="help-block">To pole jest wymagane</span>
+                <span ng-show="frm.lastName.$error.minlength" class="help-block">Nazwisko jest za krótkie</span>
+                <span ng-show="frm.lastName.$error.maxlength" class="help-block">Nazwisko jest za długie</span>
+            </div>
+
+            <div class="form-group">
+                <label class="white-label" for="email">Adres Email</label>
+                <input type="email" name="email" id="email" class="form-control" placeholder="email" ng-model="selectedUser.email"
+                       value="{{selectedUser.email}}"required>
+                <span ng-show="frm.email.$dirty && frm.email.$error.required" class="help-block">To pole jest wymagane</span>
+                <span ng-show="frm.email.$dirty && frm.email.$error.email" class="help-block">To nie jest prawidłowy adres email</span>
+            </div>
+
+            <div class="form-group">
+                <label class="white-label" for="number">Numer Telefonu</label>
+                <input type="text" name="number" id="number" class="form-control" placeholder="numer" ng-model="selectedUser.phoneNumber"
+                value="{{selectedUser.phoneNumber}}" ng-pattern="regex">
+                <span ng-show="frm.number.$dirty && frm.number.$invalid" class="help-block">Proszę podać prawidłowy numer telefonu</span>
+            </div>
+
+            <div class="form-group">
+                <label class="white-label" for="role">Rola</label>
+                <select name="role" id="role" class="form-control" ng-model="selectedUser.role">
+                    <option ng-selected="{{selectedUser.role == 'user'}}">user</option>
+                    <option ng-selected="{{selectedUser.role == 'admin'}}">admin</option>
+                </select>
+            </div>
+
+
+            <button type="submit" class="btn btn-success" ng-disabled="frm.$invalid">Zapisz</button>
+        </form>
+    </div>
 </div>

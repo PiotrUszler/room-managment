@@ -50,11 +50,9 @@ angular.module('app')
         };
 
         $scope.toConfirmation = function () {
-            console.log('asdasd');
             var extras = {extras: $scope.selectedExtras, numOfDays: calculateDiffOfDays()};
             $cookies.put('extras', JSON.stringify(extras));
             $cookies.put('price', JSON.stringify($scope.totalPrice));
-            //$window.location.href = '#/confirmation'
             $state.go('confirmation')
         };
 
@@ -71,7 +69,6 @@ angular.module('app')
                     $scope.totalPrice = $scope.totalPrice - ($scope.totalPrice * ($rootScope.discount.amount / 100));
                 } else{
                     $scope.totalPrice = (calculateDiffOfDays() * $scope.offer.room.price) + $scope.extrasTotalPrice;
-                    console.log($scope.extrasTotalPrice)
                 }
         };
 
@@ -86,7 +83,6 @@ angular.module('app')
         };
 
         $scope.addOrRemoveExtra = function (extra) {
-
             var index = $scope.selectedExtras.indexOf(extra);
             extra.buttonText = extra.buttonToggle ? 'Dodaj +' : 'Usuń -';
             extra.buttonToggle = !extra.buttonToggle;
@@ -112,7 +108,7 @@ angular.module('app')
 
         $rootScope.$watch('discount',function () {
             $scope.calculateTotalPrice();
-        })
+        });
 
         showOffer();
     });

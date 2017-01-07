@@ -90,7 +90,7 @@ angular.module('app')
         
         var changeUserDetails = function (newDetails) {
             return $q(function (resolve, reject) {
-                $http.post('/api/test', newDetails).then(function (result) {
+                $http.post('/api/changeUserDetails', newDetails).then(function (result) {
                     if(result.data.success){
                         console.log('hello');
                         $http.post('/api/getNewToken', {email: newDetails.email}).then(function (result2) {

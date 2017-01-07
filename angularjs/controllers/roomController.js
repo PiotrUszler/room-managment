@@ -66,12 +66,6 @@ angular.module('app')
             $cookies.put('dates', JSON.stringify({dateFrom: $scope.dateFrom, dateTo: $scope.dateTo}));
             offerSvc.chooseRoom(room);
             $state.go('offer');
-            //$window.location.href='#/offer';
-        };
-
-        $scope.test = function () {
-            console.log($scope.rooms);
-            $scope.findRooms();
         };
 
         $scope.getAllRooms = function () {
@@ -82,29 +76,6 @@ angular.module('app')
                 //TODO obsługa errora
             })
         };
-
-        /*
-        $scope.checkAvailability = function () {
-            console.log($scope.roomDateFrom);
-            for(var i = 0; i < $scope.allRooms.length; i++){
-                var currentDate = new Date();
-                var roomDateFrom = new Date($scope.roomDateFrom);
-                var roomDateTo = new Date($scope.roomDateTo);
-                for(var j = 0; j < $scope.allRooms[i].reservations.length; j++){
-                    var dateFrom = new Date($scope.allRooms[i].reservations[j].from);
-                    var dateTo = new Date($scope.allRooms[i].reservations[j].to);
-                    if(roomDateFrom < dateTo && roomDateTo > dateFrom) {
-                        $scope.allRooms[i].available = false;
-                        break;
-                    }
-                }
-                if($scope.allRooms[i].available == undefined)
-                    $scope.allRooms[i].available = true;
-            };
-            console.log($scope.allRooms);
-        };
-
-        */
 
         $scope.dateChanged = function () {
             if($scope.dateFrom.getMonth() >= $scope.dateTo.getMonth() && $scope.dateFrom.getDate() >= $scope.dateTo.getDate()){
@@ -155,10 +126,7 @@ angular.module('app')
         };
 
         $scope.cancelBooking = function (room_id, booking_id) {
-            console.log("room id to:"+room_id+", booking_id to:"+booking_id);
-
             roomService.cancelBooking(room_id, booking_id).then(function (a) {
-                console.log('udało się anulować');
                 $state.reload();
             })
         };
@@ -173,8 +141,6 @@ angular.module('app')
         $scope.selectUser = function (user) {
             roomService.getUserInfo(user).then(function (u) {
                 $scope.selectedUser = u;
-                console.log($scope.selectedUser);
-
             });
 
         };
@@ -200,7 +166,6 @@ angular.module('app')
 
         //TODO przeniesienie pewnych funkcjonalnosci do userCtrl
 
-        //TODO dodanie dodatków i obliczenie ceny
         $scope.submitBookForm = function () {
             var user = null;
             if($scope.selectOrAddUser){
@@ -261,7 +226,6 @@ angular.module('app')
                     $scope.totalPrice = $scope.totalPrice - ($scope.totalPrice * ($rootScope.discount.amount / 100));
                 } else{
                     $scope.totalPrice = (calculateDiffOfDays() * $scope.booking.room.price) + $scope.extrasTotalPrice;
-                    console.log($scope.extrasTotalPrice)
                 }
 
             }
@@ -300,7 +264,6 @@ angular.module('app')
         };
         $scope.pay = function (booking) {
             roomService.pay(booking._id, !booking.paid).then(function (result) {
-                console.log(result);
                 booking.paid = !booking.paid;
             })
         };

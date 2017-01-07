@@ -2,6 +2,8 @@
 $break-small: 768px;
 $darkFont: #1d2129;
 $lightFont: #fff;
+$navColor: #caa846;
+$panelColor: #e8ebef;
 
 body{
     background-image: url(images/background-pattern.png);
@@ -123,11 +125,11 @@ select{
 }
 
 .active a {
-    background-color: #caa846 !important;
+    background-color: $navColor !important;
 }
 
 .nav-tab:hover {
-    background-color: #caa846 !important;
+    background-color: $navColor !important;
     transition-duration: 0.5s;
     -webkit-transition-timing-function: ease;
     transition-timing-function: ease;
@@ -150,7 +152,16 @@ select{
 }
 
 .panel{
+    background-color: $panelColor!important;
     border: none!important;
+}
+.well{
+    background-color: $panelColor!important;
+    border: none!important;
+}
+
+.btn-block{
+    background-color: $navColor !important;
 }
 
 .rooms-managment{

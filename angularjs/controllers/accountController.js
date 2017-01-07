@@ -56,8 +56,6 @@ angular.module('app')
         $scope.changePassword = function (valid,oldP, newP) {
             if(valid){
                 AuthService.changePassword(oldP, newP).then(function (res) {
-                    console.log(res.msg);
-
                     $scope.successfulPasswordChange = true;
                 },function (rej) {
                     $scope.wrongPassword = true;
