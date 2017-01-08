@@ -1,5 +1,4 @@
-<p>Register view</p>
-
+<!--
 <div class="account-wall" ng-controller="authCtrl">
     <form name="frm" ng-submit="submitForm(frm.$valid)" novalidate>
 
@@ -56,4 +55,72 @@
     <br>
     <p ng-show="submitError" class="alert alert-danger">{{errorMessage}}</p>
 </div>
+-->
+<div class="container" ng-controller="authCtrl">
+    <br>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-login">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <a href="#" class="active" id="register-form-link">Rejestracja</a>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form name="frm" id="register-form" role="form" ng-submit="submitForm(frm.$valid)" novalidate>
+                                <div class="form-group">
+                                    <input type="text" name="firstName" id="firstName" tabindex="1" class="form-control" placeholder="Imię"
+                                           ng-model="user.firstName" maxlength="40" minlength="3" required>
+                                    <span ng-show="frm.firstName.$dirty && frm.firstName.$error.required" class="help-block">To pole jest wymagane</span>
+                                    <span ng-show="frm.firstName.$error.maxlength" class="help-block">Imię jest za długie</span>
+                                    <span ng-show="frm.firstName.$error.minlength" class="help-block">Imię jest za krótkie</span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="lastName" id="lastName" tabindex="2" class="form-control" placeholder="Nazwisko"
+                                           ng-model="user.lastName" minlength="3" maxlength="40" required>
+                                    <span ng-show="frm.lastName.$dirty && frm.lastName.$error.required" class="help-block">To pole jest wymagane</span>
+                                    <span ng-show="frm.lastName.$error.maxlength" class="help-block">Nazwisko jest za długie</span>
+                                    <span ng-show="frm.lastName.$error.minlength" class="help-block">Nazwisko jest za krótkie</span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" name="email" id="email" tabindex="3" class="form-control" placeholder="Adres email" ng-model="user.email" required>
+                                    <span ng-show="frm.email.$dirty && frm.email.$error.required" class="help-block">To pole jest wymagane</span>
+                                    <span ng-show="frm.email.$dirty && frm.email.$error.email" class="help-block">To nie jest prawidłowy adres email</span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="password" id="password" tabindex="4" class="form-control" placeholder="Hasło" ng-model="user.password"  ng-minlength="8" ng-maxlength="25" required>
+                                    <span ng-show="frm.password.$dirty && frm.password.$error.required" class="help-block">To pole jest wymagane</span>
+                                    <span ng-show="frm.password.$dirty && frm.password.$error.minlength" class="help-block">Hasło jest za krótkie</span>
+                                    <span ng-show="frm.password.$dirty && frm.password.$error.maxlength" class="help-block">Hasło jest za długie</span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="rePassword" id="rePassword" tabindex="5" class="form-control" placeholder="Potwierdź hasło" ng-model="user.rePassword" required  compare-to="user.password">
+                                    <span ng-show="frm.rePassword.$dirty && frm.rePassword.$error.required" class="help-block">To pole jest wymagane</span>
+                                    <span ng-show="frm.rePassword.$dirty && frm.$error.compareTo && !frm.rePassword.$error.required" class="help-block">Hasła różnią się.</span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="number" id="number" tabindex="7" class="form-control" placeholder="Number telefonu" ng-model="user.phoneNumber" ng-pattern="regex">
+                                    <span ng-show="frm.number.$dirty && frm.number.$invalid" class="help-block">Proszę podać prawidłowy numer telefonu</span>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-sm-offset-3">
+                                            <button type="submit" name="register-submit" id="register-submit" class="form-control btn btn-register" ng-disabled="frm.$invalid">Zarejestruj</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <p ng-show="submitError" class="alert alert-danger">{{errorMessage}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!--end of login screen-->
 

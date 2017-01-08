@@ -17,7 +17,6 @@ angular.module('app')
             AuthService.isAuthenticated ? $scope.isSignedIn = true : $scope.isSignedIn = false;
         };
 
-
         $scope.reserve = function () {
             if($scope.terms != true)
                 alert('Przed potwierdzeniem rezerwacji należy zaakceptowaćregulamin.');
@@ -33,13 +32,11 @@ angular.module('app')
                         }
 
                 },function (error) {
-                    //TODO wyświetlenie errrora
                     })
             }
         };
 
         $scope.toPrevious = function () {
-            //$window.location.href = '#/offer'
             $state.go('offer')
         };
 

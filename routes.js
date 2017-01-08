@@ -67,8 +67,8 @@ router.get('/restaurant', function (req, res) {
 router.get('/contact', function (req, res) {
     res.sendFile(path.resolve('angularjs/views/contact.html'))
 });
-router.get('/test', function (req, res) {
-    res.sendFile(path.resolve('angularjs/views/test.html'))
+router.get('/admin-booking', function (req, res) {
+    res.sendFile(path.resolve('angularjs/views/admin-booking.html'))
 });
 router.get('/managment-rooms', function (req, res) {
     res.sendFile(path.resolve('angularjs/views/managment.rooms.html'))

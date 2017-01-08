@@ -11,10 +11,10 @@
                 <button type="button" class="btn btn-default" ng-click="selectOrAddUser = true">Nowy</button>
             </div>
             <div ng-show="selectOrAddUser">
-                <input type="text" ng-model="test.firstName" placeholder="Imie">
-                <input type="text" ng-model="test.lastName" placeholder="Nazwisko">
-                <input type="text" ng-model="test.email" placeholder="email">
-                <input type="text" ng-model="test.phone" placeholder="telefon">
+                <input type="text" ng-model="bookingUser.firstName" placeholder="Imie">
+                <input type="text" ng-model="bookingUser.lastName" placeholder="Nazwisko">
+                <input type="text" ng-model="bookingUser.email" placeholder="email">
+                <input type="text" ng-model="bookingUser.phone" placeholder="telefon">
             </div>
             <div ng-show="selectOrAddUser == false">
                 <select name="userSelect" ng-model="selectedUserBooking">

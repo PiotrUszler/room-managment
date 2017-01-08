@@ -4,7 +4,6 @@
 angular.module('app')
     .controller('authCtrl', function ($q, $scope, $state, $window, $location, $route, $rootScope, AuthService) {
 
-
         $scope.regex = '(\\+[0-9]\\d{1})*(\\s)*([0-9]\\d{2})(\\s*)([0-9]\\d{2})(\\s*)([0-9]\\d{2})';
 
         $scope.submitError = false;
@@ -14,25 +13,19 @@ angular.module('app')
             return AuthService.isAuthenticated;
         };
 
-
         if($rootScope.isLoggedIn()) {
             AuthService.getUserRole().then(function (result) {
                 $rootScope.role = result.role;
             });
         }
 
-    
         $scope.signin = function () {
-            console.log('login');
             AuthService.signin($scope.user).then(function (msg, success) {
                 $rootScope.isLogedIn = true;
                 AuthService.getUserRole().then(function (result) {
                     $rootScope.role = result.role;
                 });
-                //$window.location.href='#/';
-                //$state.go('home');
                 $window.location.reload();
-                console.log(msg);
             })
         };
 
@@ -42,10 +35,6 @@ angular.module('app')
             $state.go('home').then(function () {
                 $window.location.reload();
             });
-            //$window.location.reload();
-            //state.go('home');
-            //$state.reload();
-            console.log('logout');
         };
 
         $scope.getUserInfo = function () {
@@ -58,7 +47,6 @@ angular.module('app')
         $scope.submitForm = function (isValid) {
             if(isValid){
                 AuthService.signup($scope.user).then(function (data) {
-                    console.log('Pomyślnie zarejestrowano');
                     $scope.submitError = false;
                     AuthService.signin($scope.user).then(function (msg, success) {
                         $rootScope.isLogedIn = true;
@@ -92,6 +80,5 @@ angular.module('app')
         $scope.$watch('submitError', function (errorMessage) {
             console.log(errorMessage)
         });
-
 
     });

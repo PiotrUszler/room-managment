@@ -149,14 +149,14 @@ angular.module('app')
             $cookies.put('booking', JSON.stringify({room: {_id: room._id, type: room.type, number: room.number, beds: room.beds, price: room.price}, dateFrom: dateFrom, dateTo: dateTo}));
             $('#regulamin').modal('hide');
             setTimeout(function(){
-                $state.go('test');
+                $state.go('admin-booking');
             }, 500);
         };
 
         $scope.initBooking = function () {
             $scope.booking = JSON.parse($cookies.get('booking'));
-            $scope.test.dateFrom = new Date($scope.booking.dateFrom);
-            $scope.test.dateTo = new Date($scope.booking.dateTo);
+            //$scope.test.dateFrom = new Date($scope.booking.dateFrom);
+            //$scope.test.dateTo = new Date($scope.booking.dateTo);
             $scope.calculateTotalPrice();
             getExtras();
             roomService.getUsersEmails().then(function (users) {
@@ -169,22 +169,23 @@ angular.module('app')
         $scope.submitBookForm = function () {
             var user = null;
             if($scope.selectOrAddUser){
-                if($scope.test.email == undefined){
+                if($scope.bookingUser.email == undefined){
                     var user = {
-                        email: ""+$scope.test.firstName+$scope.test.lastName+$scope.test.phone,
-                        firstName: $scope.test.firstName,
-                        lastName: $scope.test.lastName,
-                        phone: $scope.test.phone
+                        email: ""+$scope.bookingUser.firstName+$scope.bookingUser.lastName+$scope.bookingUser.phone,
+                        firstName: $scope.bookingUser.firstName,
+                        lastName: $scope.bookingUser.lastName,
+                        phone: $scope.bookingUser.phone
                     };
                 } else {
                     var user = {
-                        email: $scope.test.email,
-                        firstName: $scope.test.firstName,
-                        lastName: $scope.test.lastName,
-                        phone: $scope.test.phone
+                        email: $scope.bookingUser.email,
+                        firstName: $scope.bookingUser.firstName,
+                        lastName: $scope.bookingUser.lastName,
+                        phone: $scope.bookingUser.phone
                     };
                 }
-                roomService.signupAndBook(user, $scope.booking.room._id, {dateFrom: $scope.test.dateFrom, dateTo: $scope.test.dateTo}, $scope.totalPrice, $scope.selectedExtras)
+
+                roomService.signupAndBook(user, $scope.booking.room._id, {dateFrom: $scope.booking.dateFrom, dateTo: $scope.booking.dateTo}, $scope.totalPrice, $scope.selectedExtras)
                     .then(function (result) {
                         if($rootScope.discount){
                             voucherService.useVoucher($rootScope.discount.code).then(function (vResult) {
@@ -195,7 +196,7 @@ angular.module('app')
                     })
             } else {
                 user = JSON.parse($scope.selectedUserBooking);
-                roomService.adminBook($scope.booking.room._id, user.email ,{dateFrom: $scope.test.dateFrom, dateTo: $scope.test.dateTo}, $scope.totalPrice, $scope.selectedExtras)
+                roomService.adminBook($scope.booking.room._id, user.email ,{dateFrom: $scope.booking.dateFrom, dateTo: $scope.booking.dateTo}, $scope.totalPrice, $scope.selectedExtras)
                     .then(function (a) {
                         if($rootScope.discount){
                             voucherService.useVoucher($rootScope.discount.code).then(function (vResult) {
@@ -210,8 +211,8 @@ angular.module('app')
 
         var calculateDiffOfDays = function () {
             var MS_PER_DAY = 1000 * 60 * 60 * 24;
-            var dateFrom = new Date($scope.test.dateFrom);
-            var dateTo = new Date($scope.test.dateTo);
+            var dateFrom = new Date($scope.booking.dateFrom);
+            var dateTo = new Date($scope.booking.dateTo);
             var dateFromUTC = Date.UTC(dateFrom.getFullYear(), dateFrom.getMonth(), dateFrom.getDate());
             var dateToUTC = Date.UTC(dateTo.getFullYear(), dateTo.getMonth(), dateTo.getDate());
             return Math.floor((dateToUTC - dateFromUTC) / MS_PER_DAY);

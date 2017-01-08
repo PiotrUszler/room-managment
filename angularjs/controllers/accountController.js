@@ -6,7 +6,6 @@ angular.module('app')
 
         $scope.regex = '(\\+[0-9]\\d{1})*(\\s)*([0-9]\\d{2})(\\s*)([0-9]\\d{2})(\\s*)([0-9]\\d{2})';
 
-
         $scope.isActive = function (viewLocation) {
             return viewLocation === $location.path();
         };
@@ -25,12 +24,8 @@ angular.module('app')
             }
         };
 
-        //TODO przycisk anulowania tylko dla pokoi, których data na to pozwala
         $scope.cancelBooking = function (room_id, booking_id) {
-            console.log("room id to:"+room_id+", booking_id to:"+booking_id);
-
             roomService.cancelBooking(room_id, booking_id).then(function (a) {
-                console.log('udało się anulować');
                 $state.reload();
             })
         };
@@ -52,7 +47,6 @@ angular.module('app')
             })
         };
 
-        //TODO ustawic passy na zero po żądaniu hhtp
         $scope.changePassword = function (valid,oldP, newP) {
             if(valid){
                 AuthService.changePassword(oldP, newP).then(function (res) {
@@ -68,8 +62,7 @@ angular.module('app')
             var dateFrom = new Date(date);
             return dateFrom > currentDate;
         };
-
-
+        
         getInfo();
         getUserBookings();
     });

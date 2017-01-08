@@ -3,6 +3,7 @@
  */
 angular.module('app')
     .controller('offerCtrl', function ($scope, $rootScope, $cookies, $state, $location, $window, offerSvc) {
+
         $scope.offer = {};
         $scope.extras = [];
         $scope.selectedExtras = [];
@@ -10,7 +11,6 @@ angular.module('app')
         $scope.dateFrom = '';
         $scope.dateTo = '';
         $scope.roomName = '';
-
 
         var showOffer = function () {
             $scope.offer = JSON.parse($cookies.get('room'));
@@ -57,7 +57,6 @@ angular.module('app')
         };
 
         $scope.toPrevious = function () {
-            //$window.location.href = '#/main'
             $state.go('home')
         };
 

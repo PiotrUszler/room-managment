@@ -9,12 +9,10 @@ angular.module('app')
                 if($window.localStorage.token){
                     config.headers['Authorization'] = $window.localStorage.token;
                 }
-
                 return config;
             }
         }
     })
-
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('home',{
@@ -95,9 +93,9 @@ angular.module('app')
                 url: '/managment-bookings',
                 templateUrl: '/managment-bookings'
             })
-            .state('test',{
-                url: '/test',
-                templateUrl: 'test'
+            .state('admin-booking',{
+                url: '/admin-booking',
+                templateUrl: 'admin-booking'
             });
 
         $urlRouterProvider.otherwise('/main')
@@ -106,37 +104,6 @@ angular.module('app')
     function ($rootScope, $state, $stateParams) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
-
     }]);
-    /*
-    .config(function ($routeProvider, $httpProvider) {
-        $httpProvider.interceptors.push('authInterceptor');
-        $routeProvider
-            .when('/', {
-                templateUrl: '/main'
-            })
-            .when('/signup', {
-                templateUrl: '/signup'
-            })
-            .when('/signin', {
-            templateUrl: '/signin'
-            })
-            .when('/userinfo', {
-                templateUrl: '/userinfo'
-            })
-            .when('/successfulSignup',{
-                templateUrl: '/successfulSignup'
-            })
-            .when('/offer',{
-                templateUrl: '/offer'
-            })
-            .when('/confirmation',{
-                templateUrl: '/confirmation'
-            })
-            .when('/successfulBooking',{
-                templateUrl: '/successfulBooking'
-            })
-            .otherwise('/');
-    });
-*/
+
 

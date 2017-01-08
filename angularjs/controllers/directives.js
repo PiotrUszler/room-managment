@@ -17,12 +17,6 @@ angular.module('app')
             }
         };
     })
-    .directive('userInfo', function () {
-        return{
-            template: '<p>sialala</p>'
-        }
-    })
-
     .directive('vouchercheck', function (voucherService) {
         return {
             require: 'ngModel',
