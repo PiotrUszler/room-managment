@@ -14,7 +14,7 @@ body{
 input{
     color: $darkFont!important;
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: $break-small) {
     .container
     {
         text-align: center;
@@ -30,7 +30,7 @@ select{
 }
 
 #map {
-    width: 100%;
+    width: 50%;
     height: 400px
 }
 
@@ -51,9 +51,12 @@ select{
     margin-top: 40px;
 }
 
-.main-price{
-    border-left: dashed #fff 1px;
+@media only screen and (min-width: $break-small) {
+    .main-price{
+        border-left: dashed #fff 1px;
+    }
 }
+
 
 .btn{
     border-radius: 0!important;
@@ -114,6 +117,27 @@ select{
     width: 150px;
 }
 
+.dropdown:hover{
+    background-color: $navColor!important;
+    transition-duration: 0.5s;
+    -webkit-transition-timing-function: ease;
+    transition-timing-function: ease;
+}
+
+.dropdown-menu{
+    background-color: #222!important;
+}
+.dropdown-menu>li>a{
+    color: $lightFont!important;
+}
+
+.dropdown-menu>li>a:hover{
+    background-color: $navColor!important;
+}
+
+.navbar-inverse .navbar-nav>li>a{
+    color: $lightFont!important;
+}
 
 .navbar{
     margin-top: 70px;
@@ -357,4 +381,14 @@ input.ng-dirty.ng-valid{
 
 .footer-basic-centered{
     margin-top: 40px;
+    border-top: solid 1px #fff;
+}
+
+.footer-company-motto{
+    margin-top: 10px;
+    text-align: center;
+}
+
+.footer-company-name{
+    font-size: small;
 }
