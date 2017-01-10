@@ -32,14 +32,12 @@ angular.module('app')
 
         var getUserBookings = function () {
             AuthService.getUserBookings().then(function (msg) {
-                console.log(msg);
                 $scope.userBookings = msg;
                 })
             };
 
         var getInfo = function () {
             AuthService.getUserInfo().then(function (user) {
-                console.log(user);
                 $scope.firstName = user.firstName;
                 $scope.lastName = user.lastName;
                 $scope.email = user.email;

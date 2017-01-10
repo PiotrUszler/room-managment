@@ -90,13 +90,14 @@ router.post('/reserve', passport.authenticate('jwt', {session: false}), function
     if(token) {
         var decoded = jwt.decode(token, 'aH3kx09$s');
     }
+    console.log("id:"+req.body.id+", from: "+ req.body.from+', to: '+req.body.to+", email: "+decoded.email+', price: '+req.body.price+", extras: "+req.body.extras);
     Room.update(
         {_id: mongoose.Types.ObjectId(req.body.id)},
         {$push: {reservations: {from: req.body.from, to: req.body.to, user: decoded.email, price: req.body.price, extras: req.body.extras}}},function (err, result) {
             if(err)
                 res.json({success: false, error: err});
             else
-                res.json({success: true});
+                res.json({success: true, result: result});
         }
     )
 });
@@ -178,6 +179,7 @@ router.post('/signupAndBook', function (req, res) {
 });
 
 router.post('/adminBook', function (req, res) {
+    console.log("id:"+req.body.id+", from: "+ req.body.from+', to: '+req.body.to+", email: "+req.body.email.email+', price: '+req.body.price+", extras: "+req.body.extras);
     Room.update(
         {_id: mongoose.Types.ObjectId(req.body.id)},
         {$push: {reservations: {from: req.body.from, to: req.body.to, user: req.body.email, price: req.body.price, extras: req.body.extras}}},function (err, result) {

@@ -9,7 +9,6 @@ angular.module('app')
 
         function loadUserInfo() {
             var token = window.localStorage.getItem(LOCAL_TOKEN);
-            console.log('loading User info...');//Do usunięcia
             if(token){
                 userInfo(token);
 
@@ -57,7 +56,6 @@ angular.module('app')
             return $q(function (resolve, reject) {
                 $http.post('/api/signup', user).then(function (result) {
                     if(result.data.success){
-                        console.log('jestem w resolve');
                         resolve(result.data.msg);
                     } else {
                         reject(result.data.msg);
@@ -92,14 +90,11 @@ angular.module('app')
             return $q(function (resolve, reject) {
                 $http.post('/api/changeUserDetails', newDetails).then(function (result) {
                     if(result.data.success){
-                        console.log('hello');
                         $http.post('/api/getNewToken', {email: newDetails.email}).then(function (result2) {
                             if(result2.data.success){
-                                console.log('result2 success');
                                 storeUserInfo(result2.data.token);
                                 loadUserInfo();
                             } else {
-                                console.log('error nowego tokena')
                             }
                         });
                         resolve({success: true, msg: "Pomyślnie zmieniono dane"})

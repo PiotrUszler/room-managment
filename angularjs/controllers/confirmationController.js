@@ -21,7 +21,7 @@ angular.module('app')
             if($scope.terms != true)
                 alert('Przed potwierdzeniem rezerwacji należy zaakceptowaćregulamin.');
             else{
-                roomService.bookRoom({id: $scope.room._id, from: $scope.dateFrom, to: $scope.dateTo, price: calculateTotalPrice(), extras: $scope.extras})
+                roomService.bookRoom({id: $scope.room.room.id, from: $scope.dateFrom, to: $scope.dateTo, price: $scope.price, extras: $scope.extras})
                     .then(function () {
                         if($rootScope.discount){
                             voucherService.useVoucher($rootScope.discount.code).then(function (vResult) {
@@ -29,6 +29,8 @@ angular.module('app')
                             },function (error) {
                                 console.log(error);
                             });
+                        } else {
+                            $state.go('successfulBooking');
                         }
 
                 },function (error) {

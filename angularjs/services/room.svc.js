@@ -10,7 +10,6 @@ angular.module('app')
             return $q(function (resolve, reject) {
                 $http.post('/api/findRooms', data).then(function (result) {
                     if(result.data.success){
-                        console.log('Pobrano pokoje');
                         resolve(result.data.rooms);
                     } else {
                         reject(result.data.error);
@@ -19,7 +18,7 @@ angular.module('app')
             })
         };
 
-        var bookRoom = function (data) {//TODO zjaąć się
+        var bookRoom = function (data) {
             return $q(function (resolve, reject) {
                 $http.post('/api/reserve', data).then(function (result) {
                     if(result.data.success){
@@ -33,13 +32,10 @@ angular.module('app')
 
         var cancelBooking = function (room_id, booking_id) {
             return $q(function (resolve, reject) {
-                console.log('jetem przed post cancel');
                 $http.post('/api/cancelBooking',{room_id: room_id, booking_id: booking_id}).then(function (result) {
                     if(result.data.success){
-                        console.log('resolve cancel');
                         resolve(result.data.success)
                     } else {
-                        console.log('reject cancel');
                         reject(result.data.error)
                     }
                 })
@@ -61,7 +57,6 @@ angular.module('app')
         var getRoomBookings = function (room_id) {
             return $q(function (resolve, reject) {
                 $http.post('/api/getRoomBookings', {room_id: room_id}).then(function (result) {
-                        console.log(result.data[0].reservations);
                         resolve(result.data[0])
                 },function (result) {
                     reject(result.data)
@@ -83,7 +78,6 @@ angular.module('app')
         };
 
         var signupAndBook = function (user, id, dates, price, extras) {
-            console.log(extras);
             return $q(function (resolve, reject) {
                 $http.post('/api/signupAndBook', {
                     firstName: user.firstName,
@@ -104,7 +98,6 @@ angular.module('app')
         };
 
         var adminBook = function (id, email, dates, price, extras) {
-            console.log("Serwis: roomSvc, funkcja: adminBook | id:"+id+", email: "+email);
             return $q(function (resolve, reject) {
                 $http.post('/api/adminBook', {
                     id: id,

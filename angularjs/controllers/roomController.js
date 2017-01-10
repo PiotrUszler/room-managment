@@ -71,7 +71,6 @@ angular.module('app')
         $scope.getAllRooms = function () {
             roomService.getAllRooms().then(function (rooms) {
                 $scope.allRooms = rooms;
-                console.log(rooms);
             }, function (error) {
                 //TODO obsługa errora
             })
@@ -190,7 +189,7 @@ angular.module('app')
                         if($rootScope.discount){
                             voucherService.useVoucher($rootScope.discount.code).then(function (vResult) {
                             },function (error) {
-                                console.log(error);
+
                             });
                         }
                     })
@@ -201,10 +200,10 @@ angular.module('app')
                         if($rootScope.discount){
                             voucherService.useVoucher($rootScope.discount.code).then(function (vResult) {
                             },function (error) {
-                                console.log(error);
+
                             });
                         }
-
+                        $scope.successfulAdminBooking = true;
                     })
             }
         };

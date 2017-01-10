@@ -53,6 +53,7 @@ angular.module('app')
 
     //TODO odjecie kwoty i sprawdzenie vaznosci(wyswietlenie odpowiedniego errora), na koniec przy rezerwacji uwzglednic voucher
     $scope.checkVoucher = function () {
+        if($scope.voucher){
             voucherService.checkVoucher($scope.voucher.toString()).then(function (result) {
                 $scope.voucherNotFound = undefined;
                 $scope.voucherFound = 'Kod poprawny zniżka '+result.discount+result.discountType;
@@ -62,15 +63,13 @@ angular.module('app')
                 $scope.voucherNotFound = error;
                 $scope.voucherFound = undefined;
             })
-
+        }
     };
     
     $scope.codeChanged = function () {
-        if(!$scope.bookingFrm.$valid){
-            $scope.voucherFound = undefined;
-            $scope.voucherNotFound = undefined;
-            $rootScope.discount = undefined;
-        }
+        $scope.voucherFound = undefined;
+        $scope.voucherNotFound = undefined;
+        $rootScope.discount = undefined;
     };
 
     function isNumeric(n) {

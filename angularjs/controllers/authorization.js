@@ -39,7 +39,6 @@ angular.module('app')
 
         $scope.getUserInfo = function () {
             AuthService.getUserInfo().then(function (msg) {
-                console.log(msg);
                 $scope.userinfo = msg;
             })
         };
@@ -59,7 +58,6 @@ angular.module('app')
                     });
 
                 }, function (data) {
-                    console.log(data);
                     
                     switch(data.code){
                         case 11000:

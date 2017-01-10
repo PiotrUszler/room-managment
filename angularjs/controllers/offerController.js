@@ -50,7 +50,12 @@ angular.module('app')
         };
 
         $scope.toConfirmation = function () {
-            var extras = {extras: $scope.selectedExtras, numOfDays: calculateDiffOfDays()};
+            var extras = {extras: [], numOfDays: calculateDiffOfDays()};
+            for(var i =0; i < $scope.selectedExtras.length; i++){
+                var extra = {name: $scope.selectedExtras[i].name};
+                extras.extras.push(extra);
+            }
+           // var extras = {extras: $scope.selectedExtras, numOfDays: calculateDiffOfDays()};
             $cookies.put('extras', JSON.stringify(extras));
             $cookies.put('price', JSON.stringify($scope.totalPrice));
             $state.go('confirmation')

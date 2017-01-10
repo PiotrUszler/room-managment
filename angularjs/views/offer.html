@@ -8,7 +8,7 @@
     -->
     <div class="panel panel-default row">
         <div class="col col-xs-5">
-            <div class="well" ng-repeat="extra in extras">
+            <div class="well extra" ng-repeat="extra in extras">
                 <h5><strong>{{extra.name}}</strong></h5>
                 <span class="pull-right label label-primary">{{extra.price | currency: ''}} zł {{extra.unit}}</span>
                 <button class="btn button-extra" ng-class="{'button-remove': extra.buttonToggle}" ng-click="addOrRemoveExtra(extra)">{{extra.buttonText}}</button>
@@ -27,7 +27,7 @@
             </div>
 
         </div>
-        <div class="col col-xs-7">
+        <div class="col col-xs-7 offer">
             <div>
                 <h3><strong>Podsumowanie</strong></h3>
                 <p>Data przyjazdu: {{dateFrom}}  -  Data wyjazdu: {{dateTo}}</p>
@@ -38,7 +38,8 @@
                     Pokój: {{roomPrice | currency: ''}} zł
                     <br>
                     Dodatki: {{extrasTotalPrice | currency: ''}} zł
-
+                    <br>
+                    Zniżka: {{discount.amount}} {{discount.type}}
                 </p>
                 <br><br>
                 <p>
