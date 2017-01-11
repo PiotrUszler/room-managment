@@ -143,6 +143,24 @@ angular.module('app')
             })
         };
 
+        var changeRoomDetails = function (details) {
+            return $q(function (resolve, reject) {
+                $http.post('/api/changeRoomDetails', {id: details._id, number: details.number, beds: details.beds, price: details.price, type: details.type, description: details.description}).then(function (result) {
+                    if(result.data.error){
+                        if(result.data.error.code == 11000){
+                            reject("NUM_ERR")
+                        } else {
+                            reject(result.data.error)
+                        }
+                    } else {
+                        resolve("OK")
+                    }
+
+                })
+            })
+        };
+
+
 
 
         return{
@@ -155,6 +173,7 @@ angular.module('app')
             signupAndBook: signupAndBook,
             adminBook: adminBook,
             getUsersEmails: getUsersEmails,
-            pay: pay
+            pay: pay,
+            changeRoomDetails: changeRoomDetails
         }
     });

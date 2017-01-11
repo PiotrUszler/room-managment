@@ -35,7 +35,7 @@
             <div class="col-sm-4">
                 <div>Ilość osób</div>
                 <div>
-                    <input ng-model="numberOfBeds" ng-change="findRooms()" type="number" max="6" value="1" class="num-of-ppl">
+                    <input ng-model="numberOfBeds" ng-change="findRooms()" type="number" min="1" max="6" value="1" class="num-of-ppl">
                     <i class="fa fa-male fa-2x" aria-hidden="true"></i>
                 </div>
 
@@ -48,7 +48,7 @@
             <div class="col-sm-4"><img ng-src="{{room.imagePath}}" alt="" class="room-thumbnail"></div>
             <div class="col-sm-6">
                 <div>{{room.type}}</div>
-                <div>{{room.description}}</div>
+                <div style="white-space: pre;">{{room.description}}</div>
             </div>
 
             <div class="col col-sm-2 main-price">

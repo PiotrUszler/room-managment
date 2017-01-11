@@ -79,4 +79,8 @@ router.get('/managment-vouchers', function (req, res) {
 router.get('/managment-users', function (req, res) {
     res.sendFile(path.resolve('angularjs/views/managment.users.html'))
 });
+router.get('/managment-room-details', function (req, res) {
+    res.sendFile(path.resolve('angularjs/views/managment.room-details.html'))
+});
+
 module.exports = router;

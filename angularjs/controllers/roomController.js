@@ -107,7 +107,7 @@ angular.module('app')
         $scope.toBookings = function (room) {
 
             $cookies.put('selectedRoom', JSON.stringify({_id: room._id, type: room.type, number: room.number, beds: room.beds, price: room.price}));
-            $('#regulamin').modal('hide');
+            $('#room-dialog').modal('hide');
             setTimeout(function(){
                 $state.go('managment-bookings');
             }, 500);
@@ -146,7 +146,7 @@ angular.module('app')
 
         $scope.toBooking = function (room, dateFrom, dateTo) {
             $cookies.put('booking', JSON.stringify({room: {_id: room._id, type: room.type, number: room.number, beds: room.beds, price: room.price}, dateFrom: dateFrom, dateTo: dateTo}));
-            $('#regulamin').modal('hide');
+            $('#room-dialog').modal('hide');
             setTimeout(function(){
                 $state.go('admin-booking');
             }, 500);
@@ -256,7 +256,38 @@ angular.module('app')
             }
             $scope.calculateTotalPrice();
         };
-        
+
+        $scope.showDetails = function (room) {
+            $('#room-dialog').modal('hide');
+            setTimeout(function(){
+                $state.go('managment.room-details',{obj: $scope.selectedRoom});
+            }, 500);
+
+        };
+
+        $scope.roomDetailsInit = function () {
+            $scope.roomParam = $state.params.obj;
+        };
+
+        $scope.showParam = function () {
+            console.log($state.params.obj)
+        };
+
+        $scope.changeRoomDetails = function (valid) {
+            if(valid){
+                roomService.changeRoomDetails($scope.roomParam).then(function (result) {
+                    $scope.changeRoomDetailsResult = "Zmiana przebiegła pomyślnie";
+                }, function (error) {
+                    if(error == "NUM_ERR"){
+                        $scope.changeRoomDetailsResult = "Pokój o podanum numerze już istnieje. Proszę podać inny numer."
+                    } else {
+                        $scope.changeRoomDetailsResult = "Wystąpił błąd: "+error;
+                    }
+                });
+                console.log($scope.roomParam)
+            }
+        };
+
         $scope.paidClass = function (paid) {
             if(paid)
                 return 'btn-success';

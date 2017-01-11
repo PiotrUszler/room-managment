@@ -205,6 +205,28 @@ router.post('/paid', function (req, res) {
         }
     )
 });
+
+router.post('/getRoomDetails', function (req, res) {
+    Room.find({_id: mongoose.Types.ObjectId(req.body.id)},{reservations: 0},function (err, result) {
+        if(err) res.json({success: false, error: err});
+        else res.json({success: true, roomDetails: result})
+    })
+});
+
+router.post('/changeRoomDetails', function (req, res) {
+    Room.update(
+        {_id: mongoose.Types.ObjectId(req.body.id)},
+        {$set: {number: req.body.number, type: req.body.type, beds: req.body.beds, price: req.body.price, description: req.body.description}}
+        ,function (err, result) {
+            console.log("error: "+ err+", res: "+ result);
+            if(err){
+                res.json({success: false, error: err});
+            } else {
+                res.json({success: true, result: result})
+            }
+        }
+    )
+});
 /*
 router.post('/saveVouchers', function (req, res) {
 

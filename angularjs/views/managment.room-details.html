@@ -1,0 +1,35 @@
+<div ng-init="roomDetailsInit()">
+    <form name="frm"  ng-submit="changeRoomDetails(frm.$valid)" novalidate>
+        <div class="form-group">
+            <label class="white-label" for="roomType">Pokój</label>
+            <input type="text" id="roomType" name="roomType" class="form-control" ng-model="roomParam.type" required value="{roomParam.type}}">
+        </div>
+
+        <div class="form-group">
+            <label class="white-label" for="roomNumber">Numer</label>
+            <input type="number" name="roomNumber" id="roomNumber" class="form-control" ng-model="roomParam.number" required>
+            <span ng-show="frm.lastName.$dirty && frm.lastName.$error.required" class="help-block">To pole jest wymagane</span>
+        </div>
+
+        <div class="form-group">
+            <label class="white-label" for="roomBeds">Ilość osób</label>
+            <input type="number" name="roomBeds" id="roomBeds" class="form-control" ng-model="roomParam.beds" required>
+        </div>
+
+        <div class="form-group">
+            <label class="white-label" for="roomPrice">Cena</label>
+            <input type="number" name="roomPrice" id="roomPrice" class="form-control" ng-model="roomParam.price" >
+        </div>
+
+        <div class="form-group">
+            <label class="white-label" for="roomDesc">Opis</label>
+            <textarea rows="4" cols="50" name="roomDesc" id="roomDesc" class="form-control" ng-model="roomParam.description">
+            </textarea>
+        </div>
+
+
+        <button type="submit" class="btn btn-success" ng-disabled="frm.$invalid">Zapisz</button>
+    </form>
+    <br>
+    <p ng-show="changeRoomDetailsResult" class="alert alert-info">{{changeRoomDetailsResult}}</p>
+</div>

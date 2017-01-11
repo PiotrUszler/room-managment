@@ -93,6 +93,14 @@ angular.module('app')
                 url: '/managment-bookings',
                 templateUrl: '/managment-bookings'
             })
+            .state('managment.room-details',{
+                url: '/managment-room-details',
+                templateUrl: 'managment-room-details',
+                controller: 'roomCtrl',
+                params:{
+                    obj: null
+                }
+            })
             .state('admin-booking',{
                 url: '/admin-booking',
                 templateUrl: 'admin-booking'
