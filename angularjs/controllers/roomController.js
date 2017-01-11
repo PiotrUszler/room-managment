@@ -13,7 +13,7 @@ angular.module('app')
         $scope.successfulCancel = false;
         $scope.totalPrice = 0;
 
-
+        $scope.newExtra = {};
         $scope.extras = [];
         $scope.selectedExtras = [];
         $scope.extrasTotalPrice = 0;
@@ -35,6 +35,13 @@ angular.module('app')
         $scope.init = function () {
             setDate();
             $scope.findRooms();
+        };
+
+        $scope.extrasInit = function () {
+            offerSvc.getExtras().then(function (e) {
+                console.log(e);
+                $scope.managmentExtras = e;
+            })
         };
 
         $scope.findRooms = function () {//TODO ogarnac sie z tym beds, wyszukiwac pokoje o podanej ilosci osob i nazwac to jakos w bazie ostatecznie
@@ -239,6 +246,39 @@ angular.module('app')
                     $scope.extras[i].buttonToggle = false;
                 }
             });
+        };
+
+        $scope.changeExtraDetails = function (valid) {
+            if(valid){
+                roomService.changeExtraDetails($scope.selectedExtra).then(function (result) {
+                    $scope.changeExtraDetailsResult = result;
+                },function (error) {
+                    $scope.changeExtraDetailsResult = error;
+                })
+            }
+        };
+
+        $scope.createExtra = function (valid) {
+            if(valid){
+                roomService.createExtra($scope.newExtra).then(function (result) {
+                    $scope.createdNewExtra = result;
+                })
+            }
+        };
+
+        $scope.deleteExtra = function () {
+            console.log($scope.selectedExtra);
+            roomService.deleteExtra({id: $scope.selectedExtra._id}).then(function (result) {
+                $scope.deletedExtraResult = "Usunięto dodatek";
+                $scope.extrasInit = function () {
+                    offerSvc.getExtras().then(function (e) {
+                        $scope.managmentExtras = e;
+                    })
+                };
+            }, function (error) {
+                $scope.deletedExtraResult = error;
+            });
+
         };
         
         $scope.addOrRemoveExtra = function (extra) {

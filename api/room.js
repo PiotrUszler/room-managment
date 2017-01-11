@@ -218,7 +218,6 @@ router.post('/changeRoomDetails', function (req, res) {
         {_id: mongoose.Types.ObjectId(req.body.id)},
         {$set: {number: req.body.number, type: req.body.type, beds: req.body.beds, price: req.body.price, description: req.body.description}}
         ,function (err, result) {
-            console.log("error: "+ err+", res: "+ result);
             if(err){
                 res.json({success: false, error: err});
             } else {
@@ -226,6 +225,42 @@ router.post('/changeRoomDetails', function (req, res) {
             }
         }
     )
+});
+
+
+router.post('/changeExtraDetails', function (req, res) {
+    Extra.update(
+        {_id: mongoose.Types.ObjectId(req.body.id)},
+        {$set: {name: req.body.name, price: req.body.price, unit: req.body.unit}}
+        ,function (err, result) {
+            if(err){
+                res.json({success: false, error: err});
+            } else {
+                res.json({success: true, result: result})
+            }
+        }
+    )
+});
+
+router.post('/createExtra', function (req, res) {
+    var extra = new Extra({
+        name: req.body.name, price: req.body.price, unit: req.body.unit
+    });
+    extra.save(function (err) {
+        if(err) res.json({error: err});
+        else res.json({success: true, msg: 'Dodano nowy dodatek.'})
+
+    })
+});
+
+router.post('/deleteExtra', function (req, res) {
+    Extra.remove({_id: mongoose.Types.ObjectId(req.body.id)},function (err, result) {
+        if(err){
+            res.josn({error: err})
+        } else {
+            res.json({result: result})
+        }
+    })
 });
 /*
 router.post('/saveVouchers', function (req, res) {

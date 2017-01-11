@@ -1,0 +1,35 @@
+<div  ng-controller="roomCtrl" ng-init="extrasInit()">
+    <div>
+        <select ng-options="extra as extra.name for extra in managmentExtras" ng-model="selectedExtra"></select>
+    </div>
+    <br>
+    <div>
+        <form name="frm"  ng-submit="changeExtraDetails(frm.$valid)" novalidate>
+            <div class="form-group">
+                <label class="white-label" for="extraName">Nazwa</label>
+                <input type="text" id="extraName" name="extraName" class="form-control" ng-model="selectedExtra.name" required >
+                <span ng-show="frm.extraName.$dirty && frm.extraName.$error.required" class="help-block">To pole jest wymagane</span>
+            </div>
+
+            <div class="form-group">
+                <label class="white-label" for="extraPrice">Cena</label>
+                <input type="number" name="extraPrice" id="extraPrice" class="form-control" ng-model="selectedExtra.price" required>
+                <span ng-show="frm.extraPrice.$dirty && frm.extraPrice.$error.required" class="help-block">To pole jest wymagane</span>
+            </div>
+
+            <div class="form-group">
+                <label class="white-label" for="extraUnit">Jednostka</label>
+                <input type="text" name="extraUnit" id="extraUnit" class="form-control" ng-model="selectedExtra.unit" required>
+                <span ng-show="frm.extraUnit.$dirty && frm.extraUnit.$error.required" class="help-block">To pole jest wymagane</span>
+            </div>
+
+            <button type="submit" class="btn btn-success" ng-disabled="frm.$invalid">Zapisz</button>
+            <button type="button" class="btn btn-danger" ng-click="deleteExtra()">Usuń</button>
+        </form>
+
+        <br>
+        <p ng-show="changeExtraDetailsResult" class="alert alert-info">{{changeExtraDetailsResult}}</p>
+        <br>
+        <p ng-show="deletedExtraResult" class="alert alert-info">{{deletedExtraResult}}</p>
+    </div>
+</div>

@@ -160,6 +160,42 @@ angular.module('app')
             })
         };
 
+        var changeExtraDetails = function (details) {
+            return $q(function (resolve, reject) {
+                $http.post('/api/changeExtraDetails', {id: details._id, name: details.name, price: details.price, unit: details.unit}).then(function (result) {
+                    if(result.data.error){
+                        reject(result.data.error)
+                    } else {
+                        resolve("Dane zapisano poprawnie")
+                    }
+
+                })
+            })
+        };
+
+        var createExtra = function (extra) {
+            return $q(function (resolve, reject) {
+                $http.post('/api/createExtra', extra).then(function (result) {
+                    if(result.data.error){
+                        reject(result.data.error)
+                    } else {
+                        resolve(result.data.msg)
+                    }
+                })
+            })
+        };
+        
+        var deleteExtra = function (extraId) {
+            return $q(function (resolve, reject) {
+                $http.post('/api/deleteExtra', extraId).then(function (result) {
+                    if(result.data.error){
+                        reject(result.data.error)
+                    } else {
+                        resolve(result.data.msg)
+                    }
+                })
+            })
+        };
 
 
 
@@ -174,6 +210,9 @@ angular.module('app')
             adminBook: adminBook,
             getUsersEmails: getUsersEmails,
             pay: pay,
-            changeRoomDetails: changeRoomDetails
+            changeRoomDetails: changeRoomDetails,
+            changeExtraDetails: changeExtraDetails,
+            createExtra: createExtra,
+            deleteExtra: deleteExtra
         }
     });

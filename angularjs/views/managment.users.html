@@ -1,6 +1,6 @@
 <div ng-controller="userCtrl">
     <div>
-        <select ng-options="user as user.email for user in users" ng-model="selectedUser" ng-change="update()"></select>
+        <select ng-options="user as user.email for user in users" ng-model="selectedUser" ></select>
     </div>
     <div>
         <form name="frm"  ng-submit="changeUserDetails(frm.$valid)" novalidate>

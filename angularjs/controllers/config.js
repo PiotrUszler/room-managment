@@ -101,6 +101,18 @@ angular.module('app')
                     obj: null
                 }
             })
+            .state('managment.extras',{
+                url: '/managment-extras',
+                templateUrl: 'managment-extras'
+            })
+            .state('managment.extras.details',{
+                url: '/managment-extras-details',
+                templateUrl: 'managment-extras-details'
+            })
+            .state('managment.extras.create',{
+                url: '/managment-extras-create',
+                templateUrl: 'managment-extras-create'
+            })
             .state('admin-booking',{
                 url: '/admin-booking',
                 templateUrl: 'admin-booking'

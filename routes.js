@@ -82,5 +82,16 @@ router.get('/managment-users', function (req, res) {
 router.get('/managment-room-details', function (req, res) {
     res.sendFile(path.resolve('angularjs/views/managment.room-details.html'))
 });
+router.get('/managment-extras', function (req, res) {
+    res.sendFile(path.resolve('angularjs/views/managment.extras.html'))
+});
+router.get('/managment-extras-details', function (req, res) {
+    res.sendFile(path.resolve('angularjs/views/managment.extras.details.html'))
+});
+router.get('/managment-extras-create', function (req, res) {
+    res.sendFile(path.resolve('angularjs/views/managment.extras.create.html'))
+});
+
+
 
 module.exports = router;
