@@ -36,6 +36,7 @@ router.post('/findRooms', function (req, res) {
     })
 });
 
+
 router.get('/getExtras', function (req, res) {
     Extra.find({}, function (err, extras) {
         if(err){

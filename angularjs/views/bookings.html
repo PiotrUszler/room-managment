@@ -6,8 +6,8 @@
     <div class="col-sm-8 white-label">
         <div>
             <p>Pokój:             {{booking.type}}</p>
-            <p>Rezerwacja: od {{booking.reservations.from}} do {{booking.reservations.to}}</p>
-            <p>Cena: {{booking.reservations.price}}</p>
+            <p>Rezerwacja: od {{booking.reservations.from | date: 'dd-MM-yyyy'}} do {{booking.reservations.to | date: 'dd-MM-yyyy'}}</p>
+            <p>Cena: {{booking.reservations.price | currency: ''}} zł</p>
         </div>
         <button class="btn btn-warning" ng-show="checkDate(booking.reservations.from)" ng-click="cancelBooking(booking._id, booking.reservations._id)">Anuluj</button>
     </div>

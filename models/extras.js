@@ -6,14 +6,16 @@ var db = require('../db');
 var schema = db.Schema({
     name:{
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     price:{
         type: Number,
         required: true
     },
     unit:{
-        type: String
+        type: String,
+        required: true
     }
 });
 

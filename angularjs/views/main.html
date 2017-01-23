@@ -1,20 +1,7 @@
 <div ng-controller="roomCtrl">
-    <!--
-    <div class="main-image-container">
-        <img class="main-image" src="images/background-image.jpg" alt="main">
-    </div>
-    -->
-
-
     <p ng-init="init()"></p>
     <div class="container">
-        <!--
-        <div class="progress">
-            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="33"
-                 aria-valuemin="0" aria-valuemax="100" style="width:33%">
-            </div>
-        </div>
-        -->
+
         <div class="row booking-dates">
             <div class="col-sm-4">
                 <div>Data przyjazdu</div>
@@ -56,14 +43,12 @@
                 <span class="label label-primary">{{room.price | currency: ''}} zł / noc</span>
             </div>
 
-
         </div>
         <div ng-show="noRoomsError">
             <p>Brak wolnych pokoji w podanym terminie. Proszę spróbować inny termin.</p>
         </div>
 
     </div>
-
 
 </div>
 

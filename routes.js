@@ -5,10 +5,8 @@ var express = require('express'),
     router = express.Router(),
     path = require('path');
 
-//Static files
 router.use(express.static(__dirname+'/assets'));
 
-//router.use(express.static(__dirname+'/css'));
 
 router.get('/', function (req, res) {
     res.sendFile(path.resolve('angularjs/app.html'))
@@ -91,7 +89,5 @@ router.get('/managment-extras-details', function (req, res) {
 router.get('/managment-extras-create', function (req, res) {
     res.sendFile(path.resolve('angularjs/views/managment.extras.create.html'))
 });
-
-
 
 module.exports = router;

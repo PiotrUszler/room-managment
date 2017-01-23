@@ -1,6 +1,3 @@
-/**
- * Created by Piotr Uszler on 14.10.2016.
- */
 angular.module('app')
     .controller('authCtrl', function ($q, $scope, $state, $window, $location, $route, $rootScope, AuthService) {
 
@@ -66,12 +63,12 @@ angular.module('app')
                             break;
                         default:
                             $scope.submitError = true;
-                            $scope.errorMessage = 'Upss coś poszło nie tak. Proszę spróbować później.';
+                            $scope.errorMessage = 'Coś poszło nie tak. Proszę spróbować później.';
                     }
                 });
             } else {
                 $scope.submitError = true;
-                $scope.errorMessage = 'Upss coś poszło nie tak. Proszę spróbować później.';
+                $scope.errorMessage = 'Coś poszło nie tak. Proszę spróbować później.';
             }
         };
 

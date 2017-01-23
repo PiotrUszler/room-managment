@@ -102,20 +102,6 @@ router.post('/getUserInfo', passport.authenticate('jwt', {session: false}), func
     }
 });
 
-router.post('/change-user-details', function (req, res) {
-    User.update(
-        {email: req.body.email},
-        {$set: {firstName: req.body.firstName}},function (err, result) {
-            if(err)
-                res.json({success: false, error: err});
-            else
-                res.json({success: true});
-        }
-    )
-});
-
-
-
 router.post('/change-password', passport.authenticate('jwt', {session: false}), function (req, res) {
     var token = getToken(req.headers);
     if(token) {

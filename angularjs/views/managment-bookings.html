@@ -9,8 +9,8 @@
         <div ng-repeat="booking in bookings" class="row panel panel-default">
             <div class="col-sm-10">
                 <p>Rezerwujcy: {{booking.user}}</p>
-                <p>od: {{booking.from}}</p>
-                <p>do: {{booking.to}}</p>
+                <p>od: {{booking.from | date: "dd-MM-yyyy"}}</p>
+                <p>do: {{booking.to | date: "dd-MM-yyyy"}}</p>
                 <p>cena: {{booking.price}}</p>
                 <p>Dodatki: </p>
                 <div ng-repeat="extra in booking.extras">
@@ -26,7 +26,6 @@
             </div>
         </div>
     </div>
-    //TODO po wybraniu uzytkownika pokazanie jego danych w modalu i moze jakis przycisk przenoszący do uzytkownika
 
     <!-- Modal -->
     <div id="user" class="modal fade" role="dialog">

@@ -1,8 +1,5 @@
-/**
- * Created by Piotr Uszler on 14.10.2016.
- */
 angular.module('app')
-    .service('AuthService', ['$http', '$q', function ($http, $q, $rootScope) {
+    .service('AuthService', ['$http', '$q', function ($http, $q) {
         var LOCAL_TOKEN = 'token';
         var isAuthenticated = false;
         var authToken;
