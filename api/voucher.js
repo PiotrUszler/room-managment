@@ -15,7 +15,6 @@ router.post('/saveVouchers', function (req, res) {
             discountType: req.body.discountType,
             expiryDate: req.body.expiryDate
         });
-        //TODO wyslac co cza resem
         voucher.save(function (err, result) {
             if(err){
                 console.log("err.code w voucher.save: "+err.code);

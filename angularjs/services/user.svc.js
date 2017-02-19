@@ -26,7 +26,6 @@ angular.module('app')
             })
         };
 
-
         return{
             getAllUsers: getAllUsers,
             changeUserDetails: changeUserDetails

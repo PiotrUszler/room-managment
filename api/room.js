@@ -47,8 +47,7 @@ router.get('/getExtras', function (req, res) {
     });
 });
 
-//TODO uporządkować
-router.get('/getUserBookings',  passport.authenticate('jwt', {session: false}), function (req, res) {//TODO uporzątkowanie oraz jak starczy czasu przerobienie na Query bazowe zamiast robić większość w JS
+router.get('/getUserBookings',  passport.authenticate('jwt', {session: false}), function (req, res) {
     var token = getToken(req.headers);
     if(token) {
         var decoded = jwt.decode(token, 'aH3kx09$s');
@@ -75,10 +74,6 @@ var test = [];
                     test.push({_id: rooms[j]._id, number: rooms[j].number, type: rooms[j].type, beds: rooms[j].beds, price: rooms[j].price, imagePath: rooms[j].imagePath, reservations: rooms[j].reservations[k]});
                 }
             }
-            //if(flag){
-              //  rooms[j].reservations = undefined;
-                //result.push({room: rooms[j], reservations: reservations});
-            //}
         }
         res.json({success:true, bookings: test});
         console.log(test);
@@ -86,7 +81,7 @@ var test = [];
     })
 });
 
-router.post('/reserve', passport.authenticate('jwt', {session: false}), function (req, res) {//TODO do uporzątkowania i obsługa błędów i
+router.post('/reserve', passport.authenticate('jwt', {session: false}), function (req, res) {
     var token = getToken(req.headers);
     if(token) {
         var decoded = jwt.decode(token, 'aH3kx09$s');
@@ -115,7 +110,7 @@ router.post('/changeUserDetails', passport.authenticate('jwt', {session: false})
         else return res.send({success: true, msg: 'udało się yupii'});
     })
 });
-//TODO dodac autentykacje moze
+
 router.post('/cancelBooking', function (req, res) {
     Room.update(
         {_id: mongoose.Types.ObjectId(req.body.room_id)},
@@ -148,11 +143,6 @@ router.post('/getRoomBookings', function (req, res) {
     })
 });
 
-//TODO w przypadku rejestracji przez admina i braku emaila tworzony user z emailem firstName.lastName.phone, a pozostale dane to firstName, lastName phone i powinno dzialczyci
-//i moze dac role jako hmmm unregistered or something i pozniej w miejscach gdzie pobiera sie dane sprawdzac role i zaleznie od niej przypisywac dane  ale naj[ier sprawdzic czy nie istnieje
-//juz taki uzytkownik
-
-//TODO jesli req.body.email == undefined to jako user dajemy firstName.lastName.phone (to bedzie unikalny klucz) i no problemo albo moze dac object user: {firstName,lastName, phone}
 router.post('/signupAndBook', function (req, res) {
     console.log(req.body.extras);
     var newUser = new User({
@@ -263,26 +253,7 @@ router.post('/deleteExtra', function (req, res) {
         }
     })
 });
-/*
-router.post('/saveVouchers', function (req, res) {
 
-    for(var i = 0; i < req.body.codes.length; i++){
-        var voucher = {
-            codes: req.body.codes[i],
-            discount: req.body.discount,
-            discountType: req.body.discountType,
-            type: req.body.type,
-            expiryDate: req.body.expiryDate
-        };
-        Voucher.insert(function (err, result) {
-            if(err)
-                res.json({success: false, msg: err})
-        });
-
-    }
-    res.json({success: true, msg: 'Pomyślnie zapisano.'})
-});
-*/
 getToken = function (headers) {
     if(headers && headers.authorization){
         var parts = headers.authorization.split(' ');

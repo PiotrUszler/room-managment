@@ -75,7 +75,7 @@ angular.module('app')
             })
         };
 
-        var getUserBookings = function () {//TODO poprawić razem z api żeby dawało success
+        var getUserBookings = function () {
             return $q(function (resolve, reject) {
                 $http.get('/api/getUserBookings').then(function (result) {
                     resolve(result.data)

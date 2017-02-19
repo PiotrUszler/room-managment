@@ -25,8 +25,7 @@ angular.module('app')
                 })
             })
         };
-
-
+        
 
         return{
             chooseRoom: chooseRoom,

@@ -44,7 +44,7 @@ angular.module('app')
             })
         };
 
-        $scope.findRooms = function () {//TODO ogarnac sie z tym beds, wyszukiwac pokoje o podanej ilosci osob i nazwac to jakos w bazie ostatecznie
+        $scope.findRooms = function () {
             if($scope.dateFrom.getMonth() >= $scope.dateTo.getMonth() && $scope.dateFrom.getDate() >= $scope.dateTo.getDate()){
                 var dateTemp = new Date();
                 dateTemp.setDate($scope.dateFrom.getDate()+1);
@@ -79,7 +79,6 @@ angular.module('app')
             roomService.getAllRooms().then(function (rooms) {
                 $scope.allRooms = rooms;
             }, function (error) {
-                //TODO obsługa errora
             })
         };
 
@@ -91,7 +90,7 @@ angular.module('app')
                 $scope.dateTo = dateTemp;
             }
         };
-        //TODo po zmianie daty zmienic classe(kompletny rework? :()
+
         $scope.getAvailability = function (reservations) {
             var currentDate = new Date();
             var roomDateFrom = new Date($scope.dateFrom);
@@ -169,8 +168,7 @@ angular.module('app')
                 $scope.users = JSON.parse(JSON.stringify(users));
             })
         };
-
-        //TODO przeniesienie pewnych funkcjonalnosci do userCtrl
+        
 
         $scope.submitBookForm = function () {
             var user = null;

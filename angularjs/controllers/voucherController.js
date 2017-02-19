@@ -3,8 +3,7 @@
  */
 angular.module('app')
 .controller('voucherCtrl', function ($scope, $rootScope, voucherService) {
-
-    //Ile, czy wielokrotnego uzytku, data wygaśnięcia
+    
     $scope.generateVouchers = function () {
         $scope.vouchers = {
             codes: []
@@ -28,8 +27,7 @@ angular.module('app')
                 }
                 $scope.vouchers.codes.push(voucher);
             }
-
-            //TODO dalsza praca nad voucherami, pomyśleć jak to przechowywać w bazie czy jako tekst np. 20% czy oddzielnie number: 20, discountType: '%"
+            
             var last = $scope.discount.charAt($scope.discount.length-1);
             if(last === '%')
                 $scope.vouchers.discountType = '%';
@@ -51,7 +49,6 @@ angular.module('app')
         $scope.vouchersSaved = true;
     };
 
-    //TODO odjecie kwoty i sprawdzenie vaznosci(wyswietlenie odpowiedniego errora), na koniec przy rezerwacji uwzglednic voucher
     $scope.checkVoucher = function () {
         if($scope.voucher){
             voucherService.checkVoucher($scope.voucher.toString()).then(function (result) {
