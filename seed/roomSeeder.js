@@ -11,9 +11,7 @@ var rooms = [
         beds: 1,
         price: 70,
         imagePath: '/images/standard-single.jpg',
-        reservations: [
-
-        ]
+        reservations: []
     }),
     new Room({
         number: 2,
@@ -21,9 +19,7 @@ var rooms = [
         beds: 1,
         price: 70,
         imagePath: '/images/standard-single.jpg',
-        reservations: [
-
-        ]
+        reservations: []
     }),
     new Room({
         number: 3,
@@ -31,9 +27,7 @@ var rooms = [
         beds: 2,
         price: 95,
         imagePath: '/images/standard-twin.jpg',
-        reservations: [
-
-        ]
+        reservations: []
 
 
     }),
@@ -43,9 +37,7 @@ var rooms = [
         beds: 2,
         price: 140,
         imagePath: '/images/family-triple.jpg',
-        reservations: [
-
-        ]
+        reservations: []
     }),
     new Room({
         number: 5,
@@ -53,9 +45,7 @@ var rooms = [
         beds: 2,
         price: 320,
         imagePath: '/images/apartament.jpg',
-        reservations: [
-            
-        ]
+        reservations: []
     })
 ];
 
